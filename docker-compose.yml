@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+
+  # Nginx Service
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    container_name: nginx-webserver
+    restart: unless-stopped
+    ports:
+      - 80:80
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+  # Django Service
+  app:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: django-app-service
+    restart: unless-stopped
+    expose:
+      - 8000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  # MySQL Service
+  db:
+    image: mariadb:latest
+    container_name: mariadb-service
+    restart: unless-stopped
+    tty: true
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 3306:3306
+    volumes:
+      - dbdata:/var/lib/mysql/
+    networks:
+      - app-network
+
+
+# Docker Networks
+networks:
+    app-network:
+        driver: bridge
+
+# Volumes
+volumes:
+  dbdata:
+    driver: local

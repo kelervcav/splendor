@@ -1,0 +1,62 @@
+{% extends "base_login.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        {{ form.errors }}
+    </div>
+{% endif %}
+
+{% if messages %}
+  <div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+  <form method="post" id="form-base" novalidate>
+    {% csrf_token %}
+     <div class="input-group mb-3">
+       {{ form.username }}
+        <div class="input-group-append">
+           <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+           </div>
+        </div>
+     </div>
+     <div class="input-group mb-3">
+        {{ form.password }}
+        <div class="input-group-append">
+           <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+           </div>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-8">
+
+        </div>
+        <!-- /.col -->
+        <div class="col-4">
+           <button type="submit" class="btn btn-primary btn-block">Log In</button>
+        </div>
+        <!-- /.col -->
+     </div>
+  </form>
+
+{% endblock content %}
+
+
+{% block script %}
+
+<script>
+
+</script>
+
+{% endblock script %}
+
+
