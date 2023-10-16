@@ -1,5 +1,13 @@
 from django import forms
+from django.forms import ModelForm
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.forms import (
+    UserCreationForm, UserChangeForm, AdminPasswordChangeForm
+)
+
+User = get_user_model()
 
 
 class LoginForm(AuthenticationForm):
@@ -22,3 +30,87 @@ class LoginForm(AuthenticationForm):
                 'placeholder': 'Password'}
         )
     )
+
+
+class AdminGroupForm(ModelForm):
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+
+    class Meta:
+        model = Group
+        fields = '__all__'
+
+
+class ProfileCreationForm(UserCreationForm):
+    group = forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+    email = forms.EmailField(
+        max_length=200,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    password1 = forms.CharField(
+        max_length=100,
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    password2 = forms.CharField(
+        max_length=100,
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    first_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    last_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    mobile = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'name': 'mobile'}
+        )
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            'group',
+            'email',
+            'password1',
+            'password2',
+            'first_name',
+            'last_name',
+            'mobile'
+        )
+
+    def save(self, commit=True):
+        user = super(ProfileCreationForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.mobile = self.cleaned_data['mobile']
+
+        if commit:
+            user.save()
+            user.groups.clear()
+            user.groups.set(self.cleaned_data['group'])
+        return user

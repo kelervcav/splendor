@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block page_title %} Users {% endblock page_title %}
+
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">System User List</h3>
+                  <div class="card-tools">
+                     <a href="{% url 'users:create' %}" class="btn btn-sm btn-block bg-gradient-success">
+                        Add User
+                     </a>
+                  </div>
+               </div>
+               <!-- /.card-header -->
+               <div class="card-body">
+                  <table id="users-table" class="table table-bordered table-hover">
+                     <thead>
+                        <tr>
+                           <th>USER ID</th>
+                           <th>FIRST NAME</th>
+                           <th>LAST NAME</th>
+                           <th>USER GROUP</th>
+                           <th>EMAIL ADDRESS</th>
+                           <th>-</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for user in object_list %}
+                        <tr>
+                            <td>{{ user.user_id }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.group }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                              <a href="#" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+               <!-- /.card-body -->
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+   <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock content %}
+
+{% block script %}
+    <script>
+      $(function () {
+        $('#users-table').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+          "pageLength": 10,
+        });
+      });
+    </script>
+{% endblock script %}
