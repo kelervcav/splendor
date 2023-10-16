@@ -13,13 +13,13 @@
             <!-- small box -->
             <div class="small-box bg-info">
                <div class="inner">
-                  <h3>10</h3>
+                  <h3>{{ total_services }}</h3>
                   <p>Services</p>
                </div>
                <div class="icon">
                   <i class="fas fa-hand-holding-heart"></i>
                </div>
-               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+               <a href="{% url 'services:service_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
          </div>
          <!-- ./col -->
@@ -27,13 +27,13 @@
             <!-- small box -->
             <div class="small-box bg-success">
                <div class="inner">
-                  <h3>10</h3>
+                  <h3>{{ total_treatments }}</h3>
                   <p>Treatments</p>
                </div>
                <div class="icon">
                   <i class="fas fa-clipboard-list"></i>
                </div>
-               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+               <a href="{% url 'services:treatment_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
          </div>
          <!-- ./col -->
