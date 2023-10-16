@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block page_title %} Users {% endblock page_title %}
+
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Add User</h3>
+               </div>
+               <!-- /.card-header -->
+               <form class="form-horizontal" method="POST" novalidate>
+                  <div class="card-body">
+                     {% csrf_token %}
+                     <div class="form-group ">
+                        <label for="" class="col-md-2 control-label">Group:</label>
+                        <div class="col-md-4">
+                           {{ form.group }}
+                           <span class="help-block">{{ form.group.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group ">
+                        <label for="" class="col-md-2 control-label">First Name:</label>
+                        <div class="col-md-4">
+                           {{ form.first_name }}
+                           <span class="help-block">{{ form.first_name.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Last Name:</label>
+                        <div class="col-md-4">
+                           {{ form.last_name }}
+                           <span class="help-block">{{ form.last_name.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Email Address:</label>
+                        <div class="col-md-4">
+                           {{ form.email }}
+                           <span class="help-block">{{ form.email.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Mobile Phone:</label>
+                        <div class="col-md-4">
+                           {{ form.mobile }}
+                        </div>
+                     </div>
+                     <div class="form-group ">
+                        <label for="" class="col-md-2 control-label">Password:</label>
+                        <div class="col-md-4">
+                           {{ form.password1 }}
+                           <span class="help-block">{{ form.password1.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Password Confirmation:</label>
+                        <div class="col-md-4">
+                           {{ form.password2 }}
+                           <span class="help-block">{{ form.password2.errors }}</span>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card-footer">
+                     <button type="submit" class="btn btn-info">Save</button>
+                  </div>
+               </form>
+               <!-- /.card-body -->
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+   <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

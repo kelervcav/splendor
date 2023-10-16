@@ -25,4 +25,5 @@ urlpatterns = [
                                                 authentication_form=LoginForm), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('dashboard/', include('dashboard.urls'), name='dashboard'),
+    path('users/', include('user_profile.urls'), name='users'),
 ]
