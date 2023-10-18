@@ -92,8 +92,7 @@ def area_delete(request, pk):
     treatment_area = get_object_or_404(TreatmentArea, id=pk)
     treatment_area.status = 'Deleted'
     treatment_area.save()
-    messages.success(request,
-                     'Treatment area has been marked as deleted.')
+    messages.success(request, 'Treatment area has been marked as deleted.')
     return redirect('services:area_list')
 
 

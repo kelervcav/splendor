@@ -14,7 +14,7 @@ urlpatterns = [
     path('areas/', views.area_list, name='area_list'),
     path('area/create/', views.area_create, name='area_create'),
     path('area/<int:pk>/edit', views.area_edit, name='area_edit'),
-    path('<int:pk>/delete', views.area_delete, name='area_delete'),
+    path('area/<int:pk>/delete', views.area_delete, name='area_delete'),
 
     # price type
     path('price-type/', views.price_type_list, name='price_type_list'),

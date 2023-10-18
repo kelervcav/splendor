@@ -76,5 +76,14 @@
 {% block script %}
 
 {% endblock script %}
+
+<script>
+    setTimeout(function(){
+      if ($('.alert-dismissible').length > 0) {
+        $('.alert-dismissible').remove();
+      }
+    }, 5000)
+</script>
+
 </body>
 </html>

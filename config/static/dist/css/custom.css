@@ -1,8 +1,7 @@
 .help-block {
     margin-top: 0px;
-    color: red;
-    font-style: italic;
-    font-size: 12px;
+    font-size: 80%;
+    color: #dc3545;
 }
 
 .errorlist {
