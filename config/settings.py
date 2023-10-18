@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'user_profile',
     'dashboard',
     'services',
+    'patients',
+    'appointments',
 ]
 
 MIDDLEWARE = [

@@ -28,8 +28,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     mobile = models.CharField(max_length=100, unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    date_of_birth = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_patient = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -39,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['mobile', 'first_name', 'last_name']
 
     def __str__(self):
-        return self.email
+        return self.first_name
 
     class Meta:
         db_table = 'user'
@@ -47,7 +49,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    date_of_birth = models.DateField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
 
     # Add any additional fields you need for your user profile

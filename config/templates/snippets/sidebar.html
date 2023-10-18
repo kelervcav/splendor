@@ -38,7 +38,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{% url 'users:patient_list' %}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>Patient</p>
             </a>
@@ -47,6 +47,18 @@
             <a href="{% url 'services:treatment_list' %}" class="nav-link">
               <i class="nav-icon fas fa-clipboard-list"></i>
               <p>Treatments</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'appointments:appointment_list' %}" class="nav-link">
+             <i class="nav-icon fas fa-calendar-check"></i>
+              <p>Appointments</p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="{% url 'patients:appointment_create' %}" class="nav-link">
+             <i class="nav-icon fas fa-calendar-check"></i>
+              <p>For Patient Appointments</p>
             </a>
           </li>
           <li class="nav-item">

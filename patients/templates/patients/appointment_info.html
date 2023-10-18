@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Appointment Information
+{% endblock %}
+
+{% block content %}
+	<div class="table responsive">
+		<table class="table table-bordered table-striped table-hover">
+			 <thead class="thead-dark">
+				<tr>
+					<th>Date</th>
+					<th>Time</th>
+					<th>Treatment</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for appointment in appointment_info %}
+					<tr>
+						<td>{{ appointment.date }}</td>
+						<td>{{ appointment.time }}</td>
+						<td>{{ appointment.treatment }}</td>
+						<td><a href="{% url 'appointments:appointment_edit' appointment.id %}" class="btn btn-md btn-info">
+							Edit</a>
+							<a href="{% url 'appointments:appointment_delete' appointment.id %}" class="btn btn-md btn-danger">
+							Cancel</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
