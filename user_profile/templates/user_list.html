@@ -27,6 +27,7 @@
                            <th>USER ID</th>
                            <th>FIRST NAME</th>
                            <th>LAST NAME</th>
+                            <th>IS_PATIENT</th>
                            <th>USER GROUP</th>
                            <th>EMAIL ADDRESS</th>
                            <th>-</th>
@@ -35,9 +36,10 @@
                      <tbody>
                         {% for user in object_list %}
                         <tr>
-                            <td>{{ user.user_id }}</td>
+                            <td>{{ user.id }}</td>
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.last_name }}</td>
+                            <td>{{ user.is_patient }}</td>
                             <td>{{ user.group }}</td>
                             <td>{{ user.email }}</td>
                             <td>

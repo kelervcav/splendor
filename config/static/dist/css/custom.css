@@ -1,0 +1,16 @@
+.help-block {
+    margin-top: 0px;
+    color: red;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.errorlist {
+    list-style: none;
+    padding-left: 0px;
+    color: red;
+}
+
+.fa-pencil-alt:before{
+    margin-right: 25px;
+}
