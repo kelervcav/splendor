@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, PermissionRequiredMixin
 )
-from user_profile.forms import ProfileCreationForm
+from user_profile.forms import ProfileCreationForm, RegistrationForm
 from .utils import unique_id_generator
 
 
@@ -39,3 +39,43 @@ def profile_create(request):
     template_name = 'user_create.html'
     context = {'form': form}
     return render(request, template_name, context)
+
+
+def group_create(request):
+    if request.method == 'POST':
+        permissions = request.POST.getlist('permission')
+        new_group, group = Group.objects.get_or_create(
+            name=request.POST['group_name']
+        )
+        new_group.permissions.set(permissions)
+        return redirect('users:group_create')
+    else:
+        permission = Permission.objects.all()
+        template = 'group_create.html'
+    context = {
+        "permission": permission
+    }
+
+    return render(request, template, context)
+
+
+def patient_list(request):
+    patients_list = User.objects.filter(is_patient=True).order_by('-date_created')
+    template_name = 'patient_list.html'
+    context = {'patients_list': patients_list}
+    return render(request, template_name, context)
+
+
+def patient_create(request):
+    form = RegistrationForm(request.POST or None)
+    if form.is_valid():
+        patient = form.save()
+        patient.is_patient = True
+        patient.save()
+        messages.success(request, 'Patient registered successfully.')
+        return redirect('users:patient_create')
+    template_name = 'patient_create.html'
+    context = {'form': form}
+    return render(request, template_name, context)
+
+

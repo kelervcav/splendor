@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block page_title %} Users {% endblock page_title %}
+{% block page_title %} Patients {% endblock page_title %}
 
 
 {% block content %}
@@ -12,10 +12,10 @@
          <div class="col-12">
             <div class="card card-outline card-info">
                <div class="card-header">
-                  <h3 class="card-title">System User List</h3>
+                  <h3 class="card-title">System Patient List</h3>
                   <div class="card-tools">
                      <a href="{% url 'users:create' %}" class="btn btn-sm btn-block bg-gradient-success">
-                        Add User
+                        Add Patient
                      </a>
                   </div>
                </div>
@@ -27,21 +27,17 @@
                            <th>USER ID</th>
                            <th>FIRST NAME</th>
                            <th>LAST NAME</th>
-                            <th>IS_PATIENT</th>
-                           <th>USER GROUP</th>
                            <th>EMAIL ADDRESS</th>
                            <th>-</th>
                         </tr>
                      </thead>
                      <tbody>
-                        {% for user in object_list %}
+                        {% for patient in patients_list %}
                         <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.first_name }}</td>
-                            <td>{{ user.last_name }}</td>
-                            <td>{{ user.is_patient }}</td>
-                            <td>{{ user.group }}</td>
-                            <td>{{ user.email }}</td>
+                            <td>{{ patient.user_id }}</td>
+                            <td>{{ patient.first_name }}</td>
+                            <td>{{ patient.last_name }}</td>
+                            <td>{{ patient.email }}</td>
                             <td>
                               <a href="#" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
                             </td>
