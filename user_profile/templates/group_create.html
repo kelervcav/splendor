@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block page_title %} Group {% endblock page_title %}
+
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+             <div class="col-12">
+                   <div class="card card-outline card-info">
+                        <div class="box box-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Add Group</h3>
+                            </div>
+<!--                           what is this enctype -->
+                            <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{% url 'users:group_create' %}" novalidate>
+                                <div class="card-body">
+                                    {% csrf_token %}
+                                    <div class="form-group ">
+                                      <label for="" class="col-md-2 control-label">Group Name:</label>
+                                      <div class="col-md-4">
+                                          <input id="group_name" name="group_name" type="textbox" class="form-control">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="col-md-2 control-label">Permissions:</label>
+                                        <div class="col-md-4">
+                                            <select multiple="" class="custom-select" style="height: 250px;">
+                                                {% for data in permission %}
+                                                  <option value="{{data.id}}">{{data|title}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div><i class="fas fa-solid fa-arrow-right"></i><div
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-info">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                   </div>
+             </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  $(document).ready(function(){
+
+    $('#frm').on("submit", function(e){
+
+      group = $('#group_name').val().length
+
+      if(group<=0){
+
+        alert('Group Name is required')
+        e.preventDefault()
+
+      }// end of if
+
+      selected_permission = $('#permission option').length()
+
+      // if(selected_permission==0){
+      //   $('#sbPermission option').each(function(){
+
+      //     $('#permission').append(`<option value="${$(this).val()}" selected="selected">${$(this).html()}</option>`);
+
+      //   });
+      // }
+
+    });
+
+    $('#btnChoose').click(function(){
+
+      $('#sbPermission :selected').each(function(){
+
+        $('#permission').append(`<option value="${$(this).val()}" selected="selected">${$(this).html()}</option>`);
+
+        $(this).remove();
+
+      });//end of each
+
+    });//end of btnChoose
+
+    $('#btnRemove').click(function(){
+
+      $('#permission :selected').each(function(){
+
+        $('#sbPermission').append(`<option value="${$(this).val()}" selected="selected">${$(this).html()}</option>`);
+
+        $(this).remove();
+
+      });//end of each
+
+    });//end of btnRemove
+
+    $('#btnAll').click(function(){
+
+      $('#sbPermission option').each(function(){
+
+          $('#permission').append(`<option value="${$(this).val()}" selected="selected">${$(this).html()}</option>`);
+
+          $(this).remove();
+
+      });//end of each
+
+    });
+
+  });
+</script>
+
+{% endblock script %}

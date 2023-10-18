@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block page_title %} {{ treatment_area.area }} {% endblock %}
+
+{% block content %}
+
+<section class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Edit Treatment Area</h3>
+               </div>
+               <!-- /.card-header -->
+               <form class="form-horizontal" method="POST" novalidate>
+                  <div class="card-body">
+                     {% csrf_token %}
+                     <div class="form-group ">
+                        <label for="" class="col-md-2 control-label">Treatment Area:</label>
+                        <div class="col-md-4">
+                           {{ form.area }}
+                           <span class="help-block">{{ form.area.errors }}</span>
+                        </div>
+                     </div>
+
+                  <div class="card-footer">
+                     <button type="submit" class="btn btn-info">Update</button>
+                  </div>
+                </div>
+               </form>
+               <!-- /.card-body -->
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+
+
+</section>
+{% endblock %}
+

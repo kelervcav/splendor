@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block page_title %} Services {% endblock %}
+
+{% block content %}
+
+	{% if messages %}
+    <div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+	<section class="content">
+	   <div class="container-fluid">
+		  <div class="row">
+			 <div class="col-12">
+				<div class="card card-outline card-info">
+				   <div class="card-header">
+					  <h3 class="card-title">Service List</h3>
+					  <div class="card-tools">
+						 <a href="{% url 'services:service_create' %}" class="btn btn-sm btn-block bg-gradient-success">
+							Add Service
+						 </a>
+					  </div>
+				   </div>
+				   <!-- /.card-header -->
+				   <div class="card-body">
+					  <table id="services-table" class="table table-bordered table-hover">
+						 <thead>
+							<tr>
+								<th>ID</th>
+								<th>SERVICE NAME</th>
+								<th>DESCRIPTION</th>
+								<th>ACTIONS</th>
+							</tr>
+						 </thead>
+						 <tbody>
+							{% for service in service_list %}
+							<tr>
+								<td>{{ service.id}}</td>
+								<td>{{ service.name }}</td>
+								<td>{{ service.description }}</td>
+								<td>
+									<a href="{% url 'services:service_edit' service.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
+									<a href="{% url 'services:service_delete' service.id %}" class="pull-right text-red"><i class="fas fa-trash-alt"></i></a>
+								</td>
+							</tr>
+							{% endfor %}
+						 </tbody>
+					  </table>
+				   </div>
+				   <!-- /.card-body -->
+				</div>
+			 </div>
+			 <!-- /.col -->
+		  </div>
+		  <!-- /.row -->
+	   </div>
+	   <!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+
+{% endblock %}
