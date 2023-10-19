@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('services', '0003_alter_service_description'),
+        ('treatments', '0003_alter_service_description'),
     ]
 
     operations = [
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('deleted_at', models.DateTimeField(blank=True, null=True)),
                 ('status', models.CharField(default='Pending', max_length=50)),
-                ('treatment', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='services.treatment')),
+                ('treatment', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='treatments.treatment')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
             ],
             options={

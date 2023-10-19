@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 
     'user_profile',
     'dashboard',
-    'services',
+    'treatments',
     'patients',
     'appointments',
 ]

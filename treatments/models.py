@@ -18,7 +18,7 @@ class Service(models.Model):
         return self.name
 
     class Meta:
-        db_table = 'services'
+        db_table = 'treatments'
 
 
 class TreatmentArea(models.Model):

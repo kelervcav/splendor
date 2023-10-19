@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .forms import BookingForm
 from .models import Appointment
-from services.models import Treatment
+from treatments.models import Treatment
 from django.utils import timezone
 
 

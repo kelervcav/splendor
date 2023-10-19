@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(default='Available', max_length=50)),
             ],
             options={
-                'db_table': 'services',
+                'db_table': 'treatments',
             },
         ),
         migrations.CreateModel(
@@ -67,9 +67,9 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('deleted_at', models.DateTimeField(blank=True, null=True)),
                 ('status', models.CharField(default='Available', max_length=50)),
-                ('area', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='services.treatmentarea')),
-                ('service', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='services.service')),
-                ('type', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='services.pricetype')),
+                ('area', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='treatments.treatmentarea')),
+                ('service', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='treatments.service')),
+                ('type', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='treatments.pricetype')),
             ],
             options={
                 'db_table': 'treatments',
