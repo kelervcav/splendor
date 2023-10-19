@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
-{% block page_title %} Edit Treatment {% endblock %}
+{% block page_title %} Treatments {% endblock %}
 
 {% block content %}
+
 <section class="content">
    <div class="container-fluid">
       <div class="row">
          <div class="col-12">
             <div class="card card-outline card-info">
                <div class="card-header">
-                  <h3 class="card-title">{{treatment.name}}</h3>
+                  <h3 class="card-title">Add Treatment</h3>
                </div>
                <!-- /.card-header -->
                <form class="form-horizontal" method="POST" novalidate>
@@ -62,13 +63,10 @@
                            <span class="help-block">{{ form.price.errors }}</span>
                         </div>
                      </div>
-
-
-
+                  </div>
                   <div class="card-footer">
                      <button type="submit" class="btn btn-info">Save</button>
                   </div>
-                </div>
                </form>
                <!-- /.card-body -->
             </div>

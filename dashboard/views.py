@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from appointments.models import Appointment
-from services.models import Service, Treatment
+from treatments.models import Service, Treatment
 from user_profile.models import User
 
 @login_required

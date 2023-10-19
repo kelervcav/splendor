@@ -1,16 +1,27 @@
 {% extends 'base.html' %}
 
-{% block page_title %} Treatments {% endblock %}
+{% block page_title %} Edit Treatment {% endblock %}
 
 {% block content %}
-
 <section class="content">
    <div class="container-fluid">
+       <div class="row">
+           <div class="col-12">
+               {% if messages %}
+                <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                  {% for message in messages %}
+                    <span class="lh-1">{{ message }}</span>
+                  {% endfor %}
+                </div>
+                {% endif %}
+           </div>
+        </div>
       <div class="row">
          <div class="col-12">
             <div class="card card-outline card-info">
                <div class="card-header">
-                  <h3 class="card-title">Add Treatment</h3>
+                  <h3 class="card-title">{{treatment.name}}</h3>
                </div>
                <!-- /.card-header -->
                <form class="form-horizontal" method="POST" novalidate>
@@ -63,13 +74,10 @@
                            <span class="help-block">{{ form.price.errors }}</span>
                         </div>
                      </div>
-
-
-
+                  </div>
                   <div class="card-footer">
                      <button type="submit" class="btn btn-info">Save</button>
                   </div>
-                </div>
                </form>
                <!-- /.card-body -->
             </div>

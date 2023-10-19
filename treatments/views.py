@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def service_list(request):
-    service_list = Service.objects.exclude(status='Deleted')
-    template_name = 'services/service_list.html'
+    service_list = Service.objects.all()
+    template_name = 'treatments/service_list.html'
     context = {'service_list': service_list}
     return render(request, template_name, context)
 
@@ -22,8 +22,8 @@ def service_create(request):
         form.save()
         messages.success(request,
                          'Service created successfully.')
-        return redirect('services:service_list')
-    template_name = 'services/service_create.html'
+        return redirect('treatments:service_list')
+    template_name = 'treatments/service_create.html'
     context = {'form': form}
     return render(request, template_name, context)
 
@@ -36,8 +36,8 @@ def service_edit(request, pk):
         form.save()
         messages.success(request,
                          'Service updated successfully.')
-        return redirect('services:service_list')
-    template_name = 'services/service_edit.html'
+        return redirect('treatments:service_edit',pk)
+    template_name = 'treatments/service_edit.html'
     context = {'service': service, 'form': form}
     return render(request, template_name, context)
 
@@ -45,17 +45,17 @@ def service_edit(request, pk):
 @login_required
 def service_delete(request, pk):
     service = get_object_or_404(Service, id=pk)
-    service.status = 'Deleted'
+    service.is_deleted = True
     service.save()
     messages.success(request,
                      'Service has been marked as "Deleted".')
-    return redirect('services:service_list')
+    return redirect('treatments:service_list')
 
 
 @login_required
 def area_list(request):
-    treatment_area_list = TreatmentArea.objects.exclude(status='Deleted')
-    template_name = 'services/area_list.html'
+    treatment_area_list = TreatmentArea.objects.all()
+    template_name = 'treatments/area_list.html'
     context = {'treatment_area_list': treatment_area_list}
     return render(request, template_name, context)
 
@@ -67,8 +67,8 @@ def area_create(request):
         form.save()
         messages.success(request,
                          'Treatment area created successfully.')
-        return redirect('services:area_list')
-    template_name = 'services/area_create.html'
+        return redirect('treatments:area_list')
+    template_name = 'treatments/area_create.html'
     context = {'form': form}
     return render(request, template_name, context)
 
@@ -81,8 +81,8 @@ def area_edit(request, pk):
         form.save()
         messages.success(request,
                          'Treatment area updated successfully.')
-        return redirect('services:area_list')
-    template_name = 'services/area_edit.html'
+        return redirect('treatments:area_list')
+    template_name = 'treatments/area_edit.html'
     context = {'area': treatment_area, 'form': form}
     return render(request, template_name, context)
 
@@ -90,16 +90,16 @@ def area_edit(request, pk):
 @login_required
 def area_delete(request, pk):
     treatment_area = get_object_or_404(TreatmentArea, id=pk)
-    treatment_area.status = 'Deleted'
+    treatment_area.is_deleted = True
     treatment_area.save()
     messages.success(request, 'Treatment area has been marked as deleted.')
-    return redirect('services:area_list')
+    return redirect('treatments:area_list')
 
 
 @login_required
 def price_type_list(request):
-    pricing_type_list = PriceType.objects.exclude(status='Deleted')
-    template_name = 'services/pricetype_list.html'
+    pricing_type_list = PriceType.objects.all()
+    template_name = 'treatments/pricetype_list.html'
     context = {'pricing_type_list': pricing_type_list}
     return render(request, template_name, context)
 
@@ -111,8 +111,8 @@ def price_type_create(request):
         form.save()
         messages.success(request,
                          'Price type created successfully.')
-        return redirect('services:price_type_list')
-    template_name = 'services/pricetype_create.html'
+        return redirect('treatments:price_type_list')
+    template_name = 'treatments/pricetype_create.html'
     context = {'form': form}
     return render(request, template_name, context)
 
@@ -125,8 +125,8 @@ def price_type_edit(request, pk):
         form.save()
         messages.success(request,
                          'Price type updated successfully.')
-        return redirect('services:price_type_list')
-    template_name = 'services/pricetype_edit.html'
+        return redirect('treatments:price_type_list')
+    template_name = 'treatments/pricetype_edit.html'
     context = {'price_type': price_type, 'form': form}
     return render(request, template_name, context)
 
@@ -134,17 +134,17 @@ def price_type_edit(request, pk):
 @login_required
 def price_type_delete(request, pk):
     price_type = get_object_or_404(PriceType, id=pk)
-    price_type.status = 'Deleted'
+    price_type.is_deleted = True
     price_type.save()
     messages.success(request,
                      'Price type has been marked as deleted.')
-    return redirect('services:price_type_list')
+    return redirect('treatments:price_type_list')
 
 
 @login_required
 def treatment_list(request):
-    treatment_list = Treatment.objects.exclude(status='Deleted')
-    template_name = 'services/treatment_list.html'
+    treatment_list = Treatment.objects.all()
+    template_name = 'treatments/treatment_list.html'
     context = {'treatment_list': treatment_list}
     return render(request, template_name, context)
 
@@ -156,8 +156,8 @@ def treatment_create(request):
         form.save()
         messages.success(request,
                          'Treatment created successfully.')
-        return redirect('services:treatment_list')
-    template_name = 'services/treatment_create.html'
+        return redirect('treatments:treatment_list')
+    template_name = 'treatments/treatment_create.html'
     context = {'form': form}
     return render(request, template_name, context)
 
@@ -170,8 +170,8 @@ def treatment_edit(request, pk):
         form.save()
         messages.success(request,
                          'Treatment created successfully.')
-        return redirect('services:treatment_list')
-    template_name = 'services/treatment_edit.html'
+        return redirect('treatments:treatment_list')
+    template_name = 'treatments/treatment_edit.html'
     context = {'form': form, 'treatment': treatment}
     return render(request, template_name, context)
 
@@ -179,8 +179,8 @@ def treatment_edit(request, pk):
 @login_required
 def treatment_delete(request, pk):
     treatment = get_object_or_404(Treatment, id=pk)
-    treatment.status = 'Deleted'
+    treatment.is_deleted = True
     treatment.save()
     messages.success(request,
                      'Treatment has been marked as deleted.')
-    return redirect('services:treatment_list')
+    return redirect('treatments:treatment_list')

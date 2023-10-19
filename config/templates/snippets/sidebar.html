@@ -40,11 +40,11 @@
           <li class="nav-item">
             <a href="{% url 'users:patient_list' %}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
-              <p>Patient</p>
+              <p>Patients</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'services:treatment_list' %}" class="nav-link">
+            <a href="{% url 'treatments:treatment_list' %}" class="nav-link">
               <i class="nav-icon fas fa-clipboard-list"></i>
               <p>Treatments</p>
             </a>
@@ -80,19 +80,19 @@
                    </a>
                 </li>
                 <li class="nav-item">
-                   <a href="{% url 'services:service_list' %}" class="nav-link">
+                   <a href="{% url 'treatments:service_list' %}" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Services</p>
                    </a>
                 </li>
                 <li class="nav-item">
-                   <a href="{% url 'services:area_list' %}" class="nav-link">
+                   <a href="{% url 'treatments:area_list' %}" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Areas</p>
                    </a>
                 </li>
                 <li class="nav-item">
-                   <a href="{% url 'services:price_type_list' %}" class="nav-link">
+                   <a href="{% url 'treatments:price_type_list' %}" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Price Types</p>
                    </a>

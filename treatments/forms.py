@@ -20,7 +20,9 @@ class ServiceForm(ModelForm):
     description = forms.CharField(
         widget=forms.Textarea(
             attrs={
-                'class': 'form-control'}))
+                'class': 'form-control',
+                'rows': 5,
+            }))
 
     class Meta:
         model = Service
@@ -29,7 +31,7 @@ class ServiceForm(ModelForm):
 
 class TreatmentForm(ModelForm):
     service = forms.ModelChoiceField(
-        queryset=Service.objects.exclude(status='Deleted'),
+        queryset=Service.objects.exclude(is_deleted=True),
         widget=forms.Select(
             attrs={
                 'class': 'form-control'}),
@@ -52,16 +54,18 @@ class TreatmentForm(ModelForm):
     description = forms.CharField(
         widget=forms.Textarea(
             attrs={
-                'class': 'form-control'}))
+                'class': 'form-control',
+                'rows': 5,
+            }))
 
     area = forms.ModelChoiceField(
-        queryset=TreatmentArea.objects.exclude(status='Deleted'),
+        queryset=TreatmentArea.objects.exclude(is_deleted=True),
         widget=forms.Select(
             attrs={
                 'class': 'form-control'}))
 
     type = forms.ModelChoiceField(
-        queryset=PriceType.objects.exclude(status='Deleted'),
+        queryset=PriceType.objects.exclude(is_deleted=True),
         widget=forms.Select(
             attrs={
                 'class': 'form-control'}))
