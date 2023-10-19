@@ -21,7 +21,7 @@
 				   <div class="card-header">
 					  <h3 class="card-title">Treatment Area List</h3>
 					  <div class="card-tools">
-						 <a href="{% url 'services:area_create' %}" class="btn btn-sm btn-block bg-gradient-success">
+						 <a href="{% url 'treatments:area_create' %}" class="btn btn-sm btn-block bg-gradient-success">
 							Add Treatment Area
 						 </a>
 					  </div>
@@ -42,9 +42,9 @@
 								<th>{{ area.id}}</th>
 								<td>{{ area.area}}</td>
 								<td>
-									<a href="{% url 'services:area_edit' area.id %}" class="pull-right text-blue">
+									<a href="{% url 'treatments:area_edit' area.id %}" class="pull-right text-blue">
 										<i class="fas fa-pencil-alt"></i></a>
-									<a href="{% url 'services:area_delete' area.id %}" class="pull-right text-red">
+									<a href="{% url 'treatments:area_delete' area.id %}" class="pull-right text-red">
 										<i class="fas fa-trash-alt"></i></a>
 								</td>
 							</tr>

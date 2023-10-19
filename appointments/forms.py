@@ -4,7 +4,7 @@ from django import forms
 from django.forms import ModelForm, NumberInput
 from django.utils import timezone
 
-from services.models import Treatment
+from treatments.models import Treatment
 from user_profile.models import User
 from .models import Appointment
 

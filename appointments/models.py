@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.db import models
 from django.utils import timezone
-from services.models import Treatment
+from treatments.models import Treatment
 from user_profile.models import User
 
 

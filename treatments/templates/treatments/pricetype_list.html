@@ -21,7 +21,7 @@
 				   <div class="card-header">
 					  <h3 class="card-title">Price Type List</h3>
 					  <div class="card-tools">
-						 <a href="{% url 'services:price_type_create' %}" class="btn btn-sm btn-block bg-gradient-success">
+						 <a href="{% url 'treatments:price_type_create' %}" class="btn btn-sm btn-block bg-gradient-success">
 							Add Price Type
 						 </a>
 					  </div>
@@ -42,8 +42,8 @@
 								<th>{{ ptype.id}}</th>
 								<td>{{ ptype.type}}</td>
 								<td>
-									<a href="{% url 'services:price_type_edit' ptype.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
-									<a href="{% url 'services:price_type_delete' ptype.id %}" class="pull-right text-red"><i class="fas fa-trash-alt"></i></a>
+									<a href="{% url 'treatments:price_type_edit' ptype.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
+									<a href="{% url 'treatments:price_type_delete' ptype.id %}" class="pull-right text-red"><i class="fas fa-trash-alt"></i></a>
 								</td>
 							</tr>
 							{% endfor %}
