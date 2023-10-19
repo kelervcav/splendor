@@ -33,6 +33,7 @@
 							<tr>
 								<th>ID</th>
 								<th>PRICE TYPE</th>
+								<th>STATUS</th>
 								<th>ACTIONS</th>
 							</tr>
 						 </thead>
@@ -41,6 +42,12 @@
 							<tr>
 								<th>{{ ptype.id}}</th>
 								<td>{{ ptype.type}}</td>
+								<td>{% if ptype.is_deleted %}
+										<span class="badge bg-danger">Inactive</span>
+									{% else %}
+										<span class="badge bg-success">Active</span>
+									{% endif %}
+								</td>
 								<td>
 									<a href="{% url 'treatments:price_type_edit' ptype.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
 									<a href="{% url 'treatments:price_type_delete' ptype.id %}" class="pull-right text-red"><i class="fas fa-trash-alt"></i></a>

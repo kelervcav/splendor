@@ -41,6 +41,11 @@
 							<tr>
 								<th>{{ area.id}}</th>
 								<td>{{ area.area}}</td>
+								<td>{% if area.is_deleted %}
+									<span class="badge bg-danger">Inactive</span>
+									{% else %}
+										<span class="badge bg-success">Active</span>
+									{% endif %}
 								<td>
 									<a href="{% url 'treatments:area_edit' area.id %}" class="pull-right text-blue">
 										<i class="fas fa-pencil-alt"></i></a>
