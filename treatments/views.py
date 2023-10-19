@@ -45,10 +45,10 @@ def service_edit(request, pk):
 @login_required
 def service_delete(request, pk):
     service = get_object_or_404(Service, id=pk)
-    service.is_deleted = True
+    service.is_active = False
     service.save()
     messages.success(request,
-                     'Service has been marked as "Deleted".')
+                     'Service has been marked as inactive.')
     return redirect('treatments:service_list')
 
 
@@ -81,7 +81,7 @@ def area_edit(request, pk):
         form.save()
         messages.success(request,
                          'Treatment area updated successfully.')
-        return redirect('treatments:area_list')
+        return redirect('treatments:area_edit', pk)
     template_name = 'treatments/area_edit.html'
     context = {'area': treatment_area, 'form': form}
     return render(request, template_name, context)
@@ -125,7 +125,7 @@ def price_type_edit(request, pk):
         form.save()
         messages.success(request,
                          'Price type updated successfully.')
-        return redirect('treatments:price_type_list')
+        return redirect('treatments:price_type_edit', pk)
     template_name = 'treatments/pricetype_edit.html'
     context = {'price_type': price_type, 'form': form}
     return render(request, template_name, context)
@@ -170,7 +170,7 @@ def treatment_edit(request, pk):
         form.save()
         messages.success(request,
                          'Treatment created successfully.')
-        return redirect('treatments:treatment_list')
+        return redirect('treatments:treatment_edit', pk)
     template_name = 'treatments/treatment_edit.html'
     context = {'form': form, 'treatment': treatment}
     return render(request, template_name, context)
