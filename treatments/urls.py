@@ -20,11 +20,11 @@ urlpatterns = [
     path('price-type/', views.price_type_list, name='price_type_list'),
     path('price-type/create/', views.price_type_create, name='price_type_create'),
     path('price-type/<int:pk>/edit', views.price_type_edit, name='price_type_edit'),
-    path('<int:pk>/delete', views.price_type_delete, name='price_type_delete'),
+    path('price-type/<int:pk>/delete', views.price_type_delete, name='price_type_delete'),
 
     # treatment
     path('treatment/', views.treatment_list, name='treatment_list'),
     path('treatment/create/', views.treatment_create, name='treatment_create'),
     path('treatment/<int:pk>/edit', views.treatment_edit, name='treatment_edit'),
-    path('<int:pk>/delete', views.treatment_delete, name='treatment_delete'),
+    path('treatment/<int:pk>/delete', views.treatment_delete, name='treatment_delete'),
 ]

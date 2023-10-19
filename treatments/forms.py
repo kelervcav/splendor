@@ -24,14 +24,24 @@ class ServiceForm(ModelForm):
                 'rows': 5,
             }))
 
+    is_active = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'form-check-input',
+            }
+        )
+
+    )
+
     class Meta:
         model = Service
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'is_active']
 
 
 class TreatmentForm(ModelForm):
     service = forms.ModelChoiceField(
-        queryset=Service.objects.exclude(is_deleted=True),
+        queryset=Service.objects.exclude(is_active=False),
         widget=forms.Select(
             attrs={
                 'class': 'form-control'}),
@@ -59,13 +69,13 @@ class TreatmentForm(ModelForm):
             }))
 
     area = forms.ModelChoiceField(
-        queryset=TreatmentArea.objects.exclude(is_deleted=True),
+        queryset=TreatmentArea.objects.exclude(is_active=False),
         widget=forms.Select(
             attrs={
                 'class': 'form-control'}))
 
     type = forms.ModelChoiceField(
-        queryset=PriceType.objects.exclude(is_deleted=True),
+        queryset=PriceType.objects.exclude(is_active=False),
         widget=forms.Select(
             attrs={
                 'class': 'form-control'}))
@@ -74,6 +84,16 @@ class TreatmentForm(ModelForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control'}),
+    )
+
+    is_active = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'form-check-input',
+            }
+        )
+
     )
 
     class Meta:
@@ -85,6 +105,7 @@ class TreatmentForm(ModelForm):
             'area',
             'type',
             'price',
+            'is_active'
         ]
 
 
@@ -100,9 +121,19 @@ class AreaForm(ModelForm):
         ],
     )
 
+    is_active = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'form-check-input',
+            }
+        )
+
+    )
+
     class Meta:
         model = TreatmentArea
-        fields = ['area']
+        fields = ['area', 'is_active']
 
 
 class TypeForm(ModelForm):
@@ -117,7 +148,15 @@ class TypeForm(ModelForm):
         ],
     )
 
+    is_active = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'form-check-input',
+            })
+    )
+
     class Meta:
         model = PriceType
-        fields = ['type']
+        fields = ['type', 'is_active']
 

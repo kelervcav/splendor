@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, PermissionRequiredMixin
 )
-from user_profile.forms import ProfileCreationForm, RegistrationForm
+from user_profile.forms import ProfileCreationForm
 from .utils import unique_id_generator
 
 
