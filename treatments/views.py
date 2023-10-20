@@ -90,9 +90,9 @@ def area_edit(request, pk):
 @login_required
 def area_delete(request, pk):
     treatment_area = get_object_or_404(TreatmentArea, id=pk)
-    treatment_area.is_deleted = True
+    treatment_area.is_deleted = False
     treatment_area.save()
-    messages.success(request, 'Treatment area has been marked as deleted.')
+    messages.success(request, 'Treatment area has been marked as inactive.')
     return redirect('treatments:area_list')
 
 
@@ -134,10 +134,10 @@ def price_type_edit(request, pk):
 @login_required
 def price_type_delete(request, pk):
     price_type = get_object_or_404(PriceType, id=pk)
-    price_type.is_deleted = True
+    price_type.is_deleted = False
     price_type.save()
     messages.success(request,
-                     'Price type has been marked as deleted.')
+                     'Price type has been marked as inactive.')
     return redirect('treatments:price_type_list')
 
 
@@ -179,8 +179,8 @@ def treatment_edit(request, pk):
 @login_required
 def treatment_delete(request, pk):
     treatment = get_object_or_404(Treatment, id=pk)
-    treatment.is_deleted = True
+    treatment.is_active = False
     treatment.save()
     messages.success(request,
-                     'Treatment has been marked as deleted.')
+                     'Treatment has been marked as inactive.')
     return redirect('treatments:treatment_list')

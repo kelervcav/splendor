@@ -5,10 +5,11 @@ from appointments.models import Appointment
 from treatments.models import Service, Treatment
 from user_profile.models import User
 
+
 @login_required
 def dashboard(request):
-    service_count = Service.objects.exclude(status='Deleted').count()
-    treatment_count = Treatment.objects.exclude(status='Deleted').count()
+    service_count = Service.objects.exclude(is_active=False).count()
+    treatment_count = Treatment.objects.exclude(is_active=False).count()
     patient_count = User.objects.filter(is_patient=True).count()
     appointment_list = Appointment.objects.all()
     template_name = 'dashboard.html'

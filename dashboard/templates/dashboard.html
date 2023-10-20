@@ -69,17 +69,21 @@
                            <th>Treatment</th>
                            <th>Date</th>
                            <th>Time</th>
-                           <th>-</th>
+                           <th>ACTIONS</th>
                         </tr>
                      </thead>
 
                      <tbody>
                         {% for appointment in appointment_list %}
                            <tr>
-                              <td>{{ appointment.user }}</td>
-                              <td>{{ appointment.treatment }}</td>
-                              <td>{{ appointment.date }}</td>
-                              <td>{{ appointment.time }}</td>
+                               <td>{{ appointment.user }}</td>
+                               <td>{{ appointment.treatment }}</td>
+                               <td>{{ appointment.date }}</td>
+                               <td>{{ appointment.time }}</td>
+                               <td>
+								  	<a href="{% url 'appointment:appointment_edit' appointment.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
+									<a href="{% url 'appointment:appointment_disable' appointment.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
+								</td>
                            </tr>
                         {% endfor %}
                      </tbody>

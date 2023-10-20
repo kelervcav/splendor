@@ -5,7 +5,9 @@ app_name = 'patients'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('book-appointment', views.appointment_create, name='appointment_create'),
-    path('appointment-info', views.appointment_info, name='appointment_info'),
+
+
+    # patient
+    path('create/', views.patient_create, name='patient_create'),
 
 ]

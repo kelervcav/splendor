@@ -1,0 +1,52 @@
+{% load static %}
+
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <div class="container">
+        <a href="../../index3.html" class="navbar-brand">
+            <img src="{% static "dist/img/splendor_logo.png" %}" class="" alt="Image Logo" width="250">
+        </a>
+        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="{% url '' %}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Services
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for service in service_list %}
+                            <li><a class="dropdown-item" href="#">{{ service.name }}</a></li>
+                        {% endfor%}
+                        <!--<li><hr class="dropdown-divider"></li>-->
+                        <!--<li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="index3.html" class="nav-link">Offers</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'appointments:appointment_create' %}" class="nav-link">Book Appointment</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'appointments:appointment_info' %}" class="nav-link">View Appointment</a>
+                </li>
+            </ul>
+        </div>
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+            <li class="nav-item dropdown mx-2">
+                <a class="nav-link dropdown-toggle text-dark" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false">Hi,
+                        {{ user }}</a>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+

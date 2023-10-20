@@ -10,8 +10,5 @@ urlpatterns = [
     path('create/', views.profile_create, name='create'),
     path('group/create/', views.group_create, name='group_create'),
 
-    # patient
     path('patient/', views.patient_list, name='patient_list'),
-    path('patient/create/', views.patient_create, name='patient_create'),
-
 ]

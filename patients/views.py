@@ -1,6 +1,10 @@
+from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
-from .forms import BookingAppointmentForm
+from appointments.forms import BookingAppointmentForm
 from appointments.models import Appointment
+from patients.forms import RegistrationForm
+
 
 # Create your views here.
 
@@ -9,19 +13,15 @@ def home(request):
     return render(request, 'patients/home.html')
 
 
-def appointment_info(request):
-    appointment_info = Appointment.objects.all()
-    print(appointment_info.query)
-    template_name = 'patients/appointment_info.html'
-    context = {'appointment_info': appointment_info}
+def patient_create(request):
+    form = RegistrationForm(request.POST or None)
+    if form.is_valid():
+        patient = form.save()
+        patient.is_patient = True
+        patient.save()
+        messages.success(request, 'Patient registered successfully.')
+        return redirect('patients:patient_create')
+    template_name = 'patients/patient_create.html'
+    context = {'form': form}
     return render(request, template_name, context)
 
-
-def appointment_create(request):
-    form = BookingAppointmentForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return redirect('patients:appointment_info')
-    context = {'form': form}
-    return render(request, 'patients/appointment_create.html', context)
