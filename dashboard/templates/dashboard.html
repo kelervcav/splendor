@@ -81,8 +81,6 @@
                                <td>{{ appointment.date }}</td>
                                <td>{{ appointment.time }}</td>
                                <td>
-								  	<a href="{% url 'appointment:appointment_edit' appointment.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
-									<a href="{% url 'appointment:appointment_disable' appointment.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
 								</td>
                            </tr>
                         {% endfor %}

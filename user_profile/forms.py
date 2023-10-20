@@ -49,6 +49,7 @@ class AdminGroupForm(ModelForm):
 
 class ProfileCreationForm(UserCreationForm):
     group = forms.ModelChoiceField(
+        required=False,
         queryset=Group.objects.all(),
         widget=forms.Select(
             attrs={'class': 'form-control'}

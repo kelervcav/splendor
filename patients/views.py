@@ -25,3 +25,29 @@ def patient_create(request):
     context = {'form': form}
     return render(request, template_name, context)
 
+
+def patient_create(request):
+    form = RegistrationForm(request.POST or None)
+    if form.is_valid():
+        patient = form.save()
+        patient.is_patient = True
+        patient.save()
+        messages.success(request, 'Patient registered successfully.')
+        return redirect('patients:patient_create')
+    template_name = 'patients/patient_create.html'
+    context = {'form': form}
+    return render(request, template_name, context)
+
+
+def patient_disable(request):
+    form = RegistrationForm(request.POST or None)
+    if form.is_valid():
+        patient = form.save()
+        patient.is_patient = True
+        patient.save()
+        messages.success(request, 'Patient registered successfully.')
+        return redirect('patients:patient_create')
+    template_name = 'patients/patient_create.html'
+    context = {'form': form}
+    return render(request, template_name, context)
+

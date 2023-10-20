@@ -4,17 +4,20 @@
 
 {% block content %}
 
-	{% if messages %}
-    <div class="alert alert-success alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-      {% for message in messages %}
-        <p>{{ message }}</p>
-      {% endfor %}
-    </div>
-    {% endif %}
-
 	<section class="content">
 	   <div class="container-fluid">
+		    <div class="row">
+			   <div class="col-12">
+				   {% if messages %}
+					<div class="alert alert-success alert-dismissible">
+					  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+					  {% for message in messages %}
+						<span class="lh-1">{{ message }}</span>
+					  {% endfor %}
+					</div>
+					{% endif %}
+			   </div>
+		   </div>
 		  <div class="row">
 			 <div class="col-12">
 				<div class="card card-outline card-info">
@@ -28,7 +31,7 @@
 				   </div>
 				   <!-- /.card-header -->
 				   <div class="card-body">
-					  <table id="treatment-table" class="table table-bordered table-hover">
+					  <table id="treatments-table" class="table table-bordered table-hover">
 						 <thead>
 							<tr>
 								<th>ID</th>
@@ -36,7 +39,8 @@
 								<th>TREATMENT NAME</th>
 								<th>DESCRIPTION</th>
 								<th>TREATMENT AREA</th>
-								<th>PRICING</th>
+								<th>PRICING TYPE</th>
+								<th>PRICE</th>
 								<th>STATUS</th>
 								<th>ACTIONS</th>
 
@@ -60,7 +64,7 @@
 								</td>
 								<td>
 								  	<a href="{% url 'treatments:treatment_edit' treatment.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
-									<a href="{% url 'treatments:treatment_delete' treatment.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
+									<a href="{% url 'treatments:treatment_disable' treatment.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
 								</td>
 							</tr>
 							{% endfor %}
@@ -79,3 +83,20 @@
 	<!-- /.content -->
 
 {% endblock %}
+
+{% block script %}
+    <script>
+      $(function () {
+        $('#treatments-table').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+          "pageLength": 10,
+        });
+      });
+    </script>
+{% endblock script %}

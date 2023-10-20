@@ -15,7 +15,6 @@
 
     {% include 'customer_snippets/navbar.html'%}
 
-    {% block content %}{% endblock %}
 
     {% include 'customer_snippets/js.html'%}
 
@@ -24,13 +23,11 @@
             <div class="container">
                 <div class="row mb-2">
                     <div class="col-mb-6">
-                        <h1 class="m-0"> {% block banner_slider %}{% endblock banner_slider %}
-                                    {% block main-content %}{% endblock main-content %}
-                        </h1>
+                        <h4 class="m-0"> {% block banner_slider %}{% endblock banner_slider %}</h4>
                     </div>
-                    <div class="col-sm-6">
 
-                    </div>
+                    {% block content %}{% endblock content %}
+
                 </div>
             </div>
         </div>

@@ -41,6 +41,26 @@ def profile_create(request):
     return render(request, template_name, context)
 
 
+def profile_edit(request, pk):
+    users = get_object_or_404(User, id=pk)
+    form = ProfileCreationForm(request.POST or None, instance=users)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Users updated successfully.')
+        return redirect('/users')
+    template_name = 'user_edit.html'
+    context = {'form': form, 'users': users}
+    return render(request, template_name, context)
+
+
+def profile_disable(request, pk):
+    users = get_object_or_404(User, id=pk)
+    users.is_active = False
+    users.save()
+    messages.success(request, 'Users has been disabled.')
+    return redirect('/users')
+
+
 def group_create(request):
     if request.method == 'POST':
         permissions = request.POST.getlist('permission')
@@ -64,6 +84,8 @@ def patient_list(request):
     template_name = 'patient_list.html'
     context = {'patients_list': patients_list}
     return render(request, template_name, context)
+
+
 
 
 
