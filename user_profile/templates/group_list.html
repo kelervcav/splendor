@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block page_title %} Settings {% endblock page_title %}
+
+{% block content %}
+
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Group List</h3>
+            <div class="box-tools pull-right">
+                <a href="{% url 'users:group_create' %}" class="btn btn-primary btn-sm">Add Group</a>
+            </div>
+
+        </div>
+
+        <div class="box-body">
+            <table id="group-table" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Group</th>
+                      <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for group in group_list %}
+                  <tr>
+                    <td>{{group.id}}</td>
+                    <td>{{group.name}}</td>
+                    <td>
+                      <div class="btn-group pull-right">
+                        <a href="{% url 'users:group_edit' group.id %}" class="btn btn-default btn-sm">
+                          <i class="fa fa-pencil fa-lg text-green" aria-hidden="true"></i>
+                        </a>
+
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+            <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <!-- </form> -->
+
+</section>
+
+{% endblock content %}
+
+{% block script %}
+    <script>
+      $(function () {
+        $('#group-table').DataTable({
+          'paging'      : true,
+          'lengthChange': true,
+          'searching'   : true,
+          'ordering'    : false,
+          'info'        : true,
+          'autoWidth'   : false,
+          "order": [[ 0, "desc" ]]
+        })
+      })
+    </script>
+{% endblock script %}
