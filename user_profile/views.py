@@ -47,7 +47,7 @@ def profile_edit(request, pk):
     if form.is_valid():
         form.save()
         messages.success(request, 'Users updated successfully.')
-        return redirect('/users')
+        return redirect('users:edit', pk)
     template_name = 'user_edit.html'
     context = {'form': form, 'users': users}
     return render(request, template_name, context)
@@ -61,6 +61,13 @@ def profile_disable(request, pk):
     return redirect('/users')
 
 
+def group_list(request):
+    group_list = Group.objects.all()
+    template = 'group_list.html'
+    context = {'group_list': group_list}
+    return render(request, template, context)
+
+
 def group_create(request):
     if request.method == 'POST':
         permissions = request.POST.getlist('permission')
@@ -68,14 +75,37 @@ def group_create(request):
             name=request.POST['group_name']
         )
         new_group.permissions.set(permissions)
-        return redirect('users:group_create')
+        return redirect('users:group_list')
     else:
         permission = Permission.objects.all()
         template = 'group_create.html'
     context = {
-        "permission": permission
+        'permission': permission
     }
+    return render(request, template, context)
 
+
+def group_edit(request, pk):
+    if request.method == 'GET':
+        group = Group.objects.get(id=pk)
+        group_permission = Permission.objects.filter(group__id=group.id)
+        permission = Permission.objects.exclude(group__id=group.id)
+    else:
+        permissions = request.POST.getlist('permission')
+        group = Group.objects.get(id=pk)
+        obj, created = Group.objects.update_or_create(
+            name=group,
+            defaults={'name': request.POST['group_name']},
+        )
+        obj.permissions.set(permissions)
+        return redirect('users:group_list')
+
+    template = 'profiles/group_edit.html'
+    context = {
+        'group': group,
+        'permission': permission,
+        'group_permission': group_permission
+    }
     return render(request, template, context)
 
 

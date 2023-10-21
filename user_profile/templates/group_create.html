@@ -1,54 +1,78 @@
 {% extends "base.html" %}
 
-{% block page_title %} Group {% endblock page_title %}
+{% block page_title %} Groups {% endblock page_title %}
 
 
 {% block content %}
 
+<!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-             <div class="col-12">
-                   <div class="card card-outline card-info">
-                        <div class="box box-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Add Group</h3>
-                            </div>
-<!--                           what is this enctype -->
-                            <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{% url 'users:group_create' %}" novalidate>
-                                <div class="card-body">
-                                    {% csrf_token %}
-                                    <div class="form-group ">
-                                      <label for="" class="col-md-2 control-label">Group Name:</label>
-                                      <div class="col-md-4">
-                                          <input id="group_name" name="group_name" type="textbox" class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-md-2 control-label">Permissions:</label>
-                                        <div class="col-md-4">
-                                            <select multiple="" class="custom-select" style="height: 250px;">
-                                                {% for data in permission %}
-                                                  <option value="{{data.id}}">{{data|title}}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-
-                                        <div><i class="fas fa-solid fa-arrow-right"></i><div
-                                    </div>
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-info">Save</button>
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Add Group</h3>
+               </div>
+               <!-- /.card-header -->
+               <form class="form-horizontal" method="POST" novalidate>
+                  <div class="card-body">
+                     {% csrf_token %}
+                     <div class="form-group">
+                          <label for="" class="control-label">Group Name:</label>
+                          <div class="col-md-4">
+                              <input id="group_name" name="group_name" type="textbox" class="form-control">
+                          </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Permissions:</label>
+                                    <select id="sbPermission" class="form-control" multiple="multiple" style="height: 250px;">
+                                      {% for data in permission %}
+                                        <option value="{{data.id}}">{{data|title}}</option>
+                                      {% endfor %}
+                                    </select>
+                                    <div style="margin-top: 20px;">
+                                        <button type="button" id="btnAll" class="btn btn-primary btn-block"><i class="fas fa-solid fa-arrow-right"></i></button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="col-md-1" valign="bottom">
+                                <div style="margin-top: calc(50% + 60px); margin-left: 30px;">
+                                    <button type="button" id="btnChoose" class="btn btn-block bg-gradient-primary btn-sm"><i class="fas fa-solid fa-arrow-right"></i></button>
+                                    <br>
+                                    <button type="button" id="btnRemove"  class="btn btn-block bg-gradient-primary btn-sm"><i class="fas fa-solid fa-arrow-left"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label"></label>
+                                    <select class="form-control" id="permission" name="permission" multiple="multiple" style="height: 250px;">
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                   </div>
-             </div>
-        </div>
-    </div>
+                         <div class="card-footer">
+                             <button type="submit" class="btn btn-info">Save</button>
+                         </div>
+                     </div>
+                  </div>
+               </form>
+               <!-- /.card-body -->
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+   <!-- /.container-fluid -->
 </section>
+<!-- /.content -->
 
 {% endblock content %}
+
 
 {% block script %}
 <script>

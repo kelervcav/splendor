@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import RegexValidator
 from django.forms import ModelForm, NumberInput
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
@@ -39,7 +40,7 @@ class AdminGroupForm(ModelForm):
         max_length=100,
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
-        )
+        ),
     )
 
     class Meta:
@@ -77,20 +78,35 @@ class ProfileCreationForm(UserCreationForm):
         max_length=100,
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
-        )
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z\s]*$',
+                message='Firstname must be letters only'),
+        ],
     )
     last_name = forms.CharField(
         max_length=100,
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
-        )
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z\s]*$',
+                message='Lastname must be letters only'),
+        ],
     )
     mobile = forms.CharField(
         max_length=100,
-        required=False,
         widget=forms.TextInput(
             attrs={'class': 'form-control', 'name': 'mobile'}
-        )
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^\d{11}$',
+                message="Phone number must be in format 09123456789"
+            )
+        ]
     )
 
     date_of_birth = forms.DateField(
