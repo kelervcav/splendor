@@ -16,7 +16,7 @@ User = get_user_model()
 
 class ProfileListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = User
-    ordering = ['-date_created']
+    ordering = ['-created_at']
     permission_required = 'profiles.view_user'
 
     def get_context_data(self, **kwargs):
@@ -32,6 +32,7 @@ def profile_create(request):
         user = form.save()
         uid = User.objects.get(id=user.id)
         uid.user_id = unique_id_generator(user.id)
+        uid.set_custom_password()
         uid.save()
         messages.success(request, 'User created successfully.')
         return redirect('/users')
@@ -110,7 +111,7 @@ def group_edit(request, pk):
 
 
 def patient_list(request):
-    patients_list = User.objects.filter(is_patient=True).order_by('-date_created')
+    patients_list = User.objects.filter(is_patient=True).order_by('-created_at')
     template_name = 'patient_list.html'
     context = {'patients_list': patients_list}
     return render(request, template_name, context)

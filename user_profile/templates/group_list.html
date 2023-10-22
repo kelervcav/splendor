@@ -44,10 +44,7 @@
                                     <td>{{group.id}}</td>
                                     <td>{{group.name}}</td>
                                     <td>
-                                        <div class="btn-group pull-right">
-                                            <a href="{% url 'users:group_edit' group.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i>
-                                            </a>
-                                        </div>
+                                        <a href="{% url 'users:group_edit' group.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -68,7 +65,7 @@
         $('#group-table').DataTable({
           'paging'      : true,
           'lengthChange': true,
-          'searching'   : true,
+          'searching'   : false,
           'ordering'    : false,
           'info'        : true,
           'autoWidth'   : false,

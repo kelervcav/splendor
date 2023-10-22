@@ -11,6 +11,7 @@ User = get_user_model()
 
 
 # Create your views here.
+# for patients
 def appointment_create(request):
     form = BookingAppointmentForm(request.POST or None)
     if request.method == 'POST':
@@ -36,10 +37,20 @@ def appointment_edit(request, pk):
 
 def appointment_delete(request, pk):
     set_appointment = get_object_or_404(Appointment, id=pk)
-    set_appointment.status = 'Canceled'
+    set_appointment.is_deleted = True
     set_appointment.save()
     messages.success(request,
                      'Appointment has been marked as cancelled.')
+    return redirect('appointments:appointment_list')
+
+
+# for therapist
+def approve_appointment(request, pk):
+    appointment = get_object_or_404(Appointment, id=pk)
+    appointment.is_approved = True
+    appointment.save()
+    messages.success(request,
+                     'Appointment has been approved.')
     return redirect('appointments:appointment_list')
 
 

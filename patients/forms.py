@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import RegexValidator
 from django.forms import ModelForm, NumberInput
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
@@ -12,22 +13,10 @@ from user_profile.models import UserProfile
 User = get_user_model()
 
 
-class RegistrationForm(UserCreationForm):
+class RegistrationForm(ModelForm):
     email = forms.EmailField(
         max_length=200,
         widget=forms.TextInput(
-            attrs={'class': 'form-control'}
-        )
-    )
-    password1 = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(
-            attrs={'class': 'form-control'}
-        )
-    )
-    password2 = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(
             attrs={'class': 'form-control'}
         )
     )
@@ -45,10 +34,15 @@ class RegistrationForm(UserCreationForm):
     )
     mobile = forms.CharField(
         max_length=100,
-        required=False,
         widget=forms.TextInput(
             attrs={'class': 'form-control', 'name': 'mobile'}
-        )
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^\d{11}$',
+                message="Phone number must be in format 09123456789"
+            )
+        ]
     )
 
     date_of_birth = forms.DateField(
@@ -58,19 +52,23 @@ class RegistrationForm(UserCreationForm):
         )
     )
 
-    notes = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={'class': 'form-control'}
-        )
+    gender = forms.ChoiceField(
+        choices=UserProfile.GENDER_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    is_active = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'form-check-input',
+            })
     )
 
     class Meta:
         model = User
         fields = (
             'email',
-            'password1',
-            'password2',
             'first_name',
             'last_name',
             'mobile',
@@ -79,17 +77,17 @@ class RegistrationForm(UserCreationForm):
         )
 
         def save(self, commit=True):
-            patient_user = super(RegistrationForm, self).save(commit=False)
-            patient_user.email = self.cleaned_data['email']
-            patient_user.first_name = self.cleaned_data['first_name']
-            patient_user.last_name = self.cleaned_data['last_name']
-            patient_user.mobile = self.cleaned_data['mobile']
-            patient_user.date_of_birth = self.cleaned_data['date_of_birth']
+            user = super(RegistrationForm, self).save(commit=False)
+            user.email = self.cleaned_data['email']
+            user.first_name = self.cleaned_data['first_name']
+            user.last_name = self.cleaned_data['last_name']
+            user.mobile = self.cleaned_data['mobile']
+            user.date_of_birth = self.cleaned_data['date_of_birth']
 
             if commit:
-                patient_user.save()
-                patient_user.groups.clear()
+                user.save()
+                user.groups.clear()
 
-            profile = UserProfile(user=patient_user, notes=self.cleaned_data['notes'])
+            profile = UserProfile(user=user, gender=self.cleaned_data['gender'])
             profile.save()
-            return patient_user
+            return user

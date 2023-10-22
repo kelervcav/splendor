@@ -29,12 +29,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label">Permissions:</label>
-                                    <select id="sbPermission" class="form-control" multiple="multiple" style="height: 250px;">
+                                    <select id="sbPermission" class="form-control" multiple="multiple" style="height: 250px; margin-left:8px">
                                       {% for data in permission %}
                                         <option value="{{data.id}}">{{data|title}}</option>
                                       {% endfor %}
                                     </select>
-                                    <div style="margin-top: 20px;">
+                                    <div style="margin: 10px -9px 0 9px;">
                                         <button type="button" id="btnAll" class="btn btn-primary btn-block"><i class="fas fa-solid fa-arrow-right"></i></button>
                                     </div>
                                 </div>
@@ -48,17 +48,17 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label class="control-label"></label>
-                                    <select class="form-control" id="permission" name="permission" multiple="multiple" style="height: 250px;">
+                                    <label class="control-label" ></label>
+                                    <select class="form-control" id="permission" name="permission" multiple="multiple" style="height: 250px; margin: 8px 0 0 20px">
                                     </select>
                                 </div>
                             </div>
                         </div>
-                         <div class="card-footer">
-                             <button type="submit" class="btn btn-info">Save</button>
-                         </div>
                      </div>
                   </div>
+                     <div class="card-footer">
+                         <button type="submit" class="btn btn-info">Save</button>
+                     </div>
                </form>
                <!-- /.card-body -->
             </div>

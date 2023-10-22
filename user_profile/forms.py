@@ -35,20 +35,7 @@ class LoginForm(AuthenticationForm):
     )
 
 
-class AdminGroupForm(ModelForm):
-    name = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={'class': 'form-control'}
-        ),
-    )
-
-    class Meta:
-        model = Group
-        fields = '__all__'
-
-
-class ProfileCreationForm(UserCreationForm):
+class ProfileCreationForm(ModelForm):
     group = forms.ModelChoiceField(
         required=False,
         queryset=Group.objects.all(),
@@ -59,18 +46,6 @@ class ProfileCreationForm(UserCreationForm):
     email = forms.EmailField(
         max_length=200,
         widget=forms.TextInput(
-            attrs={'class': 'form-control'}
-        )
-    )
-    password1 = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(
-            attrs={'class': 'form-control'}
-        )
-    )
-    password2 = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(
             attrs={'class': 'form-control'}
         )
     )
@@ -129,8 +104,6 @@ class ProfileCreationForm(UserCreationForm):
         fields = (
             'group',
             'email',
-            'password1',
-            'password2',
             'first_name',
             'last_name',
             'mobile',
@@ -147,8 +120,5 @@ class ProfileCreationForm(UserCreationForm):
         user.mobile = self.cleaned_data['mobile']
         user.date_of_birth = self.cleaned_data['date_of_birth']
 
-        if commit:
-            user.save()
-            user.groups.clear()
-            user.groups.set(self.cleaned_data['group'])
-            return user
+        user.save()
+        return user

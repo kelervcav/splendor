@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
 
 
 class CustomUserManager(BaseUserManager):
@@ -32,8 +33,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = CustomUserManager()
 
@@ -43,18 +44,31 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.first_name
 
+    def set_custom_password(self):
+        surname = self.last_name
+        birthdate = self.date_of_birth.strftime('%Y%m%d')
+        password = f"{surname}{birthdate}"
+        self.set_password(password)
+
     class Meta:
         db_table = 'user'
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    GENDER_CHOICES = [
+        ('', '---------'),
+        ('MALE', 'Male'),
+        ('FEMALE', 'Female'),
+    ]
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES,)
     notes = models.TextField(null=True, blank=True)
 
     # Add any additional fields you need for your user profile
 
     def __str__(self):
-        return self.user
+        return f"{self.first_name} {self.last_name}"
+
 
     class Meta:
         db_table = 'user_profile'

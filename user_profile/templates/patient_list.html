@@ -8,6 +8,18 @@
 <!-- Main content -->
 <section class="content">
    <div class="container-fluid">
+       <div class="row">
+         <div class="col-12">
+             {% if messages %}
+              <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                {% for message in messages %}
+                  <span class="lh-1">{{ message }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+         </div>
+      </div>
       <div class="row">
          <div class="col-12">
             <div class="card card-outline card-info">
@@ -24,11 +36,12 @@
                   <table id="patient-table" class="table table-bordered table-hover">
                      <thead>
                         <tr>
-                           <th>USER ID</th>
-                           <th>FIRST NAME</th>
-                           <th>LAST NAME</th>
-                           <th>EMAIL ADDRESS</th>
-                           <th>-</th>
+                            <th>USER ID</th>
+                            <th>FIRST NAME</th>
+                            <th>LAST NAME</th>
+                            <th>EMAIL ADDRESS</th>
+                            <th>STATUS</th>
+                            <th>ACTIONS</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -38,8 +51,15 @@
                             <td>{{ patient.first_name }}</td>
                             <td>{{ patient.last_name }}</td>
                             <td>{{ patient.email }}</td>
+                            <td>{% if patient.is_active %}
+                                    <span class="badge bg-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Inactive</span>
+                                {% endif %}
+                            </td>
                             <td>
-                              <a href="#" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{% url 'patients:patient_edit'  patient.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{% url 'patients:patient_disable' patient.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
                             </td>
                         </tr>
                         {% endfor %}
