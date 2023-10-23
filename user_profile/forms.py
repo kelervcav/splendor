@@ -49,6 +49,18 @@ class ProfileCreationForm(ModelForm):
             attrs={'class': 'form-control'}
         )
     )
+    password1 = forms.CharField(
+        max_length=100,
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    password2 = forms.CharField(
+        max_length=100,
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control'}
+        )
+    )
     first_name = forms.CharField(
         max_length=100,
         widget=forms.TextInput(
@@ -104,6 +116,8 @@ class ProfileCreationForm(ModelForm):
         fields = (
             'group',
             'email',
+            'password1',
+            'password2',
             'first_name',
             'last_name',
             'mobile',
