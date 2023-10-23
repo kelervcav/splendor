@@ -44,12 +44,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.first_name
 
-    def set_custom_password(self):
-        surname = self.last_name
-        birthdate = self.date_of_birth.strftime('%Y%m%d')
-        password = f"{surname}{birthdate}"
-        self.set_password(password)
-
     class Meta:
         db_table = 'user'
 

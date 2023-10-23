@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block page_title %} Users {% endblock page_title %}
+{% block page_title %} System Users {% endblock page_title %}
 
 
 {% block content %}
@@ -47,22 +47,19 @@
                         </div>
                      </div>
                      <div class="form-group">
-                        <label for="" class="control-label">Birthdate:</label>
-                        <div class="col-md-4">
-                           {{ form.date_of_birth }}
-                           <span class="help-block">{{ form.date_of_birth.errors }}</span>
-                        </div>
-                     </div>
-                     <div class="form-group">
                         <label for="" class="control-label">Mobile Phone:</label>
                         <div class="col-md-4">
                            {{ form.mobile }}
+                           <span class="help-block">{{ form.mobile.errors }}</span>
                         </div>
                      </div>
                      <div class="form-group ">
                         <label for="" class="control-label">Password:</label>
                         <div class="col-md-4">
                            {{ form.password1 }}
+                           <span class='text-muted help-text'>Your password can't be too similar to your other personal information.</span><br>
+                           <span class='text-muted help-text'>Your password must contain at least 8 characters.</span><br>
+                           <span class='text-muted help-text'>Your password can't be entirely numeric.</span>
                            <span class="help-block">{{ form.password1.errors }}</span>
                         </div>
                      </div>

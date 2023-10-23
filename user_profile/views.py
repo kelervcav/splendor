@@ -7,21 +7,19 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, PermissionRequiredMixin
 )
-from user_profile.forms import ProfileCreationForm
+from user_profile.forms import ProfileCreationForm, EditProfileForm
 from .utils import unique_id_generator
 
 
 User = get_user_model()
 
 
-class ProfileListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    model = User
-    ordering = ['-created_at']
-    permission_required = 'profiles.view_user'
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileListView, self).get_context_data(**kwargs)
-        return context
+@login_required
+def profile_list(request):
+    users = User.objects.filter(is_patient=False).order_by('-created_at')
+    template_name = 'user_list.html'
+    context = {'users': users}
+    return render(request, template_name, context)
 
 
 @login_required
@@ -31,8 +29,6 @@ def profile_create(request):
     if form.is_valid():
         user = form.save()
         uid = User.objects.get(id=user.id)
-        uid.user_id = unique_id_generator(user.id)
-        uid.set_custom_password()
         uid.save()
         messages.success(request, 'User created successfully.')
         return redirect('/users')
@@ -43,14 +39,18 @@ def profile_create(request):
 
 
 def profile_edit(request, pk):
-    users = get_object_or_404(User, id=pk)
-    form = ProfileCreationForm(request.POST or None, instance=users)
+    user = get_object_or_404(User, id=pk)
+    group = Group.objects.filter(user=user).first()
+    form = EditProfileForm(request.POST or None, instance=user, initial={'group': group})
     if form.is_valid():
         form.save()
+        user.groups.clear()
+        user.groups.add(request.POST['group'])
         messages.success(request, 'Users updated successfully.')
         return redirect('users:edit', pk)
+
     template_name = 'user_edit.html'
-    context = {'form': form, 'users': users}
+    context = {'form': form, 'user': user}
     return render(request, template_name, context)
 
 

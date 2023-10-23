@@ -1,12 +1,12 @@
 from django.urls import path
 
-from .views import ProfileListView
+# from .views import ProfileListView
 from . import views
 
 app_name = 'users'
 
 urlpatterns = [
-    path('', ProfileListView.as_view(template_name='user_list.html'), name='list'),
+    path('', views.profile_list, name='list'),
     path('create/', views.profile_create, name='create'),
     path('<int:pk>/edit/', views.profile_edit, name='edit'),
     path('<int:pk>/disable/', views.profile_disable, name='disable'),

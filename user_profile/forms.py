@@ -35,9 +35,8 @@ class LoginForm(AuthenticationForm):
     )
 
 
-class ProfileCreationForm(ModelForm):
+class ProfileCreationForm(UserCreationForm):
     group = forms.ModelChoiceField(
-        required=False,
         queryset=Group.objects.all(),
         widget=forms.Select(
             attrs={'class': 'form-control'}
@@ -95,14 +94,6 @@ class ProfileCreationForm(ModelForm):
             )
         ]
     )
-
-    date_of_birth = forms.DateField(
-        widget=NumberInput(
-            attrs={'type': 'date',
-                   'class': 'form-control'},
-        )
-    )
-
     is_active = forms.BooleanField(
         required=False,
         widget=forms.CheckboxInput(
@@ -114,15 +105,12 @@ class ProfileCreationForm(ModelForm):
     class Meta:
         model = User
         fields = (
-            'group',
             'email',
             'password1',
             'password2',
             'first_name',
             'last_name',
             'mobile',
-            'date_of_birth',
-            'is_patient',
             'is_active',
         )
 
@@ -132,7 +120,62 @@ class ProfileCreationForm(ModelForm):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.mobile = self.cleaned_data['mobile']
-        user.date_of_birth = self.cleaned_data['date_of_birth']
 
-        user.save()
+        if commit:
+            user.save()
+            user.groups.clear()
+            user.groups.add(self.cleaned_data['group'])
         return user
+
+
+class EditProfileForm(UserChangeForm):
+    group = forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control'})
+    )
+    first_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'})
+    )
+    last_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'})
+    )
+    email = forms.EmailField(
+        max_length=200,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'})
+    )
+    mobile = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                 'class': 'form-control',
+                 'name': 'mobile'})
+    )
+    is_active = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'form-check-input',
+            })
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            'password',
+            'first_name',
+            'last_name',
+            'email',
+            'mobile',
+        )
+
