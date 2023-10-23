@@ -8,6 +8,18 @@
 
 <section class="content">
     <div class="container-fluid">
+        <div class="row">
+			   <div class="col-12">
+				   {% if messages %}
+					<div class="alert alert-success alert-dismissible">
+					  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+					  {% for message in messages %}
+						<span class="lh-1">{{ message }}</span>
+					  {% endfor %}
+					</div>
+					{% endif %}
+			   </div>
+		   </div>
          <div class="row">
          <div class="col-12">
             <div class="card card-outline card-info">
@@ -19,20 +31,32 @@
                   <table id="users-table" class="table table-sm table-bordered table-hover">
                      <thead>
                         <tr>
-                           <th>Patient</th>
-                           <th>Service</th>
-                           <th>Date</th>
-                           <th>Time</th>
-                           <th>-</th>
+                           <th>PATIENT</th>
+                           <th>TREATMENT</th>
+                           <th>DATE</th>
+                           <th>TIME</th>
+                           <th>STATUS</th>
+                           <th>ACTIONS</th>
                         </tr>
                      </thead>
-                    <tbody>
+
+                     <tbody>
                         {% for appointment in appointment_list %}
                            <tr>
-                              <td>{{ appointment.user }}</td>
-                              <td>{{ appointment.date }}</td>
-                              <td>{{ appointment.time }}</td>
-                              <td>{{ appointment.treatment }}</td>
+                               <td>{{ appointment.user }}</td>
+                               <td>{{ appointment.treatment }}</td>
+                               <td>{{ appointment.date }}</td>
+                               <td>{{ appointment.time }}</td>
+                               <td>{% if appointment.is_approved %}
+                                        <span class="badge bg-danger">Pending</span>
+                                   {% else %}
+                                        <span class="badge bg-success">Approved</span>
+                                   {% endif %}
+                               </td>
+                               <td>
+                                   <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
+                                       <button type="submit" class="btn btn-success">Approve</button></a>
+								</td>
                            </tr>
                         {% endfor %}
                      </tbody>

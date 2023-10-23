@@ -9,7 +9,7 @@ from user_profile.models import User
 from .models import Appointment
 
 
-class BookingForm(forms.ModelForm):
+class BookingAppointmentForm(forms.ModelForm):
     user = forms.ModelChoiceField(
         queryset=User.objects.all(),
         widget=forms.Select(
@@ -32,6 +32,7 @@ class BookingForm(forms.ModelForm):
         return date
 
     time = forms.ChoiceField(
+        required=True,
         choices=Appointment.TIME_CHOICES,
         widget=forms.Select(attrs={'class': 'form-control'})
     )

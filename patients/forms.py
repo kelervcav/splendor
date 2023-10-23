@@ -1,52 +1,93 @@
-from datetime import datetime
-
 from django import forms
+from django.core.validators import RegexValidator
 from django.forms import ModelForm, NumberInput
-from django.utils import timezone
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.forms import (
+    UserCreationForm, UserChangeForm, AdminPasswordChangeForm
+)
 
-from treatments.models import Treatment
-from user_profile.models import User
-from appointments.models import Appointment
+from user_profile.models import UserProfile
+
+User = get_user_model()
 
 
-class BookingAppointmentForm(forms.ModelForm):
-    user = forms.ModelChoiceField(
-        queryset=User.objects.filter(is_patient=True),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control'}))
+class RegistrationForm(ModelForm):
+    email = forms.EmailField(
+        max_length=200,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    first_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    last_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    mobile = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'name': 'mobile'}
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^\d{11}$',
+                message="Phone number must be in format 09123456789"
+            )
+        ]
+    )
 
-    date = forms.DateField(
+    date_of_birth = forms.DateField(
         widget=NumberInput(
             attrs={'type': 'date',
                    'class': 'form-control'},
         )
     )
 
-    def clean_date(self):
-        current_date = timezone.now()
-        date = self.cleaned_data['date']
-
-        if date < current_date.date():
-            raise forms.ValidationError("Please select a future date.")
-        return date
-
-    time = forms.ChoiceField(
-        choices=Appointment.TIME_CHOICES,
+    gender = forms.ChoiceField(
+        choices=UserProfile.GENDER_CHOICES,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
-    treatment = forms.ModelChoiceField(
-        queryset=Treatment.objects.all(),
-        widget=forms.Select(
+    is_active = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
             attrs={
-                'class': 'form-control'}))
+                'class': 'form-check-input',
+            })
+    )
 
     class Meta:
-        model = Appointment
-        fields = [
-            'user',
-            'date',
-            'time',
-            'treatment',
-        ]
+        model = User
+        fields = (
+            'email',
+            'first_name',
+            'last_name',
+            'mobile',
+            'date_of_birth',
+            'is_patient'
+        )
+
+        def save(self, commit=True):
+            user = super(RegistrationForm, self).save(commit=False)
+            user.email = self.cleaned_data['email']
+            user.first_name = self.cleaned_data['first_name']
+            user.last_name = self.cleaned_data['last_name']
+            user.mobile = self.cleaned_data['mobile']
+            user.date_of_birth = self.cleaned_data['date_of_birth']
+
+            if commit:
+                user.save()
+                user.groups.clear()
+
+            profile = UserProfile(user=user, gender=self.cleaned_data['gender'])
+            profile.save()
+            return user

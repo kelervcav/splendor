@@ -1,0 +1,43 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+    {% include 'customer_snippets/css.html'%}
+
+    {% include 'customer_snippets/navbar.html'%}
+
+
+    {% include 'customer_snippets/js.html'%}
+
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                    <div class="col-mb-6">
+                        <h4 class="m-0"> {% block banner_slider %}{% endblock banner_slider %}</h4>
+                    </div>
+
+                    {% block content %}{% endblock content %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <!--<footer class="container-fluid bg-success text-center p-2 mt-5">
+            Copyright : 2023
+        </footer>-->
+
+</body>
+</html>

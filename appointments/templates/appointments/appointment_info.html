@@ -1,0 +1,48 @@
+{% extends 'customer_base.html' %}
+
+{% block title %}
+    Appointment
+{% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+         <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Appointment Information</h3>
+               </div>
+               <!-- /.card-header -->
+               <div class="card-body">
+                  <table id="users-table" class="table table-sm table-bordered table-hover">
+                     <thead>
+                        <tr>
+                           <th>Patient</th>
+                           <th>Service</th>
+                           <th>Date</th>
+                           <th>Time</th>
+                           <th>-</th>
+                        </tr>
+                     </thead>
+                    <tbody>
+                        {% for appointment in appointment_info %}
+                           <tr>
+                               <td>{{ appointment.user }}</td>
+                               <td>{{ appointment.date }}</td>
+                               <td>{{ appointment.time }}</td>
+                               <td>{{ appointment.treatment }}</td>
+                           </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+               <!-- /.card-body -->
+            </div>
+         </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}

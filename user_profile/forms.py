@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import RegexValidator
 from django.forms import ModelForm, NumberInput
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
@@ -34,21 +35,9 @@ class LoginForm(AuthenticationForm):
     )
 
 
-class AdminGroupForm(ModelForm):
-    name = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={'class': 'form-control'}
-        )
-    )
-
-    class Meta:
-        model = Group
-        fields = '__all__'
-
-
-class ProfileCreationForm(UserCreationForm):
+class ProfileCreationForm(ModelForm):
     group = forms.ModelChoiceField(
+        required=False,
         queryset=Group.objects.all(),
         widget=forms.Select(
             attrs={'class': 'form-control'}
@@ -76,20 +65,35 @@ class ProfileCreationForm(UserCreationForm):
         max_length=100,
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
-        )
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z\s]*$',
+                message='Firstname must be letters only'),
+        ],
     )
     last_name = forms.CharField(
         max_length=100,
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
-        )
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z\s]*$',
+                message='Lastname must be letters only'),
+        ],
     )
     mobile = forms.CharField(
         max_length=100,
-        required=False,
         widget=forms.TextInput(
             attrs={'class': 'form-control', 'name': 'mobile'}
-        )
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^\d{11}$',
+                message="Phone number must be in format 09123456789"
+            )
+        ]
     )
 
     date_of_birth = forms.DateField(
@@ -130,8 +134,5 @@ class ProfileCreationForm(UserCreationForm):
         user.mobile = self.cleaned_data['mobile']
         user.date_of_birth = self.cleaned_data['date_of_birth']
 
-        if commit:
-            user.save()
-            user.groups.clear()
-            user.groups.set(self.cleaned_data['group'])
-            return user
+        user.save()
+        return user

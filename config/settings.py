@@ -35,7 +35,7 @@ AUTH_USER_MODEL = 'user_profile.User'
 
 LOGIN_REDIRECT_URL = '/dashboard'
 
-LOGIN_URL = '/admin'
+LOGIN_URL = '/'
 
 
 # Application definition
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'treatments',
     'patients',
     'appointments',
+    'loyalty_app',
 ]
 
 MIDDLEWARE = [

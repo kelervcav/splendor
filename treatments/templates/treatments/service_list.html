@@ -57,7 +57,7 @@
 								</td>
 								<td>
 									<a href="{% url 'treatments:service_edit' service.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
-									<a href="{% url 'treatments:service_delete' service.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
+									<a href="{% url 'treatments:service_disable' service.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
 								</td>
 							</tr>
 							{% endfor %}
@@ -76,3 +76,21 @@
 	<!-- /.content -->
 
 {% endblock %}
+
+
+{% block script %}
+    <script>
+      $(function () {
+        $('#services-table').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+          "pageLength": 10,
+        });
+      });
+    </script>
+{% endblock script %}

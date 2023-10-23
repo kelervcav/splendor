@@ -8,7 +8,7 @@ from user_profile.models import User
 # Create your models here.
 class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    date = models.DateField(null=False, blank=True)
+    date = models.DateField(null=False, blank=False)
     TIME_CHOICES = [
         ("------", "------"),
         ("10 AM", "10 AM"),
@@ -28,8 +28,8 @@ class Appointment(models.Model):
     treatment = models.ForeignKey(Treatment, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)
-    status = models.CharField(max_length=50, default='Pending')
+    is_deleted = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.date} {self.time}"

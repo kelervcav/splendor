@@ -1,0 +1,70 @@
+{% extends 'customer_base.html' %}
+
+{% block title %}
+    Appointment
+{% endblock %}
+
+{% block content %}
+<section class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Book Appointment</h3>
+               </div>
+               <!-- /.card-header -->
+               <form class="form-horizontal" method="POST" novalidate>
+                  <div class="card-body">
+                     {% csrf_token %}
+                     <div class="form-group ">
+                        <label for="" class="control-label">Name:</label>
+                        <div class="col-md-4">
+                           {{ form.user }}
+                           <span class="help-block">{{ form.user.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="control-label">Treatment:</label>
+                        <div class="col-md-4">
+                           {{ form.treatment }}
+                           <span class="help-block">{{ form.treatment.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="control-label">Date:</label>
+                        <div class="col-md-4">
+                           {{ form.date }}
+                           <span class="help-block">{{ form.date.errors }}</span>
+                        </div>
+                     </div>
+                      <div class="form-group">
+                        <label for="" class="control-label">Time:</label>
+                        <div class="col-md-4">
+                           {{ form.time }}
+                           <span class="help-block">{{ form.time.errors }}</span>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card-footer">
+                     <button type="submit" class="btn btn-info">Submit</button>
+                  </div>
+
+               </form>
+               <!-- /.card-body -->
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+   <!-- /.container-fluid -->
+</section>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock script %}

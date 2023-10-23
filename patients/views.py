@@ -1,27 +1,56 @@
-from django.shortcuts import render, redirect
-from .forms import BookingAppointmentForm
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.shortcuts import render, redirect, get_object_or_404
+from appointments.forms import BookingAppointmentForm
 from appointments.models import Appointment
+from patients.forms import RegistrationForm
+from user_profile.utils import unique_id_generator
+
+User = get_user_model()
+
 
 # Create your views here.
-
 
 def home(request):
     return render(request, 'patients/home.html')
 
 
-def appointment_info(request):
-    appointment_info = Appointment.objects.all()
-    print(appointment_info.query)
-    template_name = 'patients/appointment_info.html'
-    context = {'appointment_info': appointment_info}
+def patient_create(request):
+    form = RegistrationForm(request.POST or None)
+    if form.is_valid():
+        patient = form.save()
+        pid = User.objects.get(id=patient.id)
+        pid.user_id = unique_id_generator(patient.id)
+        pid.set_custom_password()
+        patient.set_custom_password()
+        patient.is_patient = True
+        patient.save()
+        messages.success(request, 'Patient registered successfully.')
+        return redirect('patients:patient_list')
+    template_name = 'patients/patient_create.html'
+    context = {'form': form}
     return render(request, template_name, context)
 
 
-def appointment_create(request):
-    form = BookingAppointmentForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return redirect('patients:appointment_info')
-    context = {'form': form}
-    return render(request, 'patients/appointment_create.html', context)
+def patient_edit(request, pk):
+    patients_list = get_object_or_404(User, id=pk)
+    form = RegistrationForm(request.POST or None, instance=patients_list)
+    if form.is_valid():
+        patient = form.save()
+        patient.is_patient = True
+        patient.save()
+        messages.success(request, 'Patient has been edited successfully.')
+        return redirect('patients:patient_edit', pk)
+    template_name = 'patients/patient_edit.html'
+    context = {'form': form, 'patients_list': patients_list}
+    return render(request, template_name, context)
+
+
+def patient_disable(request, pk):
+    patients = get_object_or_404(User, id=pk)
+    patients.is_active = False
+    patients.save()
+    messages.success(request, 'Patient has been disabled.')
+    return redirect('users:patient_list')
+
+

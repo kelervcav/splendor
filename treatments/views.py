@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def service_list(request):
-    service_list = Service.objects.all()
+    service_list = Service.objects.all().order_by('-created_at')
     template_name = 'treatments/service_list.html'
     context = {'service_list': service_list}
     return render(request, template_name, context)
@@ -43,7 +43,7 @@ def service_edit(request, pk):
 
 
 @login_required
-def service_delete(request, pk):
+def service_disable(request, pk):
     service = get_object_or_404(Service, id=pk)
     service.is_active = False
     service.save()
@@ -54,7 +54,7 @@ def service_delete(request, pk):
 
 @login_required
 def area_list(request):
-    treatment_area_list = TreatmentArea.objects.all()
+    treatment_area_list = TreatmentArea.objects.all().order_by('-created_at')
     template_name = 'treatments/area_list.html'
     context = {'treatment_area_list': treatment_area_list}
     return render(request, template_name, context)
@@ -88,17 +88,17 @@ def area_edit(request, pk):
 
 
 @login_required
-def area_delete(request, pk):
+def area_disable(request, pk):
     treatment_area = get_object_or_404(TreatmentArea, id=pk)
-    treatment_area.is_deleted = True
+    treatment_area.is_active = False
     treatment_area.save()
-    messages.success(request, 'Treatment area has been marked as deleted.')
+    messages.success(request, 'Treatment area has been marked as inactive.')
     return redirect('treatments:area_list')
 
 
 @login_required
 def price_type_list(request):
-    pricing_type_list = PriceType.objects.all()
+    pricing_type_list = PriceType.objects.all().order_by('-created_at')
     template_name = 'treatments/pricetype_list.html'
     context = {'pricing_type_list': pricing_type_list}
     return render(request, template_name, context)
@@ -132,18 +132,18 @@ def price_type_edit(request, pk):
 
 
 @login_required
-def price_type_delete(request, pk):
+def price_type_disable(request, pk):
     price_type = get_object_or_404(PriceType, id=pk)
-    price_type.is_deleted = True
+    price_type.is_active = False
     price_type.save()
     messages.success(request,
-                     'Price type has been marked as deleted.')
+                     'Price type has been marked as inactive.')
     return redirect('treatments:price_type_list')
 
 
 @login_required
 def treatment_list(request):
-    treatment_list = Treatment.objects.all()
+    treatment_list = Treatment.objects.all().order_by('-created_at')
     template_name = 'treatments/treatment_list.html'
     context = {'treatment_list': treatment_list}
     return render(request, template_name, context)
@@ -177,10 +177,10 @@ def treatment_edit(request, pk):
 
 
 @login_required
-def treatment_delete(request, pk):
+def treatment_disable(request, pk):
     treatment = get_object_or_404(Treatment, id=pk)
-    treatment.is_deleted = True
+    treatment.is_active = False
     treatment.save()
     messages.success(request,
-                     'Treatment has been marked as deleted.')
+                     'Treatment has been marked as inactive.')
     return redirect('treatments:treatment_list')

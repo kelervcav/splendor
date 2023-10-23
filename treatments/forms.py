@@ -18,6 +18,7 @@ class ServiceForm(ModelForm):
     )
 
     description = forms.CharField(
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': 'form-control',
@@ -62,6 +63,7 @@ class TreatmentForm(ModelForm):
     )
 
     description = forms.CharField(
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': 'form-control',
