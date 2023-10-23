@@ -39,6 +39,7 @@
                             <th>USER ID</th>
                             <th>FIRST NAME</th>
                             <th>LAST NAME</th>
+                            <th>GENDER</th>
                             <th>EMAIL ADDRESS</th>
                             <th>STATUS</th>
                             <th>ACTIONS</th>
@@ -50,6 +51,7 @@
                             <td>{{ patient.user_id }}</td>
                             <td>{{ patient.first_name }}</td>
                             <td>{{ patient.last_name }}</td>
+                            <td>{{ patient.gender }}</td>
                             <td>{{ patient.email }}</td>
                             <td>{% if patient.is_active %}
                                     <span class="badge bg-success">Active</span>

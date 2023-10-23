@@ -125,6 +125,7 @@ class ProfileCreationForm(UserCreationForm):
             user.save()
             user.groups.clear()
             user.groups.add(self.cleaned_data['group'])
+
         return user
 
 
@@ -178,4 +179,15 @@ class EditProfileForm(UserChangeForm):
             'email',
             'mobile',
         )
+
+
+class AdminEditPasswordForm(AdminPasswordChangeForm):
+    password1 = forms.CharField(max_length=100,
+                                widget=forms.PasswordInput(
+                                    attrs={
+                                        'class': 'form-control'}))
+    password2 = forms.CharField(max_length=100,
+                                widget=forms.PasswordInput(
+                                    attrs={
+                                        'class': 'form-control'}))
 

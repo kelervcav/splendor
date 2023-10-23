@@ -13,7 +13,7 @@ from user_profile.models import UserProfile
 User = get_user_model()
 
 
-class RegistrationForm(ModelForm):
+class RegistrationForm(forms.ModelForm):
     email = forms.EmailField(
         max_length=200,
         widget=forms.TextInput(
@@ -52,11 +52,6 @@ class RegistrationForm(ModelForm):
         )
     )
 
-    gender = forms.ChoiceField(
-        choices=UserProfile.GENDER_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
     is_active = forms.BooleanField(
         required=False,
         widget=forms.CheckboxInput(
@@ -73,7 +68,6 @@ class RegistrationForm(ModelForm):
             'last_name',
             'mobile',
             'date_of_birth',
-            'is_patient'
         )
 
         def save(self, commit=True):
@@ -86,8 +80,16 @@ class RegistrationForm(ModelForm):
 
             if commit:
                 user.save()
-                user.groups.clear()
 
-            profile = UserProfile(user=user, gender=self.cleaned_data['gender'])
-            profile.save()
             return user
+
+
+class CustomRegistration(ModelForm):
+    gender = forms.ChoiceField(
+        choices=UserProfile.GENDER_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        model = UserProfile
+        fields = ['gender']

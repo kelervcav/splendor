@@ -61,7 +61,8 @@ class UserProfile(models.Model):
     # Add any additional fields you need for your user profile
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return self.user
+
 
 
     class Meta:
