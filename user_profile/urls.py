@@ -16,4 +16,10 @@ urlpatterns = [
     path('group/<int:pk>/create/', views.group_edit, name='group_edit'),
 
     path('patient/', views.patient_list, name='patient_list'),
+
+    path('<int:pk>/edit/password/', views.admin_edit_password,
+         name='admin_password_update'),
+
+    path('profile/edit/password/', views.profile_edit_password,
+         name='own_profile_edit_password'),
 ]

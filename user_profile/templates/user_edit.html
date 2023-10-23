@@ -31,7 +31,8 @@
                   <div class="card-body">
                      {% csrf_token %}
                      <div class="form-group ">
-                        <label for="" class="control-label">Group:</label>
+                        <label for="" class="control-label">Group:
+                         <a href="{% url 'users:admin_password_update' user.pk %}" style="margin-left: 275px" >Change password</a></label>
                         <div class="col-md-4">
                            {{ form.group }}
                            <span class="help-block">{{ form.group.errors }}</span>
