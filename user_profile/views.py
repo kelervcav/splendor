@@ -125,7 +125,7 @@ def admin_edit_password(request, pk):
     form = AdminEditPasswordForm(data=request.POST or None, user=user)
     if form.is_valid():
         form.save()
-        return redirect('')
+        return redirect('/users')
 
     template_name = 'user_admin_edit_password.html'
     context = {'form': form}
@@ -138,7 +138,7 @@ def profile_edit_password(request):
     form = AdminEditPasswordForm(data=request.POST or None, user=user)
     if form.is_valid():
         form.save()
-        return redirect('users:own_profile_edit_password')
+        return redirect('')
 
     template_name = 'user_profile_edit_password.html'
     context = {'form': form}
