@@ -48,10 +48,10 @@
                      <tbody>
                         {% for patient in patients_list %}
                         <tr>
-                            <td>{{ patient.user_id }}</td>
+                            <td>{{ patient.id }}</td>
                             <td>{{ patient.first_name }}</td>
                             <td>{{ patient.last_name }}</td>
-                            <td>{{ patient.gender }}</td>
+                            <td>{{ patient.userprofile.gender }}</td>
                             <td>{{ patient.email }}</td>
                             <td>{% if patient.is_active %}
                                     <span class="badge bg-success">Active</span>
@@ -88,7 +88,7 @@
           "paging": true,
           "lengthChange": false,
           "searching": true,
-          "ordering": true,
+          "ordering": false,
           "info": true,
           "autoWidth": false,
           "responsive": true,

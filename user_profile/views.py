@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import (
 
 from .forms import AdminEditPasswordForm
 from user_profile.forms import ProfileCreationForm, EditProfileForm
+from .models import UserProfile
 from .utils import unique_id_generator
 
 
@@ -40,6 +41,7 @@ def profile_create(request):
     return render(request, template_name, context)
 
 
+@login_required
 def profile_edit(request, pk):
     user = get_object_or_404(User, id=pk)
     group = Group.objects.filter(user=user).first()
@@ -52,10 +54,11 @@ def profile_edit(request, pk):
         return redirect('users:edit', pk)
 
     template_name = 'user_edit.html'
-    context = {'form': form, 'user': user}
+    context = {'form': form, 'user_profile': user}
     return render(request, template_name, context)
 
 
+@login_required
 def profile_disable(request, pk):
     users = get_object_or_404(User, id=pk)
     users.is_active = False
@@ -64,6 +67,7 @@ def profile_disable(request, pk):
     return redirect('/users')
 
 
+@login_required
 def group_list(request):
     group_list = Group.objects.all()
     template = 'group_list.html'
@@ -71,6 +75,7 @@ def group_list(request):
     return render(request, template, context)
 
 
+@login_required
 def group_create(request):
     if request.method == 'POST':
         permissions = request.POST.getlist('permission')
@@ -88,6 +93,7 @@ def group_create(request):
     return render(request, template, context)
 
 
+@login_required
 def group_edit(request, pk):
     if request.method == 'GET':
         group = Group.objects.get(id=pk)
@@ -103,20 +109,13 @@ def group_edit(request, pk):
         obj.permissions.set(permissions)
         return redirect('users:group_list')
 
-    template = 'profiles/group_edit.html'
+    template = 'group_edit.html'
     context = {
         'group': group,
         'permission': permission,
         'group_permission': group_permission
     }
     return render(request, template, context)
-
-
-def patient_list(request):
-    patients_list = User.objects.filter(is_patient=True).order_by('-created_at')
-    template_name = 'patient_list.html'
-    context = {'patients_list': patients_list}
-    return render(request, template_name, context)
 
 
 @login_required

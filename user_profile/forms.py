@@ -178,6 +178,7 @@ class EditProfileForm(UserChangeForm):
             'last_name',
             'email',
             'mobile',
+            'is_active',
         )
 
 

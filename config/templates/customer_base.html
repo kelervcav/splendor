@@ -8,36 +8,41 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>{% block title %}{% endblock %}</title>
-</head>
-<body>
 
-    {% include 'customer_snippets/css.html'%}
 
-    {% include 'customer_snippets/navbar.html'%}
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+            <div class="container">
+                {% include 'customer_snippets/navbar.html'%}
+            </div>
+        </nav>
+    <div>
 
+    {% include 'snippets/css.html'%}
 
     {% include 'customer_snippets/js.html'%}
 
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container">
-                <div class="row mb-2">
-                    <div class="col-mb-6">
-                        <h4 class="m-0"> {% block banner_slider %}{% endblock banner_slider %}</h4>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="m-0"> {% block header %}{% endblock header %}</h4>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    {% block content %}{% endblock content %}
-
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                          {% block content %}{% endblock content %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-        <!--<footer class="container-fluid bg-success text-center p-2 mt-5">
-            Copyright : 2023
-        </footer>-->
-
 </body>
 </html>

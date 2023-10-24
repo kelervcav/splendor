@@ -44,6 +44,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.first_name
 
+    def set_custom_password(self):
+        surname = self.last_name.lower()
+        underscore = '_'
+        birthdate = self.date_of_birth.strftime('%Y%m%d')
+        custom_password = f"{surname}{underscore}{birthdate}"
+        self.set_password(custom_password)
+        self.save()
+
     class Meta:
         db_table = 'user'
 
@@ -62,8 +70,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user
-
-
 
     class Meta:
         db_table = 'user_profile'

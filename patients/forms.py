@@ -68,6 +68,7 @@ class RegistrationForm(forms.ModelForm):
             'last_name',
             'mobile',
             'date_of_birth',
+            'is_active',
         )
 
         def save(self, commit=True):
@@ -80,12 +81,12 @@ class RegistrationForm(forms.ModelForm):
 
             if commit:
                 user.save()
-
             return user
 
 
 class CustomRegistration(ModelForm):
     gender = forms.ChoiceField(
+
         choices=UserProfile.GENDER_CHOICES,
         widget=forms.Select(attrs={'class': 'form-control'})
     )

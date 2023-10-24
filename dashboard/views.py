@@ -28,7 +28,7 @@ def dashboard(request):
 
 def approve_appointment(request, pk):
     appointment = get_object_or_404(Appointment, id=pk)
-    appointment.status = 'Approved'
+    appointment.is_approved = True
     appointment.save()
     messages.success(request,
                      'Appointment has been approved.')

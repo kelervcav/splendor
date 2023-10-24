@@ -50,4 +50,5 @@ class BookingAppointmentForm(forms.ModelForm):
             'date',
             'time',
             'treatment',
+            'is_approved',
         ]

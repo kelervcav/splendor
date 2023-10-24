@@ -70,7 +70,7 @@
                            <span class="help-block">{{ form.mobile.errors }}</span>
                         </div>
                      </div>
-                     {% if not user.is_superuser %}
+                     {% if not user_profile.is_superuser %}
                      <div class="form-check">
                          <div class="col-md-4">
                              {{ form.is_active }}

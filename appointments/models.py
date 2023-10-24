@@ -22,7 +22,6 @@ class Appointment(models.Model):
         ("6 PM", "6 PM"),
         ("7 PM", "7 PM"),
         ("8 PM", "8 PM"),
-        ("9 PM", "9 PM"),
     ]
     time = models.CharField(max_length=10, choices=TIME_CHOICES)
     treatment = models.ForeignKey(Treatment, on_delete=models.DO_NOTHING)
