@@ -1,10 +1,12 @@
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from appointments.forms import BookingAppointmentForm
 from appointments.models import Appointment
 from patients.forms import RegistrationForm, CustomRegistration
+from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
 from user_profile.utils import unique_id_generator
 
@@ -26,13 +28,15 @@ def patient_list(request):
 
 
 @login_required
+@admin_required
 def patient_create(request):
     registration_form = RegistrationForm(request.POST or None)
     custom_form = CustomRegistration(request.POST or None)
     if registration_form.is_valid() and custom_form.is_valid():
         registration = registration_form.save()
-        registration.set_custom_password()
         registration.is_patient = True
+        custom_password = registration.set_custom_password()
+        custom_password.save()
         registration.save()
         custom = custom_form.save(commit=False)
         custom.user = registration

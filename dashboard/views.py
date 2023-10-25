@@ -4,11 +4,13 @@ from django.contrib.auth.decorators import login_required
 
 from appointments.models import Appointment
 from treatments.models import Service, Treatment
+from user_profile.decorators import admin_required
 from user_profile.models import User
 from appointments import views
 
 
 @login_required
+@admin_required
 def dashboard(request):
     service_count = Service.objects.exclude(is_active=False).count()
     treatment_count = Treatment.objects.exclude(is_active=False).count()
@@ -25,7 +27,7 @@ def dashboard(request):
     }
     return render(request, template_name, context)
 
-
+@admin_required
 def approve_appointment(request, pk):
     appointment = get_object_or_404(Appointment, id=pk)
     appointment.is_approved = True

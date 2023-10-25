@@ -3,88 +3,67 @@
 {% block title %} Home {% endblock title %}
 
 {% block header %}
-    <div class="row">
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title">WELCOME, {{ user }}</h1>
-                    <p class="card-text">
-                        Available Points: <strong> 0.00</strong>
-                        <!--<i class='bx bx-qr-scan' id="qr-icon"></i>-->
-                    </p>
-                </div>
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row-2">
+            <div class="col-sm">
+            {% if user.is_patient %}
+            <h4 class="card-title">
+                {% if user.is_authenticated %}
+                    WELCOME, {{ user }}</h4>
+                {% endif %}
+            {% endif %}
+            <p class="card-text">
+                Available Points: 0.00
+            </p>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="card">
-        <div class="card-group">
-            <div class="card">
-                <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-                <div id="carouselExampleIndicators" class="carousel slide">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+<div class="card">
+    <div class="card-group">
+        <div class="card">
+            <div id="carouselExampleSlidesOnly1" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'dist/img/acne.png' %}" class="d-block w-100" alt="banner image services" height="500px">
                     </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{% static "dist/img/acne.png" %}" class="d-block w-100" alt="banner image services">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static "dist/img/hair.png" %}" class="d-block w-100" alt="banner image services">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'snippets/images/banner/offers/tr3.jpg}" class="d-block w-100" alt="banner image services" />
-                        </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'dist/img/hair.png' %}" class="d-block w-100" alt="banner image services" height="500px">
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="card">
-        <h5 class="card-header">LATEST OFFERS</h5>
-        <div class="card-group">
-            <div class="card">
-                <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{% static "dist/img/promo1.png" %}" class="d-block w-100" alt="banner image offers">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'snippets/image/banner/offers/tr3.jpg}" class="d-block w-100" alt="banner image offers" />
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% static 'snippets/image/banner/offers/tr3.jpg}" class="d-block w-100" alt="banner image offers" />
-                        </div>
+                     <div class="carousel-item">
+                        <img src="{% static 'dist/img/hair.png' %}" class="d-block w-100" alt="banner image services" height="500px">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
+<div class="card">
+    <div class="card-group">
+        <div class="card">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'dist/img/promo1.png' %}" class="d-block w-100" alt="banner image offers" height="300px">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'dist/img/promo2.png' %}" class="d-block w-100" alt="banner image offers" height="500px">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'dist/img/acne.png' %}" class="d-block w-100" alt="banner image offers" height="500px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock header %}
-<script src="../../plugins/jquery/jquery.min.js"></script>
-
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <script src="../../dist/js/adminlte.min.js?v=3.2.0"></script>
-
-    <script src="../../dist/js/demo.js"></script>
-
-
 
 
 {% block main-content %}

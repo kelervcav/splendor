@@ -17,19 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.contrib.auth import views as auth_views
-from user_profile.forms import LoginForm
+from user_profile.views import process_admin_login
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('admin/', auth_views.LoginView.as_view(template_name='auth_login.html',
-                                                authentication_form=LoginForm), name='login'),
-    path('', auth_views.LoginView.as_view(template_name='loyalty/loyalty_login.html',
-                                          authentication_form=LoginForm), name='loyalty_login'),
+    path('admin/', process_admin_login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+
     path('dashboard/', include('dashboard.urls'), name='dashboard'),
     path('users/', include('user_profile.urls'), name='users'),
     path('treatments/', include('treatments.urls'), name='treatments'),
     path('patients/', include('patients.urls'), name='patients'),
     path('appointments/', include('appointments.urls'), name='appointments'),
-    path('loyalty/', include('loyalty_app.urls'), name='loyalty'),
+    path('', include('loyalty_app.urls'), name='loyalty'),
+    path('transactions', include('transactions.urls'), name='transactions'),
 ]

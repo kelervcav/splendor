@@ -10,12 +10,6 @@ from .models import Appointment
 
 
 class BookingAppointmentForm(forms.ModelForm):
-    user = forms.ModelChoiceField(
-        queryset=User.objects.all(),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control'}))
-
     date = forms.DateField(
         widget=NumberInput(
             attrs={'type': 'date',
@@ -46,7 +40,6 @@ class BookingAppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = [
-            'user',
             'date',
             'time',
             'treatment',

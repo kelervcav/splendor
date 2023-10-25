@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-jy_*11sj-6i9tbx!8v8j#!34pin(d^bcbffo@a)fv+okd8q-*5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'user_profile.User'
 
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'patients',
     'appointments',
     'loyalty_app',
+    'transactions',
 ]
 
 MIDDLEWARE = [

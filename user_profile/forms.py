@@ -12,27 +12,27 @@ from user_profile.models import UserProfile
 
 User = get_user_model()
 
-
-class LoginForm(AuthenticationForm):
-
-    username = forms.CharField(  # This is always 'username'
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control',
-                'name': 'email',
-                'placeholder': 'Email'}
-        )
-    )
-    password = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(
-            attrs={
-                'class': 'form-control',
-                'name': 'password',
-                'placeholder': 'Password'}
-        )
-    )
+#
+# class LoginForm(AuthenticationForm):
+#
+#     username = forms.CharField(  # This is always 'username'
+#         max_length=100,
+#         widget=forms.TextInput(
+#             attrs={
+#                 'class': 'form-control',
+#                 'name': 'email',
+#                 'placeholder': 'Email'}
+#         )
+#     )
+#     password = forms.CharField(
+#         max_length=100,
+#         widget=forms.PasswordInput(
+#             attrs={
+#                 'class': 'form-control',
+#                 'name': 'password',
+#                 'placeholder': 'Password'}
+#         )
+#     )
 
 
 class ProfileCreationForm(UserCreationForm):

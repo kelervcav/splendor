@@ -13,4 +13,5 @@ urlpatterns = [
     path('<int:pk>/disable/', views.patient_disable, name='patient_disable'),
 
 
+
 ]

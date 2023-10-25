@@ -94,3 +94,5 @@ class CustomRegistration(ModelForm):
     class Meta:
         model = UserProfile
         fields = ['gender']
+
+
