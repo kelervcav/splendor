@@ -41,9 +41,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['mobile', 'first_name', 'last_name']
 
-    def __str__(self):
-        return self.first_name
-
     def set_custom_password(self):
         surname = self.last_name.lower()
         underscore = '_'
@@ -51,6 +48,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         custom_password = f"{surname}{underscore}{birthdate}"
         self.set_password(custom_password)
         self.save()
+
+    def __str__(self):
+        return self.first_name
 
     class Meta:
         db_table = 'user'
@@ -63,8 +63,9 @@ class UserProfile(models.Model):
         ('MALE', 'Male'),
         ('FEMALE', 'Female'),
     ]
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES,)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, )
     notes = models.TextField(null=True, blank=True)
+    points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
 
     # Add any additional fields you need for your user profile
 

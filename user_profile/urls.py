@@ -11,7 +11,9 @@ urlpatterns = [
     path('<int:pk>/edit/', views.profile_edit, name='edit'),
     path('<int:pk>/disable/', views.profile_disable, name='disable'),
 
-    path('<int:pk>/edit/password/', views.admin_edit_password,
+    path('edit-profile/', views.user_profile_edit,
+         name='user_profile_edit'),
+    path('/edit/password/<int:pk>', views.admin_edit_password,
          name='admin_password_update'),
     path('profile/edit/password/', views.profile_edit_password,
          name='own_profile_edit_password'),

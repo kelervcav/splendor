@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import (
     LoginRequiredMixin, PermissionRequiredMixin
 )
 
-from user_profile.forms import ProfileCreationForm, EditProfileForm, AdminEditPasswordForm
+from user_profile.forms import ProfileCreationForm, EditProfileForm, AdminEditPasswordForm, UserProfileEdit
 from .decorators import admin_required
 from .models import UserProfile
 from .utils import unique_id_generator
@@ -63,6 +63,20 @@ def profile_create(request):
 
     template_name = 'user_create.html'
     context = {'form': form}
+    return render(request, template_name, context)
+
+
+def user_profile_edit(request):
+    user = get_object_or_404(User, id=request.user.id)
+    form = UserProfileEdit(request.POST or None, instance=request.user)
+    if form.is_valid():
+        form.save()
+        messages.success(request,
+                         'Profile updated successfully.')
+        return redirect('users:user_profile_edit')
+
+    template_name = 'user_profile_edit.html'
+    context = {'form': form, 'user': user}
     return render(request, template_name, context)
 
 
@@ -156,7 +170,6 @@ def admin_edit_password(request, pk):
     if form.is_valid():
         form.save()
         return redirect('/users')
-
     template_name = 'user_admin_edit_password.html'
     context = {'form': form}
     return render(request, template_name, context)
@@ -169,7 +182,7 @@ def profile_edit_password(request):
     form = AdminEditPasswordForm(data=request.POST or None, user=user)
     if form.is_valid():
         form.save()
-        return redirect('')
+        return redirect('admin/')
 
     template_name = 'user_profile_edit_password.html'
     context = {'form': form}

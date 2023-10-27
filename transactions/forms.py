@@ -2,18 +2,16 @@ from django import forms
 from django.forms import ModelForm
 
 from .models import Transaction
-from treatments.models import Treatment
 
 
 class AddPointsForm(ModelForm):
-    treatment = forms.ModelChoiceField(
-        queryset=Treatment.objects.all(),
-        widget=forms.Select(
+    referenced_id = forms.CharField(
+        widget=forms.TextInput(
             attrs={
-                'class': 'form-control'})
+                'class': 'form-control'}),
     )
 
-    price_amount = forms.IntegerField(
+    price_amount = forms.DecimalField(
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control'}),
@@ -21,4 +19,5 @@ class AddPointsForm(ModelForm):
 
     class Meta:
         model = Transaction
-        fields = ['treatment', 'price_amount']
+        fields = ['referenced_id', 'price_amount']
+

@@ -32,35 +32,35 @@
                      {% csrf_token %}
                      <div class="form-group">
                          <div class="col-md-4">
-                             <a href="{% url 'users:admin_password_update' pk=user.id %}"><p class="text-right">Change password</p></a>
+                             <a href="{% url 'users:own_profile_edit_password' %}"><p class="text-right">Change password</p> </a>
                          </div>
                      </div>
                      <div class="form-group ">
                         <label for="" class="control-label">Group:</label>
                         <div class="col-md-4">
-                           {{ form.group }}
-                           <span class="help-block">{{ form.group.errors }}</span>
+                            <input type="text" name="group" value="{{ user.group }}" class="form-control" maxlength="100" readonly="readonly">
+                            <span class="help-block"></span>
                         </div>
                      </div>
                      <div class="form-group ">
                         <label for="" class="control-label">First Name:</label>
                         <div class="col-md-4">
-                           {{ form.first_name }}
-                           <span class="help-block">{{ form.first_name.errors }}</span>
+                            <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control" maxlength="100" readonly="readonly">
+                            <span class="help-block"></span>
                         </div>
                      </div>
                      <div class="form-group">
                         <label for="" class="control-label">Last Name:</label>
                         <div class="col-md-4">
-                           {{ form.last_name }}
-                           <span class="help-block">{{ form.last_name.errors }}</span>
+                            <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control" maxlength="100" readonly="readonly">
+                            <span class="help-block"></span>
                         </div>
                      </div>
                      <div class="form-group">
                         <label for="" class="control-label">Email Address:</label>
                         <div class="col-md-4">
-                           {{ form.email }}
-                           <span class="help-block">{{ form.email.errors }}</span>
+                            <input type="text" name="email" value="{{ user.email }}" class="form-control" maxlength="100" readonly="readonly">
+                            <span class="help-block"></span>
                         </div>
                      </div>
                      <div class="form-group">
@@ -70,14 +70,6 @@
                            <span class="help-block">{{ form.mobile.errors }}</span>
                         </div>
                      </div>
-                     {% if not user_profile.is_superuser %}
-                     <div class="form-check">
-                         <div class="col-md-4">
-                             {{ form.is_active }}
-                             <label class="form-check-label" for="">Is active?</label>
-                         </div>
-                      </div>
-                     {% endif %}
                   </div>
                   <div class="card-footer">
                      <button type="submit" class="btn btn-info">Save</button>

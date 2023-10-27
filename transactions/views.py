@@ -1,8 +1,12 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
+from django.shortcuts import render, redirect, get_object_or_404
 
-from transactions.forms import AddPointsForm
-from transactions.models import Transaction
+from .forms import AddPointsForm
+from .models import Transaction
+from user_profile.models import UserProfile, User
+
+User = get_user_model()
 
 
 # Create your views here.
@@ -13,12 +17,16 @@ def view_points(request):
     return render(request, template_name, context)
 
 
-def add_points(request):
+def create_transaction(request, pk):
     form = AddPointsForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        user = User.objects.get(id=pk)
+        transaction = form.save(commit=False)
+        transaction.user = user
+        transaction.save()
         messages.success(request, 'Points successfully added.')
-        return redirect('')
-    template_name = ''
+        return redirect('patients:patient_list')
+
+    template_name = 'add_transaction.html'
     context = {'form': form}
     return render(request, template_name, context)

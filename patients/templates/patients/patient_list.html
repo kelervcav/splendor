@@ -60,6 +60,7 @@
                                 {% endif %}
                             </td>
                             <td>
+                                <a href="{% url 'patients:patient_info'  patient.id %}" class="pull-right text-green"><i class="fas fa-eye"></i></a>
                                 <a href="{% url 'patients:patient_edit'  patient.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="{% url 'patients:patient_disable' patient.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
                             </td>

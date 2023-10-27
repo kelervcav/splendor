@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block page_title %} Patient {% endblock page_title %}
+
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Add Points</h3>
+               </div>
+               <!-- /.card-header -->
+               <form class="form-horizontal" method="POST" novalidate>
+                  <div class="card-body">
+                     {% csrf_token %}
+                     <div class="form-group ">
+                        <label for="" class="col-md-2 control-label">Referenced ID:</label>
+                        <div class="col-md-4">
+                           {{ form.referenced_id }}
+                           <span class="help-block">{{ form.referenced_id.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Amount:</label>
+                        <div class="col-md-4">
+                           {{ form.price_amount }}
+                           <span class="help-block">{{ form.price_amount.errors }}</span>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card-footer">
+                     <button type="submit" class="btn btn-info">Save</button>
+                  </div>
+               </form>
+               <!-- /.card-body -->
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+   <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}
