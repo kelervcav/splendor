@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block page_title %} Patients {% endblock page_title %}
+{% block page_title %} Transactions {% endblock page_title %}
 
 
 {% block content %}
@@ -24,45 +24,29 @@
          <div class="col-12">
             <div class="card card-outline card-info">
                <div class="card-header">
-                  <h3 class="card-title">Patient List</h3>
-                  <div class="card-tools">
-                     <a href="{% url 'patients:patient_create' %}" class="btn btn-sm btn-block bg-gradient-success">
-                        Add Patient
-                     </a>
-                  </div>
+                  <h3 class="card-title">Patients Transactions</h3>
                </div>
                <!-- /.card-header -->
                <div class="card-body">
                   <table id="patient-table" class="table table-bordered table-hover">
                      <thead>
                         <tr>
-                            <th>USER ID</th>
-                            <th>FIRST NAME</th>
-                            <th>LAST NAME</th>
-                            <th>GENDER</th>
-                            <th>EMAIL ADDRESS</th>
-                            <th>STATUS</th>
+                            <th>ID</th>
+                            <th>REFERENCE ID</th>
+                            <th>AMOUNT</th>
+                            <th>POINTS EARNED</th>
                             <th>ACTIONS</th>
                         </tr>
                      </thead>
                      <tbody>
-                        {% for patient in patients_list %}
+                        {% for transact in transactions %}
                         <tr>
-                            <td>{{ patient.id }}</td>
-                            <td>{{ patient.first_name }}</td>
-                            <td>{{ patient.last_name }}</td>
-                            <td>{{ patient.userprofile.gender }}</td>
-                            <td>{{ patient.email }}</td>
-                            <td>{% if patient.is_active %}
-                                    <span class="badge bg-success">Active</span>
-                                {% else %}
-                                    <span class="badge bg-danger">Inactive</span>
-                                {% endif %}
-                            </td>
+                            <td>{{ transact.id }}</td>
+                            <td>{{ transact.referenced_id }}</td>
+                            <td>{{ transact.price_amount }}</td>
+                            <td>{{ transact.price_amount }}</td>
                             <td>
-                                <a href="{% url 'patients:patient_info'  patient.id %}" class="pull-right text-green"><i class="fas fa-eye"></i></a>
-                                <a href="{% url 'patients:patient_edit'  patient.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
-                                <a href="{% url 'patients:patient_disable' patient.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
+                                <a href="{% url 'patients:patient_info' transact.id %}" class="pull-right text-green"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>
                         {% endfor %}

@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from appointments.forms import BookingAppointmentForm
 from appointments.models import Appointment
 from patients.forms import RegistrationForm, CustomRegistration
+from transactions.models import Transaction
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
 from user_profile.utils import unique_id_generator
@@ -51,8 +52,9 @@ def patient_create(request):
 
 def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
+    transactions = Transaction.objects.filter(id=pk).order_by('-date_added')
     template_name = 'patients/patient_info.html'
-    context = {'patient_info': patient_info}
+    context = {'patient_info': patient_info, 'transactions': transactions}
     return render(request, template_name, context)
 
 
@@ -77,6 +79,6 @@ def patient_disable(request, pk):
     patients.is_active = False
     patients.save()
     messages.success(request, 'Patient has been disabled.')
-    return redirect('users:patient_list')
+    return redirect('patients:patient_list')
 
 

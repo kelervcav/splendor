@@ -10,14 +10,14 @@ User = get_user_model()
 
 
 # Create your views here.
-def view_points(request):
-    points = Transaction.objects.all().order_by('-date_added')
-    template_name = 'treatments/service_list.html'
-    context = {'points': points}
+def transaction_list(request):
+    transactions = Transaction.objects.all().order_by('-date_added')
+    template_name = 'transaction_list.html'
+    context = {'transactions': transactions}
     return render(request, template_name, context)
 
 
-def create_transaction(request, pk):
+def transaction_create(request, pk):
     form = AddPointsForm(request.POST or None)
     if form.is_valid():
         user = User.objects.get(id=pk)
@@ -25,8 +25,7 @@ def create_transaction(request, pk):
         transaction.user = user
         transaction.save()
         messages.success(request, 'Points successfully added.')
-        return redirect('patients:patient_list')
-
-    template_name = 'add_transaction.html'
+        return redirect('patients:patient_info', pk)
+    template_name = 'transaction_create.html'
     context = {'form': form}
     return render(request, template_name, context)
