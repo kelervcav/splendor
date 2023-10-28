@@ -22,7 +22,7 @@
       </div>
       <div class="row">
          <div class="col-12">
-            <div class="card card-outline card-info">
+            <div class="card card-outline card-primary">
                <div class="card-header">
                   <h3 class="card-title">Patient List</h3>
                   <div class="card-tools">
@@ -33,7 +33,7 @@
                </div>
                <!-- /.card-header -->
                <div class="card-body">
-                  <table id="patient-table" class="table table-bordered table-hover">
+                  <table id="patient-table" class="table table-striped projects">
                      <thead>
                         <tr>
                             <th>USER ID</th>
@@ -48,7 +48,7 @@
                      <tbody>
                         {% for patient in patients_list %}
                         <tr>
-                            <td>{{ patient.id }}</td>
+                            <th>{{ patient.id }}</th>
                             <td>{{ patient.first_name }}</td>
                             <td>{{ patient.last_name }}</td>
                             <td>{{ patient.userprofile.gender }}</td>

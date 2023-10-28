@@ -22,7 +22,7 @@
 		   </div>
       <div class="row">
          <div class="col-12">
-            <div class="card card-outline card-info">
+            <div class="card card-outline card-primary">
                <div class="card-header">
                   <h3 class="card-title">System User List</h3>
                   <div class="card-tools">
@@ -33,14 +33,15 @@
                </div>
                <!-- /.card-header -->
                <div class="card-body">
-                  <table id="users-table" class="table table-bordered table-hover">
+                  <table id="users-table" class="table table-striped projects">
                      <thead>
                         <tr>
                             <th>USER ID</th>
+                            <th>USER GROUP</th>
                             <th>FIRST NAME</th>
                             <th>LAST NAME</th>
                             <th>EMAIL ADDRESS</th>
-                            <th>USER GROUP</th>
+                            <th>MOBILE #</th>
                             <th>STATUS</th>
                             <th>ACTIONS</th>
                         </tr>
@@ -48,15 +49,16 @@
                      <tbody>
                         {% for user in users %}
                         <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.first_name }}</td>
-                            <td>{{ user.last_name }}</td>
-                            <td>{{ user.email }}</td>
+                            <th>{{ user.id }}</th>
                             <td>
                                 {% for group in user.groups.all %}
                                     {{ group.name }}
                                 {% endfor %}
                             </td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.email}}</td>
+                            <td>{{ user.mobile }}</td>
                             <td>
                                 {% if user.is_active %}
                                     <span class="badge bg-success">Active</span>

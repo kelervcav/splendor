@@ -20,7 +20,7 @@
 		   </div>
 		  <div class="row">
 			 <div class="col-12">
-				<div class="card card-outline card-info">
+				<div class="card card-outline card-primary">
 				   <div class="card-header">
 					  <h3 class="card-title">Treatment List</h3>
 					  <div class="card-tools">
@@ -31,7 +31,7 @@
 				   </div>
 				   <!-- /.card-header -->
 				   <div class="card-body">
-					  <table id="treatments-table" class="table table-bordered table-hover">
+					  <table id="treatments-table" class="table table-striped projects">
 						 <thead>
 							<tr>
 								<th>ID</th>
@@ -49,7 +49,7 @@
 						 <tbody>
 							{% for treatment in treatment_list %}
 							<tr>
-								<td>{{ treatment.id}}</td>
+								<th>{{ treatment.id}}</th>
 								<td>{{ treatment.service }}</td>
 								<td>{{ treatment.name }}</td>
 								<td>{{ treatment.description }}</td>

@@ -43,10 +43,13 @@
                         {% for transact in transactions %}
                         <tr>
                             <td>{{ transact.id }}</td>
-                            <td>{{ transact.user.first_name}}</td>
+                            <td>{{ transact.first_name}}</td>
                             <td>{{ transact.referenced_id }}</td>
                             <td>{{ transact.price_amount }}</td>
-                            <td>{{ transact.price_amount }}</td>
+                             <td> {% for points in patient_info %}
+                                    {{ points.userprofile.points }}
+                                 {% endfor %}
+                            </td>
                             <td>
                                 <a href="{% url 'patients:patient_info' transact.id %}" class="pull-right text-green"><i class="fas fa-eye"></i></a>
                             </td>

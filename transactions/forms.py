@@ -22,10 +22,3 @@ class TransactionForm(ModelForm):
         model = Transaction
         fields = ['referenced_id', 'price_amount']
 
-    # def save(self, commit=True):
-    #     transaction = super(TransactionForm, self).save(commit=False)
-    #     transaction.price_amount = self.cleaned_data['price_amount']
-    #     points = (UserProfile, transaction=transaction)
-    #
-
-

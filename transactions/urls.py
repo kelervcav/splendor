@@ -5,6 +5,5 @@ app_name = 'transactions'
 
 urlpatterns = [
     path('<int:pk>/add-points', views.transaction_create, name='transaction_create'),
-    path('transaction-list', views.transaction_list, name='transaction_list'),
 
 ]

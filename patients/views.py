@@ -3,24 +3,23 @@ from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from appointments.forms import BookingAppointmentForm
-from appointments.models import Appointment
 from patients.forms import RegistrationForm, CustomRegistration
 from transactions.models import Transaction
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
-from user_profile.utils import unique_id_generator
 
 User = get_user_model()
 
 
 # Create your views here.
-
+# Patient UI
+@login_required
 def home(request):
     return render(request, 'patients/home.html')
 
 
 @login_required
+@admin_required
 def patient_list(request):
     patients_list = User.objects.filter(is_patient=True).order_by('-created_at')
     template_name = 'patients/patient_list.html'
@@ -39,9 +38,9 @@ def patient_create(request):
         registration.is_patient = True
         registration.set_custom_password()
         registration.save()
-        custom = custom_form.save(commit=False)
-        custom.user = registration
-        custom.save()
+        gender = custom_form.save(commit=False)
+        gender.user = registration
+        gender.save()
         messages.success(request, 'Patient registered successfully.')
         return redirect('patients:patient_list')
 
@@ -50,11 +49,14 @@ def patient_create(request):
     return render(request, template_name, context)
 
 
+@login_required
+@admin_required
 def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
     transactions = Transaction.objects.filter(id=pk).order_by('-date_added')
     template_name = 'patients/patient_info.html'
-    context = {'patient_info': patient_info, 'transactions': transactions}
+    context = {'patient_info': patient_info,
+               'transactions': transactions}
     return render(request, template_name, context)
 
 

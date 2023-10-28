@@ -60,8 +60,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     GENDER_CHOICES = [
         ('', '---------'),
-        ('MALE', 'Male'),
-        ('FEMALE', 'Female'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
     ]
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, )
     notes = models.TextField(null=True, blank=True)

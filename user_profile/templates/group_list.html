@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="card card-outline card-info">
+                <div class="card card-outline card-primary">
 				   <div class="card-header">
 					  <h3 class="card-title">Group List</h3>
 					  <div class="card-tools">
@@ -30,7 +30,7 @@
 					  </div>
 				   </div>
                    <div class="card-body">
-                       <table id="group-table" class="table table-bordered table-hover">
+                       <table id="group-table" class="table table-striped projects">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -41,7 +41,7 @@
                             <tbody>
                                 {% for group in group_list %}
                                 <tr>
-                                    <td>{{group.id}}</td>
+                                    <th>{{group.id}}</th>
                                     <td>{{group.name}}</td>
                                     <td>
                                         <a href="{% url 'users:group_edit' group.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>

@@ -86,7 +86,6 @@ class RegistrationForm(forms.ModelForm):
 
 class CustomRegistration(ModelForm):
     gender = forms.ChoiceField(
-
         choices=UserProfile.GENDER_CHOICES,
         widget=forms.Select(attrs={'class': 'form-control'})
     )

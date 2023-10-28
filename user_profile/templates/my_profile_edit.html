@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block page_title %} System Users {% endblock page_title %}
+{% block page_title %} Profile {% endblock page_title %}
 
 
 {% block content %}
@@ -24,21 +24,16 @@
          <div class="col-12">
             <div class="card card-outline card-info">
                <div class="card-header">
-                  <h3 class="card-title">Edit User</h3>
+                  <h3 class="card-title">Edit Profile</h3>
                </div>
                <!-- /.card-header -->
                <form class="form-horizontal" method="POST" novalidate>
                   <div class="card-body">
                      {% csrf_token %}
-                     <div class="form-group">
-                         <div class="col-md-4">
-                             <a href="{% url 'users:own_profile_edit_password' %}"><p class="text-right">Change password</p> </a>
-                         </div>
-                     </div>
                      <div class="form-group ">
                         <label for="" class="control-label">Group:</label>
                         <div class="col-md-4">
-                            <input type="text" name="group" value="{{ user.group }}" class="form-control" maxlength="100" readonly="readonly">
+                            <input type="text" name="group" value="{{ user.userprofile.group }}" class="form-control" maxlength="100" readonly="readonly">
                             <span class="help-block"></span>
                         </div>
                      </div>
@@ -69,6 +64,11 @@
                            {{ form.mobile }}
                            <span class="help-block">{{ form.mobile.errors }}</span>
                         </div>
+                     </div>
+                      <div class="form-group">
+                         <div class="col-md-4">
+                             <a href="{% url 'users:own_profile_edit_password' %}"><p class="text-right">Change password</p> </a>
+                         </div>
                      </div>
                   </div>
                   <div class="card-footer">

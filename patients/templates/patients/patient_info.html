@@ -20,14 +20,13 @@
                 {% endif %}
             </div>
         </div>
-        <div class="card card-info">
+        <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">Patient Information</h3>
             </div>
-            <form class="form-horizontal">
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             {% for patient in patient_info %}
                              <ul class="list-group list-group mb-3">
                                  <li class="list-group-item"><b>Name</b><a class="float-right">{{ patient.first_name }} {{ patient.last_name }}</a></li>
@@ -46,14 +45,13 @@
                          </div>
                     </div>
                 </div>
-            </form>
-              <div class="card-footer">
-                      {% for patient in patient_info %}
-                    <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add</button></a>
-                    <a href="{% url 'transactions:transaction_create' patient.pk %}"><button class="btn btn-success">Redeem</button></a>
-                    <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary float-right">Edit</button></a>
-                     {% endfor %}
-                </div>
+            <div class="card-footer">
+                  {% for patient in patient_info %}
+                <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add</button></a>
+                <a href="{% url 'transactions:transaction_create' patient.pk %}"><button class="btn btn-success">Redeem</button></a>
+                <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary float-right">Edit</button></a>
+                 {% endfor %}
+            </div>
         </div>
     </div>
         <!-- /.container-fluid -->
@@ -62,26 +60,26 @@
 
 <section class="content">
     <div class="container-fluid">
-        <div class="card card-outline card-info">
+        <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">Patient Transaction</h3>
             </div>
-            <form class="form-horizontal">
-                <div class="card-body">
-                    <div class="form-group row">
-                        <div class="col-md-9">
-                             {% for transact in transactions %}
-                             <ul class="list-group list-group mb-3">
-                                 <li class="list-group-item"><b>Reference ID</b><a class="float-right">{{ transact.referenced_id }}</a></li>
-                                 <li class="list-group-item"><b>Amount</b><a class="float-right">{{ transact.price_amount }}</a></li>
-                                 <li class="list-group-item"><b>Date Earned</b><a class="float-right">{{ transact.date_added }}</a></li>
-                            </ul>
-                            {% endfor %}
-                         </div>
-                    </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                         {% for transact in transactions %}
+                         <ul class="list-group list-group mb-3">
+                             <li class="list-group-item"><b>Reference ID</b><a class="float-right">{{ transact.referenced_id }}</a></li>
+                             <li class="list-group-item"><b>Amount Paid</b><a class="float-right">{{ transact.price_amount }}</a></li>
+                             {% for point in patient_info %}
+                                <li class="list-group-item"><b>Points Earned</b><a class="float-right">{{ point.userprofile.points }}</a></li>
+                             {% endfor %}
+                             <li class="list-group-item"><b>Date Earned</b><a class="float-right">{{ transact.date_added }}</a></li>
+                        </ul>
+                        {% endfor %}
+                     </div>
                 </div>
-
-            </form>
+            </div>
         </div>
     </div>
         <!-- /.container-fluid -->
