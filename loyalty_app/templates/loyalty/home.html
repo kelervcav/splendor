@@ -8,15 +8,15 @@
 <div class="card">
     <div class="card-body">
         <div class="row-2">
-            <div class="col-sm">
+            <div class="col-md">
             {% if user.is_patient %}
             <h4 class="card-title">
                 {% if user.is_authenticated %}
-                    WELCOME, {{ user }}</h4>
+                    WELCOME, {{ user.first_name }} {{ user.last_name }}</h4>
                 {% endif %}
             {% endif %}
-            <p class="card-text">
-                Available Points: 0.00
+            <p class="float-right">
+                Available Points: {{ user.userprofile.points }}
             </p>
             </div>
         </div>

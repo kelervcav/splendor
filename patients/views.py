@@ -53,7 +53,7 @@ def patient_create(request):
 @admin_required
 def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
-    transactions = Transaction.objects.filter(id=pk).order_by('-date_added')
+    transactions = Transaction.objects.filter(id=pk).order_by('-date_added').all()
     template_name = 'patients/patient_info.html'
     context = {'patient_info': patient_info,
                'transactions': transactions}
