@@ -24,7 +24,7 @@
          <div class="col-12">
             <div class="card card-outline card-info">
                <div class="card-header">
-                  <h3 class="card-title">Patients Transactions</h3>
+                  <h3 class="card-title">Patients Transaction List</h3>
                </div>
                <!-- /.card-header -->
                <div class="card-body">
@@ -32,6 +32,7 @@
                      <thead>
                         <tr>
                             <th>ID</th>
+                            <th>NAME</th>
                             <th>REFERENCE ID</th>
                             <th>AMOUNT</th>
                             <th>POINTS EARNED</th>
@@ -42,6 +43,7 @@
                         {% for transact in transactions %}
                         <tr>
                             <td>{{ transact.id }}</td>
+                            <td>{{ transact.user.first_name}}</td>
                             <td>{{ transact.referenced_id }}</td>
                             <td>{{ transact.price_amount }}</td>
                             <td>{{ transact.price_amount }}</td>

@@ -66,23 +66,25 @@ def profile_create(request):
     return render(request, template_name, context)
 
 
-def user_profile_edit(request):
+@login_required
+@admin_required
+def my_profile_edit(request):
     user = get_object_or_404(User, id=request.user.id)
     form = UserProfileEdit(request.POST or None, instance=request.user)
     if form.is_valid():
         form.save()
         messages.success(request,
                          'Profile updated successfully.')
-        return redirect('users:user_profile_edit')
+        return redirect('users:my_profile_edit')
 
-    template_name = 'user_profile_edit.html'
-    context = {'form': form, 'user': user}
+    template_name = 'my_profile_edit.html'
+    context = {'form': form, 'user_profile': user}
     return render(request, template_name, context)
 
 
 @login_required
 @admin_required
-def profile_edit(request, pk):
+def user_profile_edit(request, pk):
     user = get_object_or_404(User, id=pk)
     group = Group.objects.filter(user=user).first()
     form = EditProfileForm(request.POST or None, instance=user, initial={'group': group})

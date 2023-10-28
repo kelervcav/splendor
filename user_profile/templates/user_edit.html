@@ -32,7 +32,7 @@
                      {% csrf_token %}
                      <div class="form-group">
                          <div class="col-md-4">
-                             <a href="{% url 'users:admin_password_update' pk=user.id %}"><p class="text-right">Change password</p></a>
+                             <a href="{% url 'users:admin_password_update' user_profile.id %}"><p class="text-right">Change password</p></a>
                          </div>
                      </div>
                      <div class="form-group ">
