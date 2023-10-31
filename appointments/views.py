@@ -68,6 +68,6 @@ def appointment_info(request):
     user = request.user
     appointment_info = Appointment.objects.filter(user=user)
     template_name = 'appointments/appointment_info.html'
-    context = {'appointment_info': appointment_info}
+    context = {'appointment_info': appointment_info, 'users': user}
     return render(request, template_name, context)
 
