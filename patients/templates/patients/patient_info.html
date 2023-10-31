@@ -47,8 +47,8 @@
                 </div>
             <div class="card-footer">
                 {% for patient in patient_info %}
-                        <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add</button></a>
-                        <a href="{% url 'transactions:transaction_create' patient.pk %}"><button class="btn btn-success">Redeem</button></a>
+                        <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add Transaction</button></a>
+                        <a href="{% url 'transactions:transaction_create' patient.pk %}"><button class="btn btn-success">Redeem Points</button></a>
                         <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary">Edit</button></a>
                         {% if date_now > patient.userprofile.account_expiry %}
                             <a href="{% url 'patients:patient_renewal' patient.id %}"><button class="btn btn-primary float-right">Renew Membership</button></a>
@@ -67,22 +67,30 @@
             <div class="card-header">
                 <h3 class="card-title">Patient Transaction</h3>
             </div>
-            <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-md-6">
+             <div class="card-body">
+                  <table id="patient-table" class="table table-striped projects">
+                     <thead>
+                        <tr>
+                            <th>USER ID</th>
+                            <th>REFERENCE ID</th>
+                            <th>AMOUNT PAID</th>
+                            <th>POINTS EARNED</th>
+                            <th>DATE EARNED</th>
+                        </tr>
+                     </thead>
+                     <tbody>
                          {% for transact in transactions %}
-                         <ul class="list-group list-group mb-3">
-                             <li class="list-group-item"><b>Reference ID</b><a class="float-right">{{ transact.referenced_id }}</a></li>
-                             <li class="list-group-item"><b>Amount Paid</b><a class="float-right">{{ transact.price_amount }}</a></li>
-                             {% for point in patient_info %}
-                                <li class="list-group-item"><b>Points Earned</b><a class="float-right">{{ point.userprofile.points }}</a></li>
-                             {% endfor %}
-                             <li class="list-group-item"><b>Date Earned</b><a class="float-right">{{ transact.date_added }}</a></li>
-                        </ul>
+                        <tr>
+                            <th>{{ transact.id }}</th>
+                            <td>{{ transact.referenced_id }}</td>
+                            <td>{{ transact.price_amount }}</td>
+                            <td>{{ transact.points }}</td>
+                            <td>{{ transact.date_added }}</td>
+                        </tr>
                         {% endfor %}
-                     </div>
-                </div>
-            </div>
+                     </tbody>
+                  </table>
+             </div>
         </div>
     </div>
         <!-- /.container-fluid -->

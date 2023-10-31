@@ -55,13 +55,14 @@ def patient_create(request):
 @admin_required
 def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
-    transactions = Transaction.objects.filter(id=pk).order_by('-date_added').all()
+    transactions = Transaction.objects.filter(user=pk).order_by('-date_added')
+    points = UserProfile.objects.filter(user=pk)
     date_now = datetime.now()
     template_name = 'patients/patient_info.html'
     context = {'patient_info': patient_info,
                'transactions': transactions,
-               'date_now': date_now,
-               }
+               'points': points,
+               'date_now': date_now}
     return render(request, template_name, context)
 
 
