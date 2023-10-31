@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -68,7 +68,7 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, )
     notes = models.TextField(null=True, blank=True)
     points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    renewal_date = models.DateTimeField(default=timezone.now)
+    account_expiry = models.DateTimeField(default=datetime.now() + timedelta(days=365))
 
     # Add any additional fields you need for your user profile
 
