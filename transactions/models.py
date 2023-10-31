@@ -9,6 +9,7 @@ class Transaction(models.Model):
     referenced_id = models.CharField(unique=True, max_length=200, default=None)
     price_amount = models.DecimalField(max_digits=8, decimal_places=2)
     date_added = models.DateTimeField(default=timezone.now)
+    points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
 
     def __str__(self):
         return self.user

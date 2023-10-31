@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block page_title %} Patient {% endblock page_title %}
+{% block page_title %} Patient: {{ users.first_name }} {{ users.last_name }}{% endblock page_title %}
 
 
 {% block content %}
