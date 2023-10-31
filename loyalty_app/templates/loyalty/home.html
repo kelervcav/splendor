@@ -2,24 +2,22 @@
 {% load static %}
 {% block title %} Home {% endblock title %}
 
-{% block header %}
-
+{% block content %}
 
 <div class="card">
     <div class="card-body">
-        <div class="row-2">
-            <div class="col-md">
-            {% if user.is_patient %}
-            <h4 class="card-title">
-                {% if user.is_authenticated %}
-                    WELCOME, {{ user.first_name }} {{ user.last_name }}</h4>
-                {% endif %}
-            {% endif %}
-            <p class="float-right">
-                Available Points: {{ user.userprofile.points }}
-            </p>
+        <div class="row">
+                <div class="col-6">
+                    {% if user.is_authenticated %}
+                        <p style="font-size:20px">WELCOME, {{ user.first_name }} {{ user.last_name }}</p>
+                    {% endif %}
+                </div>
+                <div class="col-6">
+                    <p class= "text-right" style="font-size:20px">
+                       Available Points: <b>{{ user.userprofile.total_points }}</b>
+                    </p>
+                </div>
             </div>
-        </div>
     </div>
 </div>
 
@@ -63,7 +61,7 @@
     </div>
 </div>
 
-{% endblock header %}
+{% endblock %}
 
 
 {% block main-content %}
