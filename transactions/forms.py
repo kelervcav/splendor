@@ -22,3 +22,5 @@ class TransactionForm(ModelForm):
         model = Transaction
         fields = ['referenced_id', 'price_amount']
 
+
+

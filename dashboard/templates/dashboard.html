@@ -53,7 +53,18 @@
          <!-- ./col -->
       </div>
       <!-- /.row -->
-
+       <div class="row">
+           <div class="col-12">
+               {% if messages %}
+                <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                  {% for message in messages %}
+                    <span class="lh-1">{{ message }}</span>
+                  {% endfor %}
+                </div>
+                {% endif %}
+           </div>
+       </div>
       <div class="row">
          <div class="col-12">
             <div class="card card-outline card-info">
@@ -81,10 +92,10 @@
                                <td>{{ appointment.treatment }}</td>
                                <td>{{ appointment.date }}</td>
                                <td>{{ appointment.time }}</td>
-                               <td>{% if appointment.status %}
-                                    <span class="badge bg-danger">Pending</span>
-                                   {% else %}
+                               <td>{% if appointment.is_approve %}
                                     <span class="badge bg-success">Approved</span>
+                                   {% else %}
+                                    <span class="badge bg-danger">Pending</span>
                                    {% endif %}
                                </td>
                                <td>

@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from patients.forms import RegistrationForm, CustomRegistration
+from patients.forms import RegistrationForm, CustomRegistration, MembershipRenewalForm
 from transactions.models import Transaction
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
@@ -82,5 +82,19 @@ def patient_disable(request, pk):
     patients.save()
     messages.success(request, 'Patient has been disabled.')
     return redirect('patients:patient_list')
+
+
+def patient_renewal(request, pk):
+    patient = get_object_or_404(User, id=pk)
+    form = MembershipRenewalForm(request.POST or None, instance=patient)
+    if form.is_valid():
+        if patient.created_at <= patient.renewal_date:
+            patient.is_active = False
+            patient.renew()
+            patient.save()
+        form.save()
+    template_name = 'patients/patient_renewal.html'
+    context = {'form': form}
+    return render(request, template_name, context)
 
 

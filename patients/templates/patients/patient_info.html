@@ -46,11 +46,15 @@
                     </div>
                 </div>
             <div class="card-footer">
-                  {% for patient in patient_info %}
-                <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add</button></a>
-                <a href="{% url 'transactions:transaction_create' patient.pk %}"><button class="btn btn-success">Redeem</button></a>
-                <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary float-right">Edit</button></a>
-                 {% endfor %}
+                {% for patient in patient_info %}
+                    {% if patient.is_active %}
+                        <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add</button></a>
+                        <a href="{% url 'transactions:transaction_create' patient.pk %}"><button class="btn btn-success">Redeem</button></a>
+                        <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary">Edit</button></a>
+                    {% else %}
+                        <a href="{% url 'patients:patient_renewal' patient.id %}"><button class="btn btn-primary float-right">Renew Membership</button></a>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>

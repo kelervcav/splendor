@@ -213,3 +213,4 @@ class AdminEditPasswordForm(AdminPasswordChangeForm):
                                     attrs={
                                         'class': 'form-control'}))
 
+

@@ -14,7 +14,7 @@ def home(request):
 def process_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
-        password = request.POST.get('custom_password')
+        password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
 
@@ -25,13 +25,13 @@ def process_login(request):
 
             else:
                 messages.error(request, "Your username and password didn't match. Please try again.")
-                return render(request, 'loyalty/loyalty_login.html')
+                return render(request, 'customer_base_login.html')
 
         else:
             messages.error(request, "Your username and password didn't match. Please try again.")
-            return render(request, 'loyalty/loyalty_login.html')
+            return render(request, 'customer_base_login.html')
 
-    return render(request, 'loyalty/loyalty_login.html',)
+    return render(request, 'customer_base_login.html',)
 
 
 def process_logout(request):

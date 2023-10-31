@@ -22,7 +22,28 @@
 .fa-eye:before{
     margin-right: 25px;
 }
+
 .content-header h1{
     margin-bottom:10px;
 }
 
+.background-div {
+    background: url('../img/loginbg.png') no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    height: 740px;
+    padding-top: 100px;
+
+}
+
+.banner-title {
+   text-shadow: 1px 1px 0 #FAFAFA;
+   color: #19529C;
+}
+
+.banner-description {
+  text-shadow: 1.5px 1.5px 5px #0F0F0F;
+   color: #FFFFFF;
+}

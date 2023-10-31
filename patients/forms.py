@@ -95,3 +95,28 @@ class CustomRegistration(ModelForm):
         fields = ['gender']
 
 
+class MembershipRenewalForm(ModelForm):
+    email = forms.EmailField(
+        max_length=200,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+
+    mobile = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'name': 'mobile'}
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^\d{11}$',
+                message="Phone number must be in format 09123456789"
+            )
+        ]
+    )
+
+    class Meta:
+        model = User
+        fields = ['email', 'mobile']
+
