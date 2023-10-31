@@ -65,9 +65,9 @@ class UserProfile(models.Model):
         ('Male', 'Male'),
         ('Female', 'Female'),
     ]
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, )
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     notes = models.TextField(null=True, blank=True)
-    points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    total_points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     account_expiry = models.DateTimeField(default=datetime.now() + timedelta(days=365))
 
     # Add any additional fields you need for your user profile
