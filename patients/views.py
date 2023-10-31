@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -54,9 +56,12 @@ def patient_create(request):
 def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
     transactions = Transaction.objects.filter(id=pk).order_by('-date_added').all()
+    date_now = datetime.now()
     template_name = 'patients/patient_info.html'
     context = {'patient_info': patient_info,
-               'transactions': transactions}
+               'transactions': transactions,
+               'date_now': date_now,
+               }
     return render(request, template_name, context)
 
 
@@ -86,15 +91,20 @@ def patient_disable(request, pk):
 
 def patient_renewal(request, pk):
     patient = get_object_or_404(User, id=pk)
+    user_profile = UserProfile.objects.get(user=patient)
     form = MembershipRenewalForm(request.POST or None, instance=patient)
     if form.is_valid():
-        if patient.created_at <= patient.renewal_date:
-            patient.is_active = False
-            patient.renew()
-            patient.save()
-        form.save()
+        renewal = form.save()
+        renewal.save()
+        renewal_duration = timedelta(days=365)
+        new_expiry_date = user_profile.account_expiry + renewal_duration
+        user_profile.account_expiry = new_expiry_date
+        user_profile.save()
+        messages.success(request, 'User membership account successfully renewed.')
+        return redirect('patients:patient_info', pk)
+
     template_name = 'patients/patient_renewal.html'
-    context = {'form': form}
+    context = {'form': form, 'patient': patient}
     return render(request, template_name, context)
 
 
