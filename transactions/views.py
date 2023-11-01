@@ -29,8 +29,9 @@ def transaction_create(request, pk):
         transaction.save()
         user_profile.total_points += transaction.points
         user_profile.save()
-        messages.success(request, 'Points successfully added.')
+        messages.success(request, 'Points added successfully.')
         return redirect('patients:patient_info', pk)
     template_name = 'transaction_create.html'
-    context = {'form': form, 'users':user}
+    context = {'form': form, 'users': user}
     return render(request, template_name, context)
+
