@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block page_title %} Patient: {{ users.first_name }} {{ users.last_name }} {% endblock page_title %}
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Redeem Points</h3>
+               </div>
+               <!-- /.card-header -->
+               <form class="form-horizontal" method="POST" novalidate>
+                  <div class="card-body">
+                     {% csrf_token %}
+                     <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Enter points:</label>
+                        <div class="col-md-4">
+                           {{ form.redeemed_points }}
+                           <span class="help-block">{{ form.redeemed_points.errors }}</span>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card-footer">
+                     <button type="submit" class="btn btn-info">Redeem</button>
+                  </div>
+               </form>
+               <!-- /.card-body -->
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+   <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}
