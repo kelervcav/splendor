@@ -48,7 +48,9 @@
             <div class="card-footer">
                 {% for patient in patient_info %}
                         <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add Transaction</button></a>
-                        <a href="{% url 'transactions:transaction_create' patient.pk %}"><button class="btn btn-success">Redeem Points</button></a>
+                        {% if patient.userprofile.total_points > 0 %}
+                            <a href="{% url 'redemptions:redeem_points' patient.id %}"><button class="btn btn-success">Redeem Points</button></a>
+                        {% endif %}
                         <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary">Edit</button></a>
                         {% if date_now > patient.userprofile.account_expiry %}
                             <a href="{% url 'patients:patient_renewal' patient.id %}"><button class="btn btn-primary float-right">Renew Membership</button></a>
@@ -66,9 +68,12 @@
         <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">Patient Transaction</h3>
+                {% for patient in patient_info %}
+                <a href="{% url 'redemptions:redeemed_points_list' patient.id %}" ><button class="btn btn-info float-right">Redeemed</button></a>
+                {% endfor %}
             </div>
              <div class="card-body">
-                  <table id="patient-table" class="table table-striped projects">
+                  <table id="patient_info-table" class="table table-striped projects">
                      <thead>
                         <tr>
                             <th>USER ID</th>
@@ -99,6 +104,20 @@
 
 {% endblock content %}
 
-{% block script %}
 
+{% block script %}
+    <script>
+      $(function () {
+        $('#patient_info-table').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": false,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+          "pageLength": 10,
+        });
+      });
+    </script>
 {% endblock script %}
