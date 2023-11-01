@@ -18,7 +18,6 @@ def home(request):
 
 
 def process_login(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -47,7 +46,3 @@ def process_login(request):
 
     return render(request, 'customer_base_login.html',)
 
-
-def process_logout(request):
-    logout(request)
-    return HttpResponseRedirect('/')
