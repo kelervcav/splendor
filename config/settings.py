@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'appointments',
     'loyalty_app',
     'transactions',
+    'redemptions',
 ]
 
 MIDDLEWARE = [
