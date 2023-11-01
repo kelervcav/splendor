@@ -17,13 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.contrib.auth import views as auth_views
+
+from loyalty_app.views import process_login
 from user_profile.views import process_admin_login
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('admin/', process_admin_login, name='login'),
+    path('', process_login, name='loyalty_login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
-
+    path('/logout/', auth_views.LogoutView.as_view(next_page='loyalty_login'), name='loyalty_logout'),
     path('dashboard/', include('dashboard.urls'), name='dashboard'),
     path('users/', include('user_profile.urls'), name='users'),
     path('treatments/', include('treatments.urls'), name='treatments'),
