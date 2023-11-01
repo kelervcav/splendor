@@ -73,10 +73,14 @@
                 {% endfor %}
             </div>
              <div class="card-body">
+                 {% for total in total_points %}
+                   <p>Total Points: <b>{{ total.total_points|floatformat:0|add:0 }}</b></p>
+
+                 {% endfor %}
                   <table id="patient_info-table" class="table table-striped projects">
                      <thead>
                         <tr>
-                            <th>USER ID</th>
+                            <th>ID</th>
                             <th>REFERENCE ID</th>
                             <th>AMOUNT PAID</th>
                             <th>POINTS EARNED</th>
@@ -111,7 +115,7 @@
         $('#patient_info-table').DataTable({
           "paging": true,
           "lengthChange": false,
-          "searching": true,
+          "searching": false,
           "ordering": false,
           "info": true,
           "autoWidth": false,
