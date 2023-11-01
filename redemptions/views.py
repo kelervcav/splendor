@@ -19,16 +19,19 @@ def redeem_points(request, pk):
         redeem = form.save(commit=False)
         redeem.user = user
         redeem.redeem_points = form.cleaned_data['redeemed_points']
-        user_profile.total_points -= redeem.redeem_points
-        user_profile.save()
-        if redemption is not None:
-            redemption.redeemed_points += redeem.redeem_points
+        if redeem.redeem_points <= user_profile.total_points:
+            user_profile.total_points -= redeem.redeem_points
+            user_profile.save()
+            if redemption is not None:
+                redemption.redeemed_points += redeem.redeem_points
+            else:
+                redemption = Redemption(user=user, redeemed_points=redeem.redeem_points)
+            redeem.save()
+            redemption.save()
+            messages.success(request, 'Points redeemed successfully.')
+            return redirect('redemptions:redeemed_points_list', pk)
         else:
-            redemption = Redemption(user=user, redeemed_points=redeem.redeem_points)
-        redeem.save()
-        redemption.save()
-        messages.success(request, 'Points redeemed successfully.')
-        return redirect('redemptions:redeemed_points_list', pk)
+            messages.error(request, "Insufficient amount of points.")
     template_name = 'redeem_points.html'
     context = {'form': form, 'users': user}
     return render(request, template_name, context)

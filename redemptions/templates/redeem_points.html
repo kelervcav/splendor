@@ -9,6 +9,14 @@
    <div class="container-fluid">
       <div class="row">
          <div class="col-12">
+              {% if messages %}
+           <div class="alert alert-danger alert-dismissible">
+               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+               {% for message in messages %}
+               <span class="lh-1">{{ message }}</span>
+               {% endfor %}
+           </div>
+           {% endif %}
             <div class="card card-outline card-info">
                <div class="card-header">
                   <h3 class="card-title">Redeem Points</h3>
