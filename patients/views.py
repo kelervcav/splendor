@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from patients.forms import RegistrationForm, CustomRegistration, MembershipRenewalForm
+from redemptions.models import Redemption
 from transactions.models import Transaction
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
