@@ -1,6 +1,6 @@
 {% load static %}
 
-<a href="../../index3.html" class="navbar-brand">
+<a href="{% url 'loyalty:home' %}" class="navbar-brand">
     <img src="{% static 'dist/img/splendor_logo.png' %}" class="brand-image" alt="Image Logo" width="100%">
 </a>
 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,19 +9,19 @@
 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="{% url 'loyalty:home' %}" class="nav-link">Home</a>
+            <a href="{% url 'loyalty:home' %}" class="nav-link">HOME</a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'offers:offer_list_loyalty' %}" class="nav-link">Offers</a>
+            <a href="{% url 'offers:offer_list_loyalty' %}" class="nav-link">OFFERS</a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'offers:offer_list_loyalty' %}" class="nav-link">Transactions</a>
+            <a href="{% url 'transactions:transaction_history' %}" class="nav-link">TRANSACTIONS</a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'appointments:appointment_create' %}" class="nav-link">Book Appointment</a>
+            <a href="{% url 'appointments:appointment_create' %}" class="nav-link">BOOK APPOINTMENT</a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'appointments:appointment_info' %}" class="nav-link">View Appointment</a>
+            <a href="{% url 'appointments:appointment_info' %}" class="nav-link">VIEW APPOINTMENT</a>
         </li>
     </ul>
 </div>

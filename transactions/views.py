@@ -35,3 +35,12 @@ def transaction_create(request, pk):
     context = {'form': form, 'users': user}
     return render(request, template_name, context)
 
+
+def transaction_history(request):
+    user = User.objects.all()
+    transaction_list = Transaction.objects.all()
+    template_name = 'transaction_history_list.html'
+    context = {'transaction_list': transaction_list, 'users': user}
+    return render(request, template_name, context)
+
+

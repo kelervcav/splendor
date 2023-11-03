@@ -1,78 +1,44 @@
 {% extends 'customer_base.html' %}
 
-{% block title %}
-    Appointment
-{% endblock %}
+{% block title %} Appointment {% endblock %}
 
 {% block content %}
 
-    <div class="card card-outline card-info">
-        <div class="card-header text-dark border-bottom-0">
-          <h3 class="card-title">Patient Information</h3>
-        </div>
-        <div class="card-body pt-3">
-            <div class="row">
-                <div class="col-12">
-                    {% for appointment in appointment_info %}
-                     <ul class="list-group list-group ml-1">
-                         <li class="list-group-item"><h6>{{ appointment.treatment }}
-                             <p class="float-right">{{ appointment.date }} at {{ appointment.time }}</p></h6>
-                         </li>
-                         <div class="text-right pt-2 pb-2">
-                                 {% if appointment.is_approved %}
-                                    <i class="far fa-check-circle" style="color: #25993F"> Appointment approved</i>
-                                 {% else %}
-                                    <i class="far fa-clock" style="color: #fd7012;"> Pending</i>
-                                 {% endif %}
-                         </div>
-                     </ul>
-                    {% endfor %}
-                </div>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 pl-0">
+                <p style="font-size: 27px">Booked Appointment</p>
             </div>
         </div>
-        <div class="card-footer"></div>
     </div>
+</section>
 
-
-<!--<section class="content">-->
-<!--    <div class="container-fluid">-->
-<!--        <div class="row">-->
-<!--            <div class="col-12">-->
-<!--                {% if messages %}-->
-<!--                <div class="alert alert-success alert-dismissible">-->
-<!--                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>-->
-<!--                    {% for message in messages %}-->
-<!--                    <span class="lh-1">{{ message }}</span>-->
-<!--                    {% endfor %}-->
-<!--                </div>-->
-<!--                {% endif %}-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="card">-->
-<!--            <div class="card-header">-->
-<!--                <h3 class="card-title">Patient Information</h3>-->
-<!--            </div>-->
-<!--                <div class="card-body">-->
-<!--                    <div class="form-group row">-->
-<!--                        <div class="col-md-12">-->
-<!--                            {% for appointment in appointment_info %}-->
-<!--                             <ul class="list-group list-group mb-3">-->
-<!--                                 <li class="list-group-item"><b>Treatment</b><a class="float-right">{{ appointment.treatment }}</a></li>-->
-<!--                                 <li class="list-group-item"><b>Date</b><a class="float-right">{{ appointment.date }}</a></li>-->
-<!--                                 <li class="list-group-item"><b>Time</b><a class="float-right">{{ appointment.time }}</a></li>-->
-<!--                                 <li class="list-group-item"><b>Status</b><a class="float-right">{{ appointment.is_approved }}</a></li>-->
-<!--                            </ul>-->
-<!--                            {% endfor %}-->
-<!--                         </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            <div class="card-footer">-->
-
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--        &lt;!&ndash; /.container-fluid &ndash;&gt;-->
-<!--</section>-->
-<!--&lt;!&ndash; /.content &ndash;&gt;-->
+<div class="card card-outline card-info">
+    <div class="card-header text-dark border-bottom-0">
+      <h3 class="card-title">Patient Information</h3>
+    </div>
+    <div class="card-body pt-3">
+        <div class="row">
+            <div class="col-12">
+                {% for appointment in appointment_info %}
+                 <ul class="list-group list-group ml-0">
+                     <li class="list-group-item pt-4"><h6>{{ appointment.treatment }}
+                         <p class="float-right">{{ appointment.date }} | {{ appointment.time }}</p></h6>
+                     </li>
+                     <div class="text-right pt-2 pb-3">
+                         {% if appointment.is_approved %}
+                            <i class="far fa-check-circle" style="color: #25993F"> Appointment approved</i>
+                         {% else %}
+                            <i class="far fa-clock" style="color: #fd7012;"> Pending</i>
+                         {% endif %}
+                     </div>
+                 </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer"></div>
+</div>
 
 {% endblock %}
