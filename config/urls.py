@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.contrib.auth import views as auth_views
-
+from django.conf import settings
+from django.conf.urls.static import static
 from loyalty_app.views import process_login
 from user_profile.views import process_admin_login
 
@@ -32,7 +33,10 @@ urlpatterns = [
     path('treatments/', include('treatments.urls'), name='treatments'),
     path('patients/', include('patients.urls'), name='patients'),
     path('appointments/', include('appointments.urls'), name='appointments'),
-    path('loyalty/', include('loyalty_app.urls'), name='loyalty'),
+    path('', include('loyalty_app.urls'), name='loyalty'),
     path('transactions/', include('transactions.urls'), name='transactions'),
     path('redemptions/', include('redemptions.urls'), name='redemptions'),
+    path('offers/', include('offers.urls'), name='offers'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

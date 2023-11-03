@@ -5,23 +5,6 @@
 {% block content %}
 
 <div class="card">
-    <div class="card-body">
-        <div class="row">
-                <div class="col-6">
-                    {% if user.is_authenticated %}
-                        <p style="font-size:20px">WELCOME, {{ user.first_name }} {{ user.last_name }}</p>
-                    {% endif %}
-                </div>
-                <div class="col-6">
-                    <p class= "text-right" style="font-size:20px">
-                       Available Points: <b>{{ user.userprofile.total_points }}</b>
-                    </p>
-                </div>
-            </div>
-    </div>
-</div>
-
-<div class="card">
     <div class="card-group">
         <div class="card">
             <div id="carouselExampleSlidesOnly1" class="carousel slide" data-bs-ride="carousel">

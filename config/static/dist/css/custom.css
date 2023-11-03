@@ -47,3 +47,6 @@
   text-shadow: 1.5px 1.5px 5px #0F0F0F;
    color: #FFFFFF;
 }
+.text-right {
+    text-align: right;
+}
