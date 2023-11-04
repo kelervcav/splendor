@@ -72,15 +72,19 @@ def patient_info(request, pk):
 @login_required
 def patient_edit(request, pk):
     patient = get_object_or_404(User, id=pk)
-    form = RegistrationForm(request.POST or None, instance=patient)
-    if form.is_valid():
-        patient = form.save()
-        patient.is_patient = True
-        patient.save()
+    registration_form = RegistrationForm(request.POST or None, instance=patient)
+    custom_form = CustomRegistration(request.POST or None, instance=patient.userprofile)
+    if registration_form.is_valid() and custom_form.is_valid():
+        registration = registration_form.save(commit=False)
+        registration.is_patient = True
+        registration.save()
+        gender = custom_form.save(commit=False)
+        gender.user = registration
+        gender.save()
         messages.success(request, 'Patient has been edited successfully.')
         return redirect('patients:patient_edit', pk)
     template_name = 'patients/patient_edit.html'
-    context = {'form': form, 'patient': patient}
+    context = {'registration_form': registration_form, 'patient': patient, 'custom_form': custom_form}
     return render(request, template_name, context)
 
 
