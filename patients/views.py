@@ -116,3 +116,13 @@ def patient_renewal(request, pk):
     return render(request, template_name, context)
 
 
+@login_required
+@admin_required
+def reset_password(request, pk):
+    patient = get_object_or_404(User, id=pk)
+    template_name = 'patients/patient_reset_password.html'
+    context = {'patient': patient}
+    return render(request, template_name, context)
+
+
+
