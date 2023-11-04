@@ -1,21 +1,22 @@
+from datetime import datetime
+
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 
-from offers.forms import OfferDiscountForm
-from offers.models import Discount
+from offers.forms import OfferForm
+from offers.models import Offer
 
 
 # Create your views here.
 def offer_list(request):
-    offer_list = Discount.objects.all()
+    offer_list = Offer.objects.all()
     template_name = 'offer_list.html'
     context = {'offer_list': offer_list}
     return render(request, template_name, context)
 
 
 def offer_create(request):
-
-    form = OfferDiscountForm(request.POST or None, request.FILES or None)
+    form = OfferForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
         messages.success(request, 'Offer created successfully.')
@@ -26,8 +27,8 @@ def offer_create(request):
 
 
 def offer_edit(request, pk):
-    offer = get_object_or_404(Discount, id=pk)
-    form = OfferDiscountForm(request.POST or None, request.FILES or None, instance=offer)
+    offer = get_object_or_404(Offer, id=pk)
+    form = OfferForm(request.POST or None, request.FILES or None, instance=offer)
     if form.is_valid():
         form.save()
         messages.success(request, 'Offer has been edited successfully.')
@@ -38,15 +39,20 @@ def offer_edit(request, pk):
 
 
 def offer_disable(request, pk):
-    offer = get_object_or_404(Discount, id=pk)
-    offer.is_discount_active = False
+    offer = get_object_or_404(Offer, id=pk)
+    offer.is_offer_active = False
     offer.save()
     messages.success(request, 'Offer has been disabled.')
     return redirect('offers:offer_list')
 
 
+# For patient
 def offer_list_loyalty(request):
-    offers = Discount.objects.filter(is_discount_active=True)
+    offers = Offer.objects.filter(is_offer_active=True)
+    date_now = datetime.now()
     template_name = 'offer_list_loyalty.html'
-    context = {'offers': offers}
+    context = {'offers': offers, 'date_now': date_now}
     return render(request, template_name, context)
+
+
+

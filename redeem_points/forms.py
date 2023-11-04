@@ -1,9 +1,9 @@
 from django.forms import ModelForm
 from django import forms
-from redemptions.models import Redemption
+from redeem_points.models import RedeemPoints
 
 
-class RedemptionForm(ModelForm):
+class RedeemPointsForm(ModelForm):
     redeemed_points = forms.IntegerField(
         widget=forms.TextInput(
             attrs={
@@ -11,5 +11,5 @@ class RedemptionForm(ModelForm):
     )
 
     class Meta:
-        model = Redemption
+        model = RedeemPoints
         fields = ['redeemed_points']

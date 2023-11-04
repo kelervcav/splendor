@@ -24,7 +24,7 @@
          <div class="col-12">
             <div class="card card-outline card-info">
                <div class="card-header">
-                  <h3 class="card-title">Add Discount Offer</h3>
+                  <h3 class="card-title">Add Offer</h3>
                </div>
                <!-- /.card-header -->
                <form class="form-horizontal" method="POST" enctype="multipart/form-data" novalidate>
@@ -44,22 +44,15 @@
                            <span class="help-block">{{ form.code.errors }}</span>
                         </div>
                      </div>
-                     <div class="form-group">
-                        <label for="" class="col-md-2 control-label">Start Date:</label>
+                      <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Offer Discount:</label>
                         <div class="col-md-4">
-                           {{ form.start_date }}
-                           <span class="help-block">{{ form.start_date.errors }}</span>
+                           {{ form.percentage_discount }}
+                           <span class="help-block">{{ form.percentage_discount.errors }}</span>
                         </div>
                      </div>
                       <div class="form-group">
-                        <label for="" class="col-md-2 control-label">End Date:</label>
-                        <div class="col-md-4">
-                           {{ form.end_date }}
-                           <span class="help-block">{{ form.end_date.errors }}</span>
-                        </div>
-                     </div>
-                      <div class="form-group">
-                        <label for="" class="col-md-2 control-label">Discount Image:</label>
+                        <label for="" class="col-md-2 control-label">Image:</label>
                         <div class="col-md-4">
                             <input type="file" name="offer_image" id="offer_image">
                            <span class="help-block"></span>
@@ -67,7 +60,7 @@
                      </div>
                      <div class="form-check">
                          <div class="col-md-4">
-                             {{ form.is_discount_active }}
+                             {{ form.is_offer_active }}
                              <label class="form-check-label" for="">Is active?</label>
                          </div>
                      </div>

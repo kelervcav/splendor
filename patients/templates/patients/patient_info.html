@@ -49,7 +49,7 @@
                 {% for patient in patient_info %}
                 <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add Transaction</button></a>
                 {% if patient.userprofile.total_points > 0 %}
-                <a href="{% url 'redemptions:redeem_points' patient.id %}"><button class="btn btn-success">Redeem Points</button></a>
+                <a href="{% url 'redeem_points:redeem_points' patient.id %}"><button class="btn btn-success">Redeem Points</button></a>
                 {% endif %}
                 <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary">Edit</button></a>
                 {% if date_now > patient.userprofile.account_expiry %}

@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from patients.forms import RegistrationForm, CustomRegistration, MembershipRenewalForm
-from redemptions.models import Redemption
+from redeem_points.models import RedeemPoints
 from transactions.models import Transaction
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
@@ -58,7 +58,7 @@ def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
     transactions = Transaction.objects.filter(user=pk).order_by('-date_added')
     total_points = UserProfile.objects.filter(user=pk)
-    redeemed_list = Redemption.objects.filter(user=pk).order_by('-date_redeemed')
+    redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')
     date_now = datetime.now()
     template_name = 'patients/patient_info.html'
     context = {'patient_info': patient_info,

@@ -10,7 +10,7 @@
       <div class="row">
          <div class="col-12">
              {% if messages %}
-              <div class="alert alert-success alert-dismissible">
+              <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
                 {% for message in messages %}
                   <span class="lh-1">{{ message }}</span>
@@ -21,17 +21,17 @@
          <div class="col-12">
             <div class="card card-outline card-info">
                <div class="card-header">
-                  <h3 class="card-title">Add Points</h3>
+                  <h3 class="card-title">Add Transaction</h3>
                </div>
                <!-- /.card-header -->
                <form class="form-horizontal" method="POST" novalidate>
                   <div class="card-body">
                      {% csrf_token %}
                      <div class="form-group ">
-                        <label for="" class="col-md-2 control-label">Referenced ID:</label>
+                        <label for="" class="col-md-2 control-label">Reference ID:</label>
                         <div class="col-md-4">
-                           {{ form.referenced_id }}
-                           <span class="help-block">{{ form.referenced_id.errors }}</span>
+                           {{ form.reference_id }}
+                           <span class="help-block">{{ form.reference_id.errors }}</span>
                         </div>
                      </div>
                      <div class="form-group">
@@ -39,6 +39,13 @@
                         <div class="col-md-4">
                            {{ form.price_amount }}
                            <span class="help-block">{{ form.price_amount.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Offer Code:</label>
+                        <div class="col-md-4">
+                           {{ form.offer_code }}
+                           <span class="help-block">{{ form.offer_code.errors }}</span>
                         </div>
                      </div>
                   </div>

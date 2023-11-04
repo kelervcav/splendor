@@ -37,8 +37,7 @@
                             <th>ID</th>
                             <th>TITLE</th>
                             <th>CODE</th>
-                            <th>START TIME</th>
-                            <th>END TIME</th>
+                            <th>DISCOUNT</th>
                             <th>IMAGE</th>
                             <th>STATUS</th>
                             <th>ACTIONS</th>
@@ -51,10 +50,9 @@
                                <th>{{ offer.id }}</th>
                                <td>{{ offer.title }}</td>
                                <td>{{ offer.code }}</td>
-                               <td>{{ offer.start_date }}</td>
-                               <td>{{ offer.end_date }}</td>
+                               <td>{{ offer.percentage_discount }}</td>
                                <td><img src="{{ MEDIA_URL }}{{offer.offer_image.url}}" alt="Offer Image" width="150"></td>
-                               <td>{% if offer.is_discount_active %}
+                               <td>{% if offer.is_offer_active %}
                                         <span class="badge bg-success">Active</span>
                                     {% else %}
                                         <span class="badge bg-danger">Inactive</span>

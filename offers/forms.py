@@ -1,10 +1,10 @@
 from django.forms import ModelForm
 from django import forms
 
-from offers.models import Discount
+from offers.models import Offer
 
 
-class OfferDiscountForm(ModelForm):
+class OfferForm(ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -17,16 +17,10 @@ class OfferDiscountForm(ModelForm):
                 'class': 'form-control'}),
     )
 
-    start_date = forms.DateField(
-        widget=forms.NumberInput(
-            attrs={'type': 'date',
-                   'class': 'form-control'}),
-    )
-
-    end_date = forms.DateField(
-        widget=forms.NumberInput(
-            attrs={'type': 'date',
-                   'class': 'form-control'}),
+    percentage_discount = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'}),
     )
 
     offer_image = forms.ImageField(
@@ -35,7 +29,7 @@ class OfferDiscountForm(ModelForm):
                 'class': 'form-control'}),
     )
 
-    is_discount_active = forms.BooleanField(
+    is_offer_active = forms.BooleanField(
         required=False,
         widget=forms.CheckboxInput(
             attrs={
@@ -43,10 +37,10 @@ class OfferDiscountForm(ModelForm):
     )
 
     class Meta:
-        model = Discount
+        model = Offer
         fields = ['title',
                   'code',
-                  'start_date',
-                  'end_date',
+                  'percentage_discount',
                   'offer_image',
-                  'is_discount_active']
+                  'is_offer_active']
+

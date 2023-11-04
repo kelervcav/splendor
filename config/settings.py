@@ -55,8 +55,8 @@ INSTALLED_APPS = [
     'appointments',
     'loyalty_app',
     'transactions',
-    'redemptions',
-    'offers'
+    'redeem_points',
+    'offers',
 ]
 
 MIDDLEWARE = [
