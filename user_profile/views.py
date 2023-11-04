@@ -11,8 +11,6 @@ from django.contrib.auth.mixins import (
 
 from user_profile.forms import ProfileCreationForm, EditProfileForm, AdminEditPasswordForm, UserProfileEdit
 from .decorators import admin_required
-from .models import UserProfile
-from .utils import unique_id_generator
 
 
 User = get_user_model()
@@ -189,5 +187,7 @@ def profile_edit_password(request):
     template_name = 'user_profile_edit_password.html'
     context = {'form': form}
     return render(request, template_name, context)
+
+
 
 

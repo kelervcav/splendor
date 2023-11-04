@@ -78,6 +78,11 @@
                              <label class="form-check-label" for="">Is active?</label>
                          </div>
                      </div>
+                       <div class="form-group">
+                         <div class="col-md-4">
+                             <a href="{% url 'patients:reset_password' patient.id %}"><p class="text-right">Reset password</p> </a>
+                         </div>
+                     </div>
                   </div>
                   <div class="card-footer">
                      <button type="submit" class="btn btn-info">Save</button>
