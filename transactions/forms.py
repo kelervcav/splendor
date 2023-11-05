@@ -32,10 +32,6 @@ class TransactionForm(ModelForm):
 
             except Offer.DoesNotExist:
                 raise forms.ValidationError('Invalid offer code.')
-
-            except not Transaction.is_code_used:
-                raise forms.ValidationError('Code was already used.')
-
         return offer_code
 
     class Meta:

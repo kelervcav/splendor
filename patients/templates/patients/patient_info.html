@@ -28,7 +28,7 @@
                             <li class="list-group-item"><b>Email</b><a class="float-right">{{ patient.email }}</a></li>
                             <li class="list-group-item"><b>Gender</b><a class="float-right">{{ patient.userprofile.gender }}</a></li>
                             <li class="list-group-item"><b>Mobile</b><a class="float-right">{{ patient.mobile }}</a></li>
-                            <li class="list-group-item"><b>Birthdate</b><a class="float-right">{{ patient.date_of_birth }}</a></li>
+                            <li class="list-group-item"><b>Birthdate</b><a class="float-right">{{ patient.date_of_birth|date:"d M Y" }}</a></li>
                             {% for total in total_points %}
                                <li class="list-group-item"><b>Points Earned</b><a class="float-right">{{ total.total_points}}</a></li>
                             {% endfor %}
@@ -74,21 +74,24 @@
                         <table id="patient_info-table" class="table table-striped projects">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>REFERENCE ID</th>
-                                    <th>AMOUNT PAID</th>
-                                    <th>POINTS EARNED</th>
-                                    <th>DATE EARNED</th>
+                                    <th>CODE</th>
+                                    <th>AMOUNT</th>
+                                    <th>POINTS</th>
+                                    <th>DATE</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for transact in transactions %}
                                 <tr>
-                                    <th>{{ transact.id }}</th>
-                                    <td>{{ transact.referenced_id }}</td>
-                                    <td>{{ transact.price_amount }}</td>
+                                    <td>{{ transact.reference_id }}</td>
+                                    <td>{{ transact.offer_code }}</td>
+                                    {% if transact.offer_code %}
+                                        <td>{{ transact.discounted_amount }}</td>
+                                    {% else %}
+                                        <td>{{ transact.price_amount }}</td>
                                     <td>{{ transact.points }}</td>
-                                    <td>{{ transact.date_added }}</td>
+                                    <td>{{ transact.date_added|date:"d M Y" }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -116,7 +119,7 @@
                                 <tr>
                                     <th>{{ redeem.id }}</th>
                                     <td>{{ redeem.redeemed_points }}</td>
-                                    <td>{{ redeem.date_redeemed }}</td>
+                                    <td>{{ redeem.date_redeemed|date:"d M Y" }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

@@ -10,8 +10,8 @@ class Transaction(models.Model):
     price_amount = models.DecimalField(max_digits=8, decimal_places=2)
     date_added = models.DateTimeField(auto_now_add=True)
     points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    offer_code = models.CharField(max_length=50)
-    is_code_used = models.BooleanField(default=False)
+    offer_code = models.CharField(null=True, max_length=50)
+    discounted_amount = models.DecimalField(default=0.00, max_digits=8, decimal_places=2)
 
     def __str__(self):
         return self.user
