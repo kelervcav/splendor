@@ -126,5 +126,3 @@ def reset_password(request, pk):
 
 
 
-
-
