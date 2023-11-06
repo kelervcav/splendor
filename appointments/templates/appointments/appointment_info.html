@@ -1,48 +1,44 @@
 {% extends 'customer_base.html' %}
 
-{% block title %}
-    Appointment
-{% endblock %}
+{% block title %} Appointment {% endblock %}
 
 {% block content %}
 
-<section class="content">
+<section class="content-header">
     <div class="container-fluid">
-         <div class="row">
-         <div class="col-12">
-            <div class="card card-outline card-info">
-               <div class="card-header">
-                  <h3 class="card-title">Appointment Information</h3>
-               </div>
-               <!-- /.card-header -->
-               <div class="card-body">
-                  <table id="users-table" class="table table-sm table-bordered table-hover">
-                     <thead>
-                        <tr>
-                           <th>Patient</th>
-                           <th>Service</th>
-                           <th>Date</th>
-                           <th>Time</th>
-                           <th>-</th>
-                        </tr>
-                     </thead>
-                    <tbody>
-                        {% for appointment in appointment_info %}
-                           <tr>
-                               <td>{{ appointment.user }}</td>
-                               <td>{{ appointment.date }}</td>
-                               <td>{{ appointment.time }}</td>
-                               <td>{{ appointment.treatment }}</td>
-                           </tr>
-                        {% endfor %}
-                     </tbody>
-                  </table>
-               </div>
-               <!-- /.card-body -->
+        <div class="row">
+            <div class="col-sm-6 pl-0">
+                <p style="font-size: 27px">Booked Appointment</p>
             </div>
-         </div>
-      </div>
+        </div>
     </div>
 </section>
+
+<div class="card card-outline card-info">
+    <div class="card-header text-dark border-bottom-0">
+      <h3 class="card-title">Booked Appointment</h3>
+    </div>
+    <div class="card-body pt-3">
+        <div class="row">
+            <div class="col-12">
+                {% for appointment in appointment_info %}
+                 <ul class="list-group list-group ml-0">
+                     <li class="list-group-item pt-4"><h6>{{ appointment.treatment }}
+                         <p class="float-right">{{ appointment.date }} | {{ appointment.time }}</p></h6>
+                     </li>
+                     <div class="text-right pt-2 pb-3">
+                         {% if appointment.is_approved %}
+                            <i class="far fa-check-circle" style="color: #25993F"> Appointment approved</i>
+                         {% else %}
+                            <i class="far fa-clock" style="color: #fd7012;"> Pending</i>
+                         {% endif %}
+                     </div>
+                 </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer"></div>
+</div>
 
 {% endblock %}

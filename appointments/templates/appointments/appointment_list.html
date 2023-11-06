@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    Appointment
-{% endblock %}
+{% block page_title %} Appointments {% endblock %}
 
 {% block content %}
 
@@ -22,7 +20,7 @@
 		   </div>
          <div class="row">
          <div class="col-12">
-            <div class="card card-outline card-info">
+            <div class="card card-outline card-primary">
                <div class="card-header">
                   <h3 class="card-title">Appointments</h3>
                </div>
@@ -45,12 +43,12 @@
                            <tr>
                                <td>{{ appointment.user }}</td>
                                <td>{{ appointment.treatment }}</td>
-                               <td>{{ appointment.date }}</td>
+                               <td>{{ appointment.date|date:"d M Y" }}</td>
                                <td>{{ appointment.time }}</td>
                                <td>{% if appointment.is_approved %}
-                                        <span class="badge bg-danger">Pending</span>
-                                   {% else %}
                                         <span class="badge bg-success">Approved</span>
+                                   {% else %}
+                                        <span class="badge bg-danger">Pending</span>
                                    {% endif %}
                                </td>
                                <td>

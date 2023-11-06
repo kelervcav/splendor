@@ -12,27 +12,27 @@ from user_profile.models import UserProfile
 
 User = get_user_model()
 
-
-class LoginForm(AuthenticationForm):
-
-    username = forms.CharField(  # This is always 'username'
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control',
-                'name': 'email',
-                'placeholder': 'Email'}
-        )
-    )
-    password = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(
-            attrs={
-                'class': 'form-control',
-                'name': 'password',
-                'placeholder': 'Password'}
-        )
-    )
+#
+# class LoginForm(AuthenticationForm):
+#
+#     username = forms.CharField(  # This is always 'username'
+#         max_length=100,
+#         widget=forms.TextInput(
+#             attrs={
+#                 'class': 'form-control',
+#                 'name': 'email',
+#                 'placeholder': 'Email'}
+#         )
+#     )
+#     password = forms.CharField(
+#         max_length=100,
+#         widget=forms.PasswordInput(
+#             attrs={
+#                 'class': 'form-control',
+#                 'name': 'password',
+#                 'placeholder': 'Password'}
+#         )
+#     )
 
 
 class ProfileCreationForm(UserCreationForm):
@@ -178,6 +178,28 @@ class EditProfileForm(UserChangeForm):
             'last_name',
             'email',
             'mobile',
+            'is_active',
+        )
+
+
+class UserProfileEdit(ModelForm):
+    mobile = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'name': 'mobile'}
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^\d{11}$',
+                message="Phone number must be in format 09123456789"
+            )
+        ]
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            'mobile',
         )
 
 
@@ -190,4 +212,5 @@ class AdminEditPasswordForm(AdminPasswordChangeForm):
                                 widget=forms.PasswordInput(
                                     attrs={
                                         'class': 'form-control'}))
+
 

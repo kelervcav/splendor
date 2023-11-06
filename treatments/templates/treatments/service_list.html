@@ -22,7 +22,7 @@
 
 		  <div class="row">
 			 <div class="col-12">
-				<div class="card card-outline card-info">
+				<div class="card card-outline card-primary">
 				   <div class="card-header">
 					  <h3 class="card-title">Service List</h3>
 					  <div class="card-tools">
@@ -33,7 +33,7 @@
 				   </div>
 				   <!-- /.card-header -->
 				   <div class="card-body">
-					  <table id="services-table" class="table table-bordered table-hover">
+					  <table id="services-table" class="table table-striped projects">
 						 <thead>
 							<tr>
 								<th>ID</th>
@@ -46,7 +46,7 @@
 						 <tbody>
 							{% for service in service_list %}
 							<tr>
-								<td>{{ service.id}}</td>
+								<th>{{ service.id}}</th>
 								<td>{{ service.name }}</td>
 								<td>{{ service.description }}</td>
 								<td>{% if service.is_active %}

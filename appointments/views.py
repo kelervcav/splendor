@@ -16,7 +16,9 @@ def appointment_create(request):
     form = BookingAppointmentForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            appointment = form.save(commit=False)
+            appointment.user = request.user
+            appointment.save()
             return redirect('appointments:appointment_info')
     context = {'form': form}
     return render(request, 'appointments/appointment_create.html', context)
@@ -63,8 +65,9 @@ def appointment_list(request):
 
 
 def appointment_info(request):
-    appointment_info = Appointment.objects.all()
+    user = request.user
+    appointment_info = Appointment.objects.filter(user=user)
     template_name = 'appointments/appointment_info.html'
-    context = {'appointment_info': appointment_info}
+    context = {'appointment_info': appointment_info, 'users': user}
     return render(request, template_name, context)
 

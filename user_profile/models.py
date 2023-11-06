@@ -1,3 +1,5 @@
+from datetime import timedelta, datetime
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
@@ -34,12 +36,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(default=timezone.now)
 
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['mobile', 'first_name', 'last_name']
+
+    def set_custom_password(self):
+        surname = self.last_name.lower()
+        underscore = '_'
+        birthdate = self.date_of_birth.strftime('%Y%m%d')
+        custom_password = f"{surname}{underscore}{birthdate}"
+        self.set_password(custom_password)
+        self.save()
 
     def __str__(self):
         return self.first_name
@@ -52,18 +62,18 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     GENDER_CHOICES = [
         ('', '---------'),
-        ('MALE', 'Male'),
-        ('FEMALE', 'Female'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
     ]
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES,)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     notes = models.TextField(null=True, blank=True)
+    total_points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    account_expiry = models.DateTimeField(default=datetime.now() + timedelta(days=365))
 
     # Add any additional fields you need for your user profile
 
     def __str__(self):
         return self.user
-
-
 
     class Meta:
         db_table = 'user_profile'

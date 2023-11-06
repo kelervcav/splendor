@@ -1,132 +1,133 @@
-{% extends "base.html" %}
-
-{% block page_title %} Dashboard {% endblock page_title %}
-
-{% block content %}
+{% extends "base.html" %} {% block page_title %} Dashboard {% endblock page_title %} {% block content %}
 
 <!-- Main content -->
 <section class="content">
-   <div class="container-fluid">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-         <div class="col-lg-4 col-md-4 col-sm-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-               <div class="inner">
-                  <h3>{{ service_count }}</h3>
-                  <p>Services</p>
-               </div>
-               <div class="icon">
-                  <i class="fas fa-hand-holding-heart"></i>
-               </div>
-               <a href="{% url 'treatments:service_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ service_count }}</h3>
+                        <p>Services</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <a href="{% url 'treatments:service_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-         </div>
-         <!-- ./col -->
-         <div class="col-lg-4 col-md-4 col-sm-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-               <div class="inner">
-                  <h3>{{ treatment_count }}</h3>
-                  <p>Treatments</p>
-               </div>
-               <div class="icon">
-                  <i class="fas fa-clipboard-list"></i>
-               </div>
-               <a href="{% url 'treatments:treatment_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <!-- ./col -->
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ treatment_count }}</h3>
+                        <p>Treatments</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <a href="{% url 'treatments:treatment_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-         </div>
-         <!-- ./col -->
-         <div class="col-lg-4 col-md-4 col-sm-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-               <div class="inner">
-                  <h3>{{ patient_count }}</h3>
-                  <p>Patients</p>
-               </div>
-               <div class="icon">
-                  <i class="fas fa-users"></i>
-               </div>
-               <a href="{% url 'users:patient_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <!-- ./col -->
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ patient_count }}</h3>
+                        <p>Patients</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <a href="{% url 'patients:patient_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-         </div>
-         <!-- ./col -->
-      </div>
-      <!-- /.row -->
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-12">
+                {% if messages %}
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                    {% for message in messages %}
+                    <span class="lh-1">{{ message }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Appointments</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="users-table" class="table table-sm table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>PATIENT</th>
+                                    <th>TREATMENT</th>
+                                    <th>DATE</th>
+                                    <th>TIME</th>
+                                    <th>STATUS</th>
+                                </tr>
+                            </thead>
 
-      <div class="row">
-         <div class="col-12">
-            <div class="card card-outline card-info">
-               <div class="card-header">
-                  <h3 class="card-title">Appointments</h3>
-               </div>
-               <!-- /.card-header -->
-               <div class="card-body">
-                  <table id="users-table" class="table table-sm table-bordered table-hover">
-                     <thead>
-                        <tr>
-                           <th>PATIENT</th>
-                           <th>TREATMENT</th>
-                           <th>DATE</th>
-                           <th>TIME</th>
-                           <th>STATUS</th>
-                           <th>ACTIONS</th>
-                        </tr>
-                     </thead>
-
-                     <tbody>
-                        {% for appointment in appointment_list %}
-                           <tr>
-                               <td>{{ appointment.user }}</td>
-                               <td>{{ appointment.treatment }}</td>
-                               <td>{{ appointment.date }}</td>
-                               <td>{{ appointment.time }}</td>
-                               <td>{% if appointment.status %}
-                                    <span class="badge bg-danger">Pending</span>
-                                   {% else %}
-                                    <span class="badge bg-success">Approved</span>
-                                   {% endif %}
-                               </td>
-                               <td>
-                                  <a href="{% url 'appointments:appointment_edit' appointment.id %}" class="pull-right text-blue">
-                                     <button type="submit" class="btn btn-info">View</button></a>
-                                   <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
-                                       <button type="submit" class="btn btn-success">Approve</button></a>
-                               </td>
-                           </tr>
-                        {% endfor %}
-                     </tbody>
-                  </table>
-               </div>
-               <!-- /.card-body -->
+                            <tbody>
+                                {% for appointment in appointment_list %}
+                                <tr>
+                                    <td>{{ appointment.user }}</td>
+                                    <td>{{ appointment.treatment }}</td>
+                                    <td>{{ appointment.date }}</td>
+                                    <td>{{ appointment.time }}</td>
+                                    <td>
+                                        {% if appointment.is_approved %}
+                                        <span class="badge bg-success">Approved</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                     <a href="{% url 'appointments:appointment_list' %}"><button type="submit" class="btn btn-info float-right">View Appointments</button></a>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
             </div>
-         </div>
-      </div>
-
-   </div>
-   <!-- /.container-fluid -->
+        </div>
+    </div>
+    <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 
-{% endblock content %}
+{% endblock content %} {% block script %}
+<script>
+    $(function () {
+        $("#my-transaction-table").DataTable({
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: false,
+            info: true,
+            autoWidth: false,
+        });
+    });
+</script>
 
-{% block script %}
-    <script>
-      $(function () {
-        $('#my-transaction-table').DataTable({
-          'paging'      : true,
-          'lengthChange': true,
-          'searching'   : true,
-          'ordering'    : false,
-          'info'        : true,
-          'autoWidth'   : false
-        })
-      })
-    </script>
-
-    <script>
-      setInterval(function() {
-          window.location.reload();
-      }, 60000); // refresh every 1 min
-    </script>
+<script>
+    setInterval(function () {
+        window.location.reload();
+    }, 60000); // refresh every 1 min
+</script>
 {% endblock script %}

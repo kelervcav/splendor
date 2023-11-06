@@ -1,0 +1,48 @@
+{% extends 'customer_base.html' %}
+
+{% block title %} Transactions {% endblock %}
+
+{% block content %}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 pl-0">
+                <p style="font-size: 27px">Transactions</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <div class="card card-outline card-info">
+        <div class="card-header text-dark border-bottom-0">
+          <h3 class="card-title">Transaction Records</h3>
+        </div>
+        <div class="card-body pt-2">
+            <div class="row">
+                <div class="col-12">
+                    {% for transact in transaction_list %}
+                     <ul class="list-group list-group ml-1">
+                         <li class="list-group-item">
+                             <div class="row">
+                                 <div class="col-6">
+                                     <h6>{{ transact.reference_id }}</h6>
+                                 </div>
+                                 <div class="col-6">
+                                     <p class= "text-right">{{ transact.date_added|date:"d M Y" }}</p>
+                                     <p class= "text-right"><b>{{transact.points}}</b></p>
+                                 </div>
+
+                             </div>
+
+                        </li>
+                     </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+    </div>
+
+{% endblock %}

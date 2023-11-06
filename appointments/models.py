@@ -11,18 +11,17 @@ class Appointment(models.Model):
     date = models.DateField(null=False, blank=False)
     TIME_CHOICES = [
         ("------", "------"),
-        ("10 AM", "10 AM"),
-        ("11 AM", "11 AM"),
-        ("12 PM", "12 PM"),
-        ("1 PM", "1 PM"),
-        ("2 PM", "2 PM"),
-        ("3 PM", "3 PM"),
-        ("4 PM", "4 PM"),
-        ("5 PM", "5 PM"),
-        ("6 PM", "6 PM"),
-        ("7 PM", "7 PM"),
-        ("8 PM", "8 PM"),
-        ("9 PM", "9 PM"),
+        ("10 AM", "10:00 AM"),
+        ("11 AM", "11:00 AM"),
+        ("12 PM", "12:00 PM"),
+        ("1 PM", "1:00 PM"),
+        ("2 PM", "2:00 PM"),
+        ("3 PM", "3:00 PM"),
+        ("4 PM", "4:00 PM"),
+        ("5 PM", "5:00 PM"),
+        ("6 PM", "6:00 PM"),
+        ("7 PM", "7:00 PM"),
+        ("8 PM", "8:00 PM"),
     ]
     time = models.CharField(max_length=10, choices=TIME_CHOICES)
     treatment = models.ForeignKey(Treatment, on_delete=models.DO_NOTHING)

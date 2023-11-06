@@ -2,31 +2,31 @@
 
 {% block content %}
 
-
-{% if form.errors %}
+{% if messages %}
     <div class="alert alert-danger alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <span class="lh-1">Your username and password didn't match. Please try again.</span>
+        {% for message in messages %}
+            <span class="lh-1">{{ message }}</span>
+         {% endfor %}
     </div>
 {% endif %}
 
-
-  <form method="post" id="form-base" novalidate>
+  <form method="post" action="{% url 'login' %}" id="form-base" novalidate>
     {% csrf_token %}
      <div class="input-group mb-3">
-       {{ form.username }}
-        <div class="input-group-append">
-           <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-           </div>
+         <input type="text" name="email" class="form-control" placeholder="Enter email" autocomplete="on">
+         <div class="input-group-append">
+             <div class="input-group-text">
+                 <span class="fas fa-envelope"></span>
+             </div>
         </div>
      </div>
      <div class="input-group mb-3">
-        {{ form.password }}
-        <div class="input-group-append">
-           <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-           </div>
+         <input type="password" name="password" class="form-control" placeholder="Enter password">
+         <div class="input-group-append">
+            <div class="input-group-text">
+               <span class="fas fa-lock"></span>
+            </div>
         </div>
      </div>
      <div class="row">

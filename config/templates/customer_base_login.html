@@ -1,45 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login Page</title>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
-  {% include 'snippets/css.html' %}
-
-</head>
 {% load static %}
-<body class="hold-transition login-page">
-<div class="login-box">
-  <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <div class="image">
-          <img src="{% static 'dist/img/splendor_logo.png' %}" class="" alt="Image Logo" width="100%">
-      </div>
-    </div>
-    <div class="card-body">
-      <p class="login-box-msg">Please log in to access this page</p>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Login Page</title>
 
-      {% block content %}
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
 
-      {% endblock content %}
+        {% include 'snippets/css.html' %}
+    </head>
 
-    </div>
-    <!-- /.card-body -->
-  </div>
-  <!-- /.card -->
-</div>
-<!-- /.login-box -->
+    <body class="hold-transition layout-top-nav">
+        <div class="wrapper">
+            <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+                <div class="container px-1 py-3 px-md-12">
+                    <a href="#" class="navbar-brand"><img src="{% static 'dist/img/splendor_logo.png' %}" class="brand-image" alt="Image Logo" width="100%" /></a>
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav">
+                            <li>
+                                <h4>Log In</h4>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="background-div">
 
-{% include 'snippets/js.html' %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 align-self-center">
+                                <h1 class="display-3 mb-3 font-weight-bolder banner-title">
+                                   THE BEST CLINIC IN THE INDUSTRY
+                                </h1>
+                                <p class="lead mb-4 banner-description">
+                                    A most prefered dermatologic clinic by providing the latest, quality and affordable dermatologic and cosmetic surgical treatment in
+                                    a clean, sanitized and safe facility.
+                                </p>
+                            </div>
 
-<!-- Custom JS -->
-{% block script %}
+                            <div class="col-md-5 ml-auto">
+                                <div class="">
+                                    <!-- /.login-logo -->
+                                    <div class="card card-outline card-success">
+                                        <div class="card-header text-center">
+                                            <h4>Splendor Skin</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="login-box-msg">Please log in to access this page</p>
+                                            {% if messages %}
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                {% for message in messages %}
+                                                <span class="lh-1">{{ message }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
 
-{% endblock script %}
-</body>
+                                            <form method="post" action="{% url 'loyalty_login' %}" id="form-base" novalidate>
+                                                {% csrf_token %}
+                                                <div class="input-group mb-3">
+                                                    <input type="text" name="username" class="form-control form-control-lg" placeholder="Enter email" autocomplete="on" />
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">
+                                                            <span class="fas fa-envelope"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Enter password" />
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">
+                                                            <span class="fas fa-lock"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <button type="submit" class="btn btn-success btn-block btn-lg mb-2">Login</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                <!-- /.login-box -->
+                            </div>
+                        </div>
+
+                </div>
+              </div>
+        {% include 'snippets/js.html' %}
+
+        <!-- Custom JS -->
+        {% block script %} {% endblock script %}
+    </body>
 </html>

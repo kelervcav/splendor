@@ -1,12 +1,14 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Django - Core</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'dist/img/blue_logo.png' %}">
+    <title>Splendor Skin</title>
 
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
   {% include 'snippets/css.html' %}
 
@@ -56,7 +58,7 @@
     <div class="p-3" style="padding: 16px; height: 100%; width: 100%;">
       <h5>{{ user.first_name }} {{ user.last_name }}</h5>
       <hr class="mb-2">
-      <div class="mb-2"><a href="#" class=""><span>Profile</span></a></div>
+      <div class="mb-2"><a href="{% url 'users:my_profile_edit' %}" class=""><span>Profile</span></a></div>
       <div class="mb-2"><a href="{% url 'logout' %}" class=""><span>Logout</span></a></div>
     </div>
   </aside>

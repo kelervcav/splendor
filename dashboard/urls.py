@@ -5,5 +5,5 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path('', views.dashboard, name='main'),
-    path('<int:pk>/approved', views.approve_appointment, name='approve_appointment'),
+    # path('<int:pk>/approved', views.approve_appointment_dashboard, name='approve_appointment_dashboard'),
 ]

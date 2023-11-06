@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block page_title %} Discount Offer {% endblock page_title %}
+
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+   <div class="container-fluid">
+       <div class="row">
+           <div class="col-12">
+               {% if messages %}
+                  <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                    {% for message in messages %}
+                       <span class="lh-1">{{ message }}</span>
+                    {% endfor %}
+                  </div>
+               {% endif %}
+           </div>
+      </div>
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Add Offer</h3>
+               </div>
+               <!-- /.card-header -->
+               <form class="form-horizontal" method="POST" enctype="multipart/form-data" novalidate>
+                  <div class="card-body">
+                     {% csrf_token %}
+                     <div class="form-group ">
+                        <label for="" class="col-md-2 control-label">Title:</label>
+                        <div class="col-md-4">
+                           {{ form.title }}
+                           <span class="help-block">{{ form.title.errors }}</span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Code:</label>
+                        <div class="col-md-4">
+                           {{ form.code }}
+                           <span class="help-block">{{ form.code.errors }}</span>
+                        </div>
+                     </div>
+                      <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Offer Discount:</label>
+                        <div class="col-md-4">
+                           {{ form.percentage_discount }}
+                           <span class="help-block">{{ form.percentage_discount.errors }}</span>
+                        </div>
+                     </div>
+                      <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Image:</label>
+                        <div class="col-md-4">
+                            <input type="file" name="offer_image" id="offer_image">
+                           <span class="help-block"></span>
+                        </div>
+                     </div>
+                     <div class="form-check">
+                         <div class="col-md-4">
+                             {{ form.is_offer_active }}
+                             <label class="form-check-label" for="">Is active?</label>
+                         </div>
+                     </div>
+                  </div>
+                  <div class="card-footer">
+                     <button type="submit" class="btn btn-info">Save</button>
+                  </div>
+               </form>
+
+               <!-- /.card-body -->
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+   <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block page_title %} Offers {% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+			   <div class="col-12">
+				   {% if messages %}
+					<div class="alert alert-success alert-dismissible">
+					  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+					  {% for message in messages %}
+						<span class="lh-1">{{ message }}</span>
+					  {% endfor %}
+					</div>
+					{% endif %}
+			   </div>
+		   </div>
+         <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-primary">
+               <div class="card-header">
+                  <h3 class="card-title">Offer List</h3>
+                   <div class="card-tools">
+                     <a href="{% url 'offers:offer_create' %}" class="btn btn-sm btn-block bg-gradient-success">
+                        Add Offer
+                     </a>
+                  </div>
+               </div>
+               <!-- /.card-header -->
+               <div class="card-body">
+                  <table id="users-table" class="table table-sm table-bordered table-hover">
+                     <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>TITLE</th>
+                            <th>CODE</th>
+                            <th>DISCOUNT</th>
+                            <th>IMAGE</th>
+                            <th>STATUS</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                     </thead>
+
+                     <tbody>
+                        {% for offer in offer_list %}
+                           <tr>
+                               <th>{{ offer.id }}</th>
+                               <td>{{ offer.title }}</td>
+                               <td>{{ offer.code }}</td>
+                               <td>{{ offer.percentage_discount }}</td>
+                               <td><img src="{{ MEDIA_URL }}{{offer.offer_image.url}}" alt="Offer Image" width="150"></td>
+                               <td>{% if offer.is_offer_active %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Inactive</span>
+                                    {% endif %}
+                               </td>
+                               <td> <a href="{% url 'offers:offer_edit' offer.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="{% url 'offers:offer_disable' offer.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
+                           </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+               <!-- /.card-body -->
+            </div>
+         </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}
