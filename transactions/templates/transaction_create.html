@@ -44,7 +44,7 @@
                      <div class="form-group">
                         <label for="" class="col-md-2 control-label">Offer Code:</label>
                         <div class="col-md-4">
-                           {{ form.offer_code }}
+                           <input type="text" name="offer_code" id="offer_code" value="{{ offer_code|upper }}" class="form-control" required>
                            <span class="help-block">{{ form.offer_code.errors }}</span>
                         </div>
                      </div>

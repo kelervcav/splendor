@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from patients.forms import RegistrationForm, CustomRegistration, MembershipRenewalForm
 from redeem_points.models import RedeemPoints
@@ -120,9 +120,20 @@ def patient_renewal(request, pk):
 @admin_required
 def reset_password(request, pk):
     patient = get_object_or_404(User, id=pk)
+
+    generated_password = request.POST.get('password')
+
+    patient.password = generated_password
+    patient.save()
+    messages.success(request, 'Password reset successfully.')
+    return redirect('patients:patient_edit')
     template_name = 'patients/patient_reset_password.html'
     context = {'patient': patient}
     return render(request, template_name, context)
+
+
+def generate_password(request, pk):
+    pass
 
 
 

@@ -68,7 +68,7 @@
             <div class="col-md-6">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h3 class="card-title">Transaction</h3>
+                        <h3 class="card-title">Transaction List</h3>
                     </div>
                     <div class="card-body">
                         <table id="patient_info-table" class="table table-striped projects">
@@ -85,11 +85,12 @@
                                 {% for transact in transactions %}
                                 <tr>
                                     <td>{{ transact.reference_id }}</td>
-                                    <td>{{ transact.offer_code }}</td>
+                                    <td>{{ transact.offer_code|upper }}</td>
                                     {% if transact.offer_code %}
                                         <td>{{ transact.discounted_amount }}</td>
                                     {% else %}
                                         <td>{{ transact.price_amount }}</td>
+                                    {% endif %}
                                     <td>{{ transact.points }}</td>
                                     <td>{{ transact.date_added|date:"d M Y" }}</td>
                                 </tr>
@@ -133,7 +134,8 @@
 </section>
 <!-- /.content -->
 
-{% endblock content %} {% block script %}
+{% endblock content %}
+{% block script %}
 <script>
     $(function () {
         $("#patient_info-table").DataTable({

@@ -38,6 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
 
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'

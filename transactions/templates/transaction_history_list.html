@@ -8,41 +8,93 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6 pl-0">
-                <p style="font-size: 27px">Transactions</p>
+                <p style="font-size: 27px">Transaction</p>
             </div>
         </div>
     </div>
 </section>
 
-
-    <div class="card card-outline card-info">
-        <div class="card-header text-dark border-bottom-0">
-          <h3 class="card-title">Transaction Records</h3>
-        </div>
-        <div class="card-body pt-2">
-            <div class="row">
-                <div class="col-12">
-                    {% for transact in transaction_list %}
-                     <ul class="list-group list-group ml-1">
-                         <li class="list-group-item">
-                             <div class="row">
-                                 <div class="col-6">
-                                     <h6>{{ transact.reference_id }}</h6>
-                                 </div>
-                                 <div class="col-6">
-                                     <p class= "text-right">{{ transact.date_added|date:"d M Y" }}</p>
-                                     <p class= "text-right"><b>{{transact.points}}</b></p>
-                                 </div>
-
-                             </div>
-
-                        </li>
-                     </ul>
-                    {% endfor %}
-                </div>
+<div class="card card-outline card-info">
+    <div class="card-header text-dark border-bottom-0">
+        <div class="row">
+            <div class="col-6">
+                 <h3 class="card-title">Transaction History</h3>
+            </div>
+            <div class="col-6">
+                 <h3 class="card-title">Redeemed Points History</h3>
             </div>
         </div>
-        <div class="card-footer"></div>
     </div>
+    <div class="card-body pt-2">
+        <div class="row">
+            <div class="col-6">
+                {% for transact in transaction_list %}
+                 <ul class="list-group list-group ml-1">
+                     <li class="list-group-item">
+                         <div class="row">
+                             <div class="col-6">
+                                 <h6>{{ transact.reference_id }}</h6>
+                                 {% if transact.offer_code %}
+                                    <p class="pt-2">{{transact.offer_code|upper}}</p>
+                                 {% endif %}
+                             </div>
+                             <div class="col-6">
+                                 <p class="text-right">{{ transact.date_added|date:"d M Y" }}</p>
+                                 <p class="text-right"><b>{{transact.points}}</b></p>
+                             </div>
+                         </div>
+                    </li>
+                 </ul>
+                {% endfor %}
+            </div>
+             <div class="col-6">
+                {% for redeem in redeemed_list %}
+                 <ul class="list-group list-group ml-1">
+                     <li class="list-group-item">
+                         <div class="row">
+                             <div class="col-6">
+                                 <p>Redeemed Point/s: <b>{{ redeem.redeemed_points }}</b></p>
+                             </div>
+                             <div class="col-6">
+                                 <p class= "text-right">{{ redeem.date_redeemed|date:"d M Y" }}</p>
+                             </div>
+                         </div>
+                    </li>
+                 </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer"></div>
+</div>
 
+
+<div class="card card-outline card-info">
+    <div class="card-header text-dark border-bottom-0">
+      <h3 class="card-title">Redeemed Points</h3>
+    </div>
+    <div class="card-body pt-2">
+        <div class="row">
+            <div class="col-6">
+                {% for redeem in redeemed_list %}
+                 <ul class="list-group list-group ml-1">
+                     <li class="list-group-item">
+                         <div class="row">
+                             <div class="col-6">
+                                 <h6>{{ redeem.redeemed_points }}</h6>
+                             </div>
+                             <div class="col-6">
+                                 <p class= "text-right">{{ redeem.date_redeemed|date:"d M Y" }}</p>
+                             </div>
+
+                         </div>
+
+                    </li>
+                 </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer"></div>
+</div>
 {% endblock %}

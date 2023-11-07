@@ -15,6 +15,7 @@ urlpatterns = [
     path('<int:pk>/patient-renewal', views.patient_renewal, name='patient_renewal'),
     # reset password
     path('<int:pk>/reset/password/', views.reset_password, name='reset_password'),
+    path('<int:pk>/generate-password/', views.generate_password, name='generate_password'),
 
 
 

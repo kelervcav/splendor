@@ -1,64 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{% block title %}{% endblock %}</title>
-
-
-<body class="hold-transition layout-top-nav">
-    <div class="wrapper">
-        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-            <div class="container">
-                {% include 'customer_snippets/navbar.html'%}
-            </div>
-        </nav>
-    <div>
-
-    {% include 'snippets/css.html'%}
-
-    {% include 'customer_snippets/js.html'%}
-
-    <div class="content-wrapper">
-        <div class="content-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4 class="m-0"> {% block content_title %}{% endblock %}</h4>
-                    </div>
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body class="hold-transition layout-top-nav">
+        <div class="wrapper">
+            <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+                <div class="container">
+                    {% include 'snippets/customer_navbar.html'%}
                 </div>
-            </div>
-        </div>
+            </nav>
+            <div>
+                {% include 'snippets/css.html'%} {% include 'snippets/js.html'%}
 
-        <div class="content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        {% if user.is_authenticated %}
-                                          <h5>WELCOME, {{ user.first_name }} {{ user.last_name }}</h5>
-                                        {% endif %}
-                                        <p style="font-size:17px">Membership Renewal: {{user.userprofile.account_expiry|date:"d M Y" }}</p>
-                                    </div>
-                                    <div class="col-6">
-                                        <h5 class= "text-right">
-                                           Available Points: <b>{{ user.userprofile.total_points|floatformat:0|add:0 }}</b>
-                                        </h5>
-                                    </div>
+                <div class="content-wrapper">
+                    <div class="content-header">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="m-0">{% block content_title %}{% endblock %}</h4>
                                 </div>
                             </div>
                         </div>
-                          {% block content %}{% endblock %}
+                    </div>
+
+                    <div class="content">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    {% if user.is_authenticated %}
+                                                    <h5>WELCOME, {{ user.first_name }} {{ user.last_name }}</h5>
+                                                    {% endif %}
+                                                    <p style="font-size: 17px;">Membership Renewal: {{user.userprofile.account_expiry|date:"d M Y" }}</p>
+                                                </div>
+                                                <div class="col-6">
+                                                    <h5 class="text-right">Available Points: <b>{{ user.userprofile.total_points|floatformat:0|add:0 }}</b></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% block content %}{% endblock %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
