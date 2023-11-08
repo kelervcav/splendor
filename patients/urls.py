@@ -16,6 +16,7 @@ urlpatterns = [
     # reset password
     path('<int:pk>/reset/password/', views.reset_password, name='reset_password'),
     path('<int:pk>/generate-password/', views.generate_password, name='generate_password'),
+    # path('generated-password/', views.new_pass, name='new_pass'),
 
 
 
