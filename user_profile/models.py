@@ -1,8 +1,10 @@
 from datetime import timedelta, datetime
-
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
+import qrcode
+from io import BytesIO
+from django.core.files import File
 
 
 class CustomUserManager(BaseUserManager):
@@ -38,7 +40,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
 
-
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
@@ -70,8 +71,10 @@ class UserProfile(models.Model):
     notes = models.TextField(null=True, blank=True)
     total_points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     account_expiry = models.DateTimeField(default=datetime.now() + timedelta(days=365))
+    qr_code = models.ImageField(upload_to='qr_codes', blank=True, null=True)
 
     # Add any additional fields you need for your user profile
+
 
     def __str__(self):
         return self.user
