@@ -1,6 +1,9 @@
 from datetime import timedelta, datetime
+
+from django.core.files.base import ContentFile
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 import qrcode
 from io import BytesIO
@@ -39,6 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_patient = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
 
     objects = CustomUserManager()
 
@@ -51,6 +55,26 @@ class User(AbstractBaseUser, PermissionsMixin):
         birthdate = self.date_of_birth.strftime('%Y%m%d')
         custom_password = f"{surname}{underscore}{birthdate}"
         self.set_password(custom_password)
+        self.save()
+
+    def generate_qr(self, *args, **kwargs):
+        # Generate and save the QR code when the user is saved
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(str(self.pk))
+        print(f"QR Code Content: {str(self.pk)}")
+        qr.make(fit=True)
+
+        img = qr.make_image(fill_color="black", back_color="white")
+        buffer = BytesIO()
+        img.save(buffer)
+        filename = f'qr_{self.last_name}.png'
+        file_buffer = File(buffer, name=filename)
+        self.qr_code = file_buffer
         self.save()
 
     def __str__(self):
@@ -68,13 +92,13 @@ class UserProfile(models.Model):
         ('Female', 'Female'),
     ]
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
+    address = models.CharField(max_length=255)
     notes = models.TextField(null=True, blank=True)
     total_points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     account_expiry = models.DateTimeField(default=datetime.now() + timedelta(days=365))
-    qr_code = models.ImageField(upload_to='qr_codes', blank=True, null=True)
+
 
     # Add any additional fields you need for your user profile
-
 
     def __str__(self):
         return self.user

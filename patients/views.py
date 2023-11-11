@@ -40,6 +40,7 @@ def patient_create(request):
         registration = registration_form.save(commit=False)
         registration.is_patient = True
         registration.set_custom_password()
+        registration.generate_qr()
         registration.save()
         gender = custom_form.save(commit=False)
         gender.user = registration

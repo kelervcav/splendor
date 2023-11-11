@@ -1,0 +1,45 @@
+{% extends 'customer_base.html' %}
+
+{% block title %} Transactions {% endblock %}
+
+{% block content %}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 pl-0">
+                <p style="font-size: 27px">Redeemed Points</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="card card-outline card-info">
+    <div class="card-header text-dark border-bottom-0">
+      <h3 class="card-title">Redeemed Points List</h3>
+    </div>
+    <div class="card-body pt-2">
+        <div class="row">
+            <div class="col-12">
+                {% for redeem in redeemed_list %}
+                 <ul class="list-group list-group ml-1">
+                     <li class="list-group-item">
+                         <div class="row">
+                             <div class="col-6">
+                                 <p>{{ redeem.date_redeemed|date:"d M Y G:i"  }}</p>
+                             </div>
+                             <div class="col-6">
+                                 <h6 class= "text-right"><span>&#8369;</span>{{ redeem.redeemed_points }}</h6>
+                             </div>
+
+                         </div>
+
+                    </li>
+                 </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer"></div>
+</div>
+{% endblock %}

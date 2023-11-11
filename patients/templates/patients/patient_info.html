@@ -30,7 +30,7 @@
                             <li class="list-group-item"><b>Mobile</b><a class="float-right">{{ patient.mobile }}</a></li>
                             <li class="list-group-item"><b>Birthdate</b><a class="float-right">{{ patient.date_of_birth|date:"d M Y" }}</a></li>
                             {% for total in total_points %}
-                               <li class="list-group-item"><b>Points Earned</b><a class="float-right">{{ total.total_points}}</a></li>
+                               <li class="list-group-item"><b>Points Earned</b><a class="float-right"><span>&#8369;</span>{{ total.total_points}}</a></li>
                             {% endfor %}
                             <li class="list-group-item">
                                 <b>Status</b>
@@ -43,18 +43,21 @@
                         </ul>
                         {% endfor %}
                     </div>
+                    <div class="col-md-6">
+                        {% for qr in patient_info %}
+                            <img src="{{ MEDIA_URL }}{{ qr.qr_code.url }}" alt="QR Code Image">
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <div class="card-footer">
                 {% for patient in patient_info %}
-                <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add Transaction</button></a>
-                {% if patient.userprofile.total_points > 0 %}
-                <a href="{% url 'redeem_points:redeem_points' patient.id %}"><button class="btn btn-success">Redeem Points</button></a>
-                {% endif %}
-                <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary">Edit</button></a>
-                {% if date_now > patient.userprofile.account_expiry %}
-                <a href="{% url 'patients:patient_renewal' patient.id %}"><button class="btn btn-primary float-right">Renew Membership</button></a>
-                {% endif %} {% endfor %}
+                    <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add Transaction</button></a>
+                    <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary">Edit</button></a>
+                    {% if date_now > patient.userprofile.account_expiry %}
+                        <a href="{% url 'patients:patient_renewal' patient.id %}"><button class="btn btn-primary float-right">Renew Membership</button></a>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -85,13 +88,18 @@
                                 {% for transact in transactions %}
                                 <tr>
                                     <td>{{ transact.reference_id }}</td>
-                                    <td>{{ transact.offer_code|upper }}</td>
+                                     <td>{% if transact.offer_code %}
+                                            {{ transact.offer_code|upper }}
+                                         {% else %}
+                                            <h6>_</h6>
+                                         {% endif %}
+                                     </td>
                                     {% if transact.offer_code %}
-                                        <td>{{ transact.discounted_amount }}</td>
+                                        <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>
                                     {% else %}
-                                        <td>{{ transact.price_amount }}</td>
+                                        <td><span>&#8369;</span>{{ transact.price_amount }}</td>
                                     {% endif %}
-                                    <td>{{ transact.points }}</td>
+                                    <td><span>&#8369;</span>{{ transact.points }}</td>
                                     <td>{{ transact.date_added|date:"d M Y" }}</td>
                                 </tr>
                                 {% endfor %}
@@ -111,7 +119,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>POINTS REDEEMED</th>
+                                    <th>POINTS</th>
                                     <th>DATE REDEEMED</th>
                                 </tr>
                             </thead>
@@ -119,8 +127,8 @@
                                 {% for redeem in redeemed_list %}
                                 <tr>
                                     <th>{{ redeem.id }}</th>
-                                    <td>{{ redeem.redeemed_points }}</td>
-                                    <td>{{ redeem.date_redeemed|date:"d M Y" }}</td>
+                                    <td><span>&#8369;</span>{{ redeem.redeemed_points }}</td>
+                                    <td>{{ redeem.date_redeemed }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

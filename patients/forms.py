@@ -57,7 +57,8 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input',
-            })
+            }),
+        initial=True,
     )
 
     class Meta:

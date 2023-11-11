@@ -1,0 +1,88 @@
+{% extends "customer_base.html" %}
+
+{% block page_title %} Profile {% endblock page_title %}
+
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Profile</h3>
+               </div>
+               <!-- /.card-header -->
+               <form class="form-horizontal" method="POST" novalidate>
+                  <div class="card-body">
+                     {% csrf_token %}
+                     <div class="form-group ">
+                        <label for="" class="control-label">First Name:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="group" value="{{ user.userprofile.group }}" class="form-control" maxlength="100" readonly="readonly">
+                            <span class="help-block"></span>
+                        </div>
+                     </div>
+                     <div class="form-group ">
+                        <label for="" class="control-label">Last Name:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control" maxlength="100" readonly="readonly">
+                            <span class="help-block"></span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="control-label">Birthdate:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control" maxlength="100" readonly="readonly">
+                            <span class="help-block"></span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="control-label">Gender:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="email" value="{{ user.email }}" class="form-control" maxlength="100" readonly="readonly">
+                            <span class="help-block"></span>
+                        </div>
+                     </div>
+                      <div class="form-group">
+                        <label for="" class="control-label">Email:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="email" value="{{ user.email }}" class="form-control" maxlength="100" readonly="readonly">
+                            <span class="help-block"></span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="" class="control-label">Mobile Phone:</label>
+                        <div class="col-md-4">
+                           {{ form.mobile }}
+                           <span class="help-block">{{ form.mobile.errors }}</span>
+                        </div>
+                     </div>
+                      <div class="form-group">
+                         <div class="col-md-4">
+                             <a href="{% url 'users:own_profile_edit_password' %}"><p class="text-right">Change password</p> </a>
+                         </div>
+                     </div>
+                  </div>
+                  <div class="card-footer">
+                     <button type="submit" class="btn btn-info">Save</button>
+                  </div>
+               </form>
+               <!-- /.card-body -->
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+   <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

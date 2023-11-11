@@ -21,7 +21,14 @@
          <div class="col-12">
             <div class="card card-outline card-info">
                <div class="card-header">
-                  <h3 class="card-title">Add Transaction</h3>
+                  <h3 class="card-title">  Add Transaction</h3>
+                  <div class="card-tools">
+                     {% if users.userprofile.total_points > 0 %}
+                        <a href="{% url 'redeem_points:redeem_points' users.id %}" class="btn btn-sm btn-block bg-gradient-success">
+                           Redeem Points
+                        </a>
+                     {% endif %}
+                  </div>
                </div>
                <!-- /.card-header -->
                <form class="form-horizontal" method="POST" novalidate>
