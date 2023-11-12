@@ -52,7 +52,6 @@ class Treatment(models.Model):
     type = models.ForeignKey(PriceType, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)

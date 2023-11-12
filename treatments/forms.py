@@ -30,8 +30,8 @@ class ServiceForm(ModelForm):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input',
-            }
-        )
+            }),
+        initial=True
 
     )
 
@@ -82,19 +82,13 @@ class TreatmentForm(ModelForm):
             attrs={
                 'class': 'form-control'}))
 
-    price = forms.DecimalField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'}),
-    )
-
     is_active = forms.BooleanField(
         required=False,
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input',
-            }
-        )
+            }),
+        initial=True
 
     )
 
@@ -106,7 +100,6 @@ class TreatmentForm(ModelForm):
             'description',
             'area',
             'type',
-            'price',
             'is_active'
         ]
 
@@ -128,8 +121,8 @@ class AreaForm(ModelForm):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input',
-            }
-        )
+            }),
+        initial=True
 
     )
 
@@ -155,7 +148,8 @@ class TypeForm(ModelForm):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input',
-            })
+            }),
+        initial=True
     )
 
     class Meta:

@@ -9,18 +9,13 @@ from patients.forms import RegistrationForm, CustomRegistration, MembershipRenew
 from redeem_points.models import RedeemPoints
 from transactions.models import Transaction
 from user_profile.decorators import admin_required
+from user_profile.forms import AdminEditPasswordForm
 from user_profile.models import UserProfile
 
 User = get_user_model()
 
 
 # Create your views here.
-# Patient UI
-@login_required
-def home(request):
-    return render(request, 'patients/home.html')
-
-
 @login_required
 @admin_required
 def patient_list(request):
@@ -136,9 +131,28 @@ def generate_password(request, pk):
     return redirect('patients:patient_edit', pk)
 
 
-# def new_pass(request):
-#     patients_pass = User.objects.filter(is_patient=True)
-#     template_name = 'patients/patient_generated_password.html'
-#     context = {'patients_pass': patients_pass}
-#     return render(request, template_name, context)
-#
+# patient UI
+
+def patient_profile(request, pk):
+    patient_info = User.objects.get(id=pk)
+    patient = get_object_or_404(User, id=request.user.id)
+    form = RegistrationForm(request.POST or None, instance=patient)
+    if form.is_valid():
+        form.save()
+        return redirect('patients:patient_profile')
+
+    template_name = 'patients/patient_profile.html'
+    context = {'form': form, 'patient': patient, 'patient_info': patient_info}
+    return render(request, template_name, context)
+
+
+def change_password(request):
+    patient = get_object_or_404(User, id=request.user.id)
+    form = AdminEditPasswordForm(data=request.POST or None, user=patient)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+
+    template_name = 'user_profile_edit_password.html'
+    context = {'form': form}
+    return render(request, template_name, context)

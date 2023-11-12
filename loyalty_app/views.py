@@ -14,7 +14,7 @@ User = get_user_model()
 # Create your views here.
 @login_required
 def home(request):
-    return render(request,"loyalty/home.html")
+    return render(request, "loyalty/home.html")
 
 
 def process_login(request):

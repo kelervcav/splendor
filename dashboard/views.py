@@ -12,7 +12,7 @@ from user_profile.models import User
 @admin_required
 def dashboard(request):
     now = datetime.now()
-    appointment_list = Appointment.objects.filter('created_at' == now).order_by('-created_at')
+    appointment_list = Appointment.objects.filter(created_at=now).order_by('-created_at')
     service_count = Service.objects.exclude(is_active=False).count()
     treatment_count = Treatment.objects.exclude(is_active=False).count()
     patient_count = User.objects.filter(is_patient=True).count()
