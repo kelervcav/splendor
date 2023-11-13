@@ -40,7 +40,6 @@
 								<th>DESCRIPTION</th>
 								<th>TREATMENT AREA</th>
 								<th>PRICING TYPE</th>
-								<th>PRICE</th>
 								<th>STATUS</th>
 								<th>ACTIONS</th>
 
@@ -55,7 +54,6 @@
 								<td>{{ treatment.description }}</td>
 								<td>{{ treatment.area }}</td>
 								<td>{{ treatment.type }}</td>
-								<td>{{ treatment.price }}</td>
 								<td>{% if treatment.is_active %}
 										<span class="badge bg-success">Active</span>
 									{% else %}
@@ -63,8 +61,8 @@
 									{% endif %}
 								</td>
 								<td>
-								  	<a href="{% url 'treatments:treatment_edit' treatment.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
-									<a href="{% url 'treatments:treatment_disable' treatment.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
+								  	<a href="{% url 'treatments:treatment_edit' treatment.id %}" class="pull-right text-blue actions-gap"><i class="fas fa-pencil-alt"></i></a>
+									<a href="{% url 'treatments:treatment_disable' treatment.id %}" class="pull-right text-red actions-gap"><i class="fas fa-ban"></i></a>
 								</td>
 							</tr>
 							{% endfor %}
@@ -95,7 +93,7 @@
           "info": true,
           "autoWidth": false,
           "responsive": true,
-          "pageLength": 10,
+<!--          "pageLength": 10,-->
         });
       });
     </script>

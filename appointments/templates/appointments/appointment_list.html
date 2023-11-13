@@ -43,7 +43,7 @@
                            <tr>
                                <td>{{ appointment.user }}</td>
                                <td>{{ appointment.treatment }}</td>
-                               <td>{{ appointment.date|date:"d M Y" }}</td>
+                               <td>{{ appointment.date|date:"D, d M Y" }}</td>
                                <td>{{ appointment.time }}</td>
                                <td>{% if appointment.is_approved %}
                                         <span class="badge bg-success">Approved</span>

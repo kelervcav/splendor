@@ -22,6 +22,7 @@ wheels/
 .installed.cfg
 *.egg
 .idea
+media/
 
 # Django stuff:
 *.log

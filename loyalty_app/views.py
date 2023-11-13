@@ -14,14 +14,13 @@ User = get_user_model()
 # Create your views here.
 @login_required
 def home(request):
-    return render(request,"loyalty/home.html")
+    return render(request, "loyalty/home.html")
 
 
 def process_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST.get('mobile')
         password = request.POST.get('password')
-
         user = authenticate(username=username, password=password)
 
         date_now = datetime.now()
@@ -30,7 +29,7 @@ def process_login(request):
             if user.is_patient:
                 if date_now > user.userprofile.account_expiry:
                     messages.error(request, "Your account is already expired. Please renew your account.")
-                    return render(request, 'customer_base_login.html')
+                    return render(request, 'loyalty/loyalty_login.html')
 
                 else:
                     login(request, user)
@@ -38,11 +37,11 @@ def process_login(request):
 
             else:
                 messages.error(request, "Your username and password didn't match. Please try again.")
-                return render(request, 'customer_base_login.html')
+                return render(request, 'loyalty/loyalty_login.html')
 
         else:
             messages.error(request, "Your username and password didn't match. Please try again.")
-            return render(request, 'customer_base_login.html')
+            return render(request, 'loyalty/loyalty_login.html')
 
-    return render(request, 'customer_base_login.html',)
+    return render(request, 'loyalty/loyalty_login.html')
 

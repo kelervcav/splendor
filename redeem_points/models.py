@@ -6,7 +6,7 @@ from user_profile.models import User
 # Create your models here.
 class RedeemPoints(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    date_redeemed = models.DateField(default=timezone.now)
+    date_redeemed = models.DateTimeField(default=timezone.now)
     redeemed_points = models.IntegerField(default=0)
 
     def __str__(self):

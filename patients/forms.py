@@ -39,7 +39,7 @@ class RegistrationForm(forms.ModelForm):
         ),
         validators=[
             RegexValidator(
-                regex=r'^\d{11}$',
+                regex=r'^09\d{9}$',
                 message="Phone number must be in format 09123456789"
             )
         ]
@@ -57,7 +57,8 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input',
-            })
+            }),
+        initial=True,
     )
 
     class Meta:
@@ -110,7 +111,7 @@ class MembershipRenewalForm(ModelForm):
         ),
         validators=[
             RegexValidator(
-                regex=r'^\d{11}$',
+                regex=r'^09\d{9}$',
                 message="Phone number must be in format 09123456789"
             )
         ]

@@ -12,6 +12,7 @@ from user_profile.models import UserProfile
 
 User = get_user_model()
 
+
 #
 # class LoginForm(AuthenticationForm):
 #
@@ -89,7 +90,7 @@ class ProfileCreationForm(UserCreationForm):
         ),
         validators=[
             RegexValidator(
-                regex=r'^\d{11}$',
+                regex=r'^09\d{9}$',
                 message="Phone number must be in format 09123456789"
             )
         ]
@@ -99,7 +100,8 @@ class ProfileCreationForm(UserCreationForm):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input',
-            })
+            }),
+        initial=True
     )
 
     class Meta:
@@ -159,8 +161,13 @@ class EditProfileForm(UserChangeForm):
         required=False,
         widget=forms.TextInput(
             attrs={
-                 'class': 'form-control',
-                 'name': 'mobile'})
+                'class': 'form-control'}),
+        validators=[
+            RegexValidator(
+                regex=r'^09\d{9}$',
+                message="Phone number must be in format 09123456789"
+            )
+        ]
     )
     is_active = forms.BooleanField(
         required=False,
@@ -190,16 +197,23 @@ class UserProfileEdit(ModelForm):
         ),
         validators=[
             RegexValidator(
-                regex=r'^\d{11}$',
+                regex=r'^09\d{9}$',
                 message="Phone number must be in format 09123456789"
             )
         ]
+    )
+    email = forms.EmailField(
+        max_length=200,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'})
     )
 
     class Meta:
         model = User
         fields = (
             'mobile',
+            'email',
         )
 
 
@@ -212,5 +226,3 @@ class AdminEditPasswordForm(AdminPasswordChangeForm):
                                 widget=forms.PasswordInput(
                                     attrs={
                                         'class': 'form-control'}))
-
-

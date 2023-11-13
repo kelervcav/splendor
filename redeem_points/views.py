@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render, get_object_or_404, redirect
 
 from redeem_points.forms import RedeemPointsForm
+from redeem_points.models import RedeemPoints
 from user_profile.models import UserProfile
 
 User = get_user_model()
@@ -31,3 +32,9 @@ def redeem_points(request, pk):
     context = {'form': form, 'users': user}
     return render(request, template_name, context)
 
+
+def redeemed_list(request):
+    redeemed_list = RedeemPoints.objects.all().order_by('-date_redeemed')
+    template_name = 'redeemed_list.html'
+    context = {'redeemed_list': redeemed_list}
+    return render(request, template_name, context)

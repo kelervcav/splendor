@@ -18,6 +18,5 @@ class Transaction(models.Model):
 
     class Meta:
         db_table = 'transactions'
-        unique_together = ['user', 'offer_code']
 
 

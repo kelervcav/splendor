@@ -51,3 +51,10 @@
     text-align: right;
 }
 
+.actions-gap {
+    padding-right: 16px;
+}
+
+.patient-qr {
+    text-align: center;
+}

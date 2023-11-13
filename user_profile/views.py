@@ -182,7 +182,7 @@ def profile_edit_password(request):
     form = AdminEditPasswordForm(data=request.POST or None, user=user)
     if form.is_valid():
         form.save()
-        return redirect('admin/')
+        return redirect('/admin')
 
     template_name = 'user_profile_edit_password.html'
     context = {'form': form}
