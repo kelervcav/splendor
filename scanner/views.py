@@ -4,6 +4,9 @@ import cv2
 
 
 # Create your views here.
+# def index(request):
+#     return render(request, 'scanner.html')
+#
 
 def scan_qrcode(request):
     cam = cv2.VideoCapture(0)

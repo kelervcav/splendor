@@ -28,9 +28,10 @@
                      </li>
                      <div class="text-right pt-2 pb-3">
                          {% if appointment.is_approved %}
-                            <i class="far fa-check-circle" style="color: #25993F"> Appointment approved</i>
+                            <p style="color: #25993F"><i class="far fa-check-circle"></i> Appointment approved</p>
                          {% else %}
-                            <i class="far fa-clock" style="color: #fd7012;"> Pending</i>
+                            <p style="color: #fd7012"><i class="far fa-clock"></i> Pending</p>
+
                          {% endif %}
                      </div>
                  </ul>

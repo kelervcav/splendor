@@ -43,7 +43,7 @@ class BookingAppointmentForm(forms.ModelForm):
             if selected_time < current_time:
                 raise forms.ValidationError("Please select a future time for today.")
 
-        return cleaned_data
+        return selected_time
 
     treatment = forms.ModelChoiceField(
         queryset=Treatment.objects.all(),

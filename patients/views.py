@@ -1,9 +1,8 @@
 from datetime import datetime, timedelta
-
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from patients.forms import RegistrationForm, CustomRegistration, MembershipRenewalForm
 from redeem_points.models import RedeemPoints
@@ -35,8 +34,10 @@ def patient_create(request):
         registration = registration_form.save(commit=False)
         registration.is_patient = True
         registration.set_custom_password()
-        registration.generate_qr()
         registration.save()
+        user = User.objects.get(id=registration.id)
+        user.generate_qr()
+        user.save()
         gender = custom_form.save(commit=False)
         gender.user = registration
         gender.save()

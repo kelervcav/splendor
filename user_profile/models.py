@@ -57,7 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.set_password(custom_password)
         self.save()
 
-    def generate_qr(self, *args, **kwargs):
+    def generate_qr(self):
         # Generate and save the QR code when the user is saved
         qr = qrcode.QRCode(
             version=1,
@@ -65,7 +65,8 @@ class User(AbstractBaseUser, PermissionsMixin):
             box_size=10,
             border=4,
         )
-        qr.add_data(str(self.pk))
+        redirect_url = f"http://127.0.0.1:8000/patients/{self.pk}/patient-information"
+        qr.add_data(str(redirect_url))
         print(f"QR Code Content: {str(self.pk)}")
         qr.make(fit=True)
 
@@ -74,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         img.save(buffer)
         filename = f'qr_{self.last_name}.png'
         file_buffer = File(buffer, name=filename)
-        self.qr_code = file_buffer
+        self.qr_code.save(filename, file_buffer)
         self.save()
 
     def __str__(self):
