@@ -43,10 +43,14 @@
                         </ul>
                         {% endfor %}
                     </div>
-                    <div class="col-md-6 pt-4 patient-qr">
-                        {% for qr in patient_info %}
-                            <img src="{{ MEDIA_URL }}{{ qr.qr_code.url }}" alt="QR Code Image">
-                        {% endfor %}
+                    <div class="col-md-6 patient-qr">
+                        <div class="card">
+                            {% for qr in patient_info %}
+                                <div class="card-body">
+                                    <img src="{{ MEDIA_URL }}{{ qr.qr_code.url }}" height="300px" alt="QR Code Image" data-toggle="modal" data-target="#qrModal" />
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>

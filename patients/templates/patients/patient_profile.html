@@ -28,9 +28,24 @@
                     <li class="list-group-item"><b>Mobile</b><a class="float-right">{{ patient_info.mobile }}</a></li>
                 </ul>
             </div>
+
             <div class="col-md-6 patient-qr">
-                <img src="{{ MEDIA_URL }}{{ patient_info.qr_code.url }}" alt="QR Code Image" />
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{ MEDIA_URL }}{{ patient_info.qr_code.url }}" height="253px" alt="QR Code Image" data-toggle="modal" data-target="#qrModal" />
+                    </div>
+                    <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="{{ MEDIA_URL }}{{ patient_info.qr_code.url }}" alt="QR Code Image" data-toggle="modal" data-target="#qrModal"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

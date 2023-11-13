@@ -50,38 +50,9 @@
                                         </div>
                                         <div class="card-body">
                                             <p class="login-box-msg">Please log in to access this page</p>
-                                            {% if messages %}
-                                            <div class="alert alert-danger alert-dismissible">
-                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                {% for message in messages %}
-                                                <span class="lh-1">{{ message }}</span>
-                                                {% endfor %}
-                                            </div>
-                                            {% endif %}
+                                            {% block content %}
 
-                                            <form method="post" action="{% url 'loyalty_login' %}" id="form-base" novalidate>
-                                                {% csrf_token %}
-                                                <div class="input-group mb-3">
-                                                    <input type="text" name="username" class="form-control form-control-lg" placeholder="Enter email" autocomplete="on" />
-                                                    <div class="input-group-append">
-                                                        <div class="input-group-text">
-                                                            <span class="fas fa-envelope"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="input-group mb-3">
-                                                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Enter password" />
-                                                    <div class="input-group-append">
-                                                        <div class="input-group-text">
-                                                            <span class="fas fa-lock"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="input-group mb-3">
-                                                    <button type="submit" class="btn btn-success btn-block btn-lg mb-2">Login</button>
-                                                </div>
-                                            </form>
-
+                                            {% endblock content%}
                                         </div>
                                         <!-- /.card-body -->
                                     </div>

@@ -97,6 +97,7 @@ class UserProfile(models.Model):
     total_points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     account_expiry = models.DateTimeField(default=datetime.now() + timedelta(days=365))
 
+    USERNAME_FIELD = 'mobile'
 
     # Add any additional fields you need for your user profile
 

@@ -90,7 +90,7 @@ class ProfileCreationForm(UserCreationForm):
         ),
         validators=[
             RegexValidator(
-                regex=r'^\d{11}$',
+                regex=r'^09\d{9}$',
                 message="Phone number must be in format 09123456789"
             )
         ]
@@ -161,8 +161,13 @@ class EditProfileForm(UserChangeForm):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
-                'name': 'mobile'})
+                'class': 'form-control'}),
+        validators=[
+            RegexValidator(
+                regex=r'^09\d{9}$',
+                message="Phone number must be in format 09123456789"
+            )
+        ]
     )
     is_active = forms.BooleanField(
         required=False,
@@ -192,7 +197,7 @@ class UserProfileEdit(ModelForm):
         ),
         validators=[
             RegexValidator(
-                regex=r'^\d{11}$',
+                regex=r'^09\d{9}$',
                 message="Phone number must be in format 09123456789"
             )
         ]

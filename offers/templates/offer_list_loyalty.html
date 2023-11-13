@@ -16,24 +16,24 @@
     <div class="card-body">
         <div class="row">
             {% for offer in offers %}
-            <div class="col-12 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <img src="{{ MEDIA_URL }}{{offer.offer_image.url}}" alt="Offer Image" width="100%" data-toggle="modal" data-target="#exampleModal" />
-                    </div>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                        <img src="{{ MEDIA_URL }}{{offer.offer_image.url}}"
-                                             alt="Offer Image" width="100%" height="200px" data-toggle="modal" data-target="#exampleModal"/>
+                <div class="col-12 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{{ MEDIA_URL }}{{offer.offer_image.url}}" alt="Offer Image" width="100%" data-toggle="modal" data-target="#exampleModal" />
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                            <img src="{{ MEDIA_URL }}{{offer.offer_image.url}}"
+                                                 alt="Offer Image" width="100%" height="300px" data-toggle="modal" data-target="#exampleModal"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
-            </div>
+              {% endfor %}
         </div>
 
         {% endblock %}

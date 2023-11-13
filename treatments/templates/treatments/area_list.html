@@ -51,10 +51,8 @@
 										<span class="badge bg-danger">Inactive</span>
 									{% endif %}
 								<td>
-									<a href="{% url 'treatments:area_edit' area.id %}" class="pull-right text-blue">
-										<i class="fas fa-pencil-alt"></i></a>
-									<a href="{% url 'treatments:area_disable' area.id %}" class="pull-right text-red">
-										<i class="fas fa-ban"></i></a>
+									<a href="{% url 'treatments:area_edit' area.id %}" class="pull-right text-blue actions-gap"><i class="fas fa-pencil-alt"></i></a>
+									<a href="{% url 'treatments:area_disable' area.id %}" class="pull-right text-red actions-gap"><i class="fas fa-ban"></i></a>
 								</td>
 							</tr>
 							{% endfor %}

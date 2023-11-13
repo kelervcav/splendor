@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'user_profile.User'
 
+AUTHENTICATION_BACKENDS = ['user_profile.backends.CustomAuthenticationBackend']
+
 LOGIN_REDIRECT_URL = '/dashboard'
 
 LOGIN_URL = '/'
@@ -57,6 +59,7 @@ INSTALLED_APPS = [
     'transactions',
     'redeem_points',
     'offers',
+    'scanner',
 ]
 
 MIDDLEWARE = [

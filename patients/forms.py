@@ -39,7 +39,7 @@ class RegistrationForm(forms.ModelForm):
         ),
         validators=[
             RegexValidator(
-                regex=r'^\d{11}$',
+                regex=r'^09\d{9}$',
                 message="Phone number must be in format 09123456789"
             )
         ]
@@ -111,7 +111,7 @@ class MembershipRenewalForm(ModelForm):
         ),
         validators=[
             RegexValidator(
-                regex=r'^\d{11}$',
+                regex=r'^09\d{9}$',
                 message="Phone number must be in format 09123456789"
             )
         ]
