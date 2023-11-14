@@ -104,7 +104,7 @@
                                         <td><span>&#8369;</span>{{ transact.price_amount }}</td>
                                     {% endif %}
                                     <td><span>&#8369;</span>{{ transact.points }}</td>
-                                    <td>{{ transact.date_added|date:"d M Y" }}</td>
+                                    <td>{{ transact.date_added }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -131,8 +131,8 @@
                                 {% for redeem in redeemed_list %}
                                 <tr>
                                     <th>{{ redeem.id }}</th>
-                                    <td><span>&#8369;</span>{{ redeem.redeemed_points }}</td>
-                                    <td>{{ redeem.date_redeemed }}</td>
+                                    <td><span>&#8369;</span>{{ redeem.redeemed_points|floatformat:2 }}</td>
+                                    <td>{{ redeem.date_redeemed|date:"d M Y G:i" }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

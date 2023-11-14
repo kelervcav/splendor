@@ -34,6 +34,7 @@ class OfferForm(ModelForm):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input'}),
+        initial=False,
     )
 
     class Meta:

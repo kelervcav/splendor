@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block page_title %} Report and Analytics {% endblock page_title %}
+
+{% block content %}
+
+ <h2>Most Chosen Treatment</h2>
+
+    {% if most_chosen_treatment %}
+        {% for treatment in most_chosen_treatment %}
+        <p>Count: {{ treatment.count }}</p>
+        {% endfor %}
+        {% if most_chosen_treatment%}
+            <p>Treatment Name: {{ most_chosen_treatment.name }}</p>
+        {% endif %}
+
+    {% else %}
+        <p>No treatment data available.</p>
+    {% endif %}
+
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+{% endblock script %}

@@ -40,8 +40,6 @@ def redeem_points(request, pk):
 
 
 @login_required
-@admin_required
-@permission_required('redeem_points.view_redeempoints', raise_exception=True)
 def redeemed_list(request):
     redeemed_list = RedeemPoints.objects.all().order_by('-date_redeemed')
     template_name = 'redeemed_list.html'
