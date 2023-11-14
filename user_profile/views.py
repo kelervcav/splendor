@@ -37,7 +37,7 @@ def process_admin_login(request):
 
 @login_required
 @admin_required
-@permission_required('users.view_user', raise_exception=True)
+@permission_required('user_profile.view_user', raise_exception=True)
 def profile_list(request):
     users = User.objects.filter(is_patient=False).order_by('-created_at')
     template_name = 'user_list.html'
@@ -47,7 +47,7 @@ def profile_list(request):
 
 @login_required
 @admin_required
-@permission_required('users.add_user', raise_exception=True)
+@permission_required('user_profile.add_user', raise_exception=True)
 def profile_create(request):
     form = ProfileCreationForm(request.POST or None)
     if form.is_valid():
@@ -66,7 +66,7 @@ def profile_create(request):
 
 @login_required
 @admin_required
-@permission_required('users.change_user', raise_exception=True)
+@permission_required('user_profile.change_user', raise_exception=True)
 def my_profile_edit(request):
     user = get_object_or_404(User, id=request.user.id)
     form = UserProfileEdit(request.POST or None, instance=request.user)
@@ -83,7 +83,7 @@ def my_profile_edit(request):
 
 @login_required
 @admin_required
-@permission_required('users.change_user', raise_exception=True)
+@permission_required('user_profile.change_user', raise_exception=True)
 def user_profile_edit(request, pk):
     user = get_object_or_404(User, id=pk)
     group = Group.objects.filter(user=user).first()
@@ -102,7 +102,7 @@ def user_profile_edit(request, pk):
 
 @login_required
 @admin_required
-@permission_required('users.disable_user', raise_exception=True)
+@permission_required('user_profile.disable_user', raise_exception=True)
 def profile_disable(request, pk):
     users = get_object_or_404(User, id=pk)
     users.is_active = False
@@ -175,7 +175,8 @@ def admin_edit_password(request, pk):
     form = AdminEditPasswordForm(data=request.POST or None, user=user)
     if form.is_valid():
         form.save()
-        return redirect('/users')
+        messages.success(request, 'Password changed successfully.')
+        return redirect('users:edit', pk)
     template_name = 'user_admin_edit_password.html'
     context = {'form': form}
     return render(request, template_name, context)

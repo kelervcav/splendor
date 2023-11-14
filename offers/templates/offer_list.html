@@ -63,8 +63,8 @@
                                     {% endif %}
                                </td>
                                {% if perms.offers.change_offer %}
-                               <td> <a href="{% url 'offers:offer_edit' offer.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="{% url 'offers:offer_disable' offer.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
+                               <td> <a href="{% url 'offers:offer_edit' offer.id %}" class="pull-right text-blue actions-gap"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="{% url 'offers:offer_disable' offer.id %}" class="pull-right text-red actions-gap"><i class="fas fa-ban"></i></a>
                                </td>
                                {% endif %}
                            </tr>

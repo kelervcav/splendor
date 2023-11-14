@@ -57,7 +57,7 @@ def appointment_create(request):
 # for therapist
 @login_required
 @admin_required
-@permission_required('appointment.approve_appointment', raise_exception=True)
+@permission_required('appointments.approve_appointment', raise_exception=True)
 def approve_appointment(request, pk):
     appointment = get_object_or_404(Appointment, id=pk)
     appointment.is_approved = True
@@ -70,7 +70,7 @@ def approve_appointment(request, pk):
 # for therapist
 @login_required
 @admin_required
-@permission_required('appointment.view_appointment', raise_exception=True)
+@permission_required('appointments.view_appointment', raise_exception=True)
 def appointment_list(request):
     appointment_list = Appointment.objects.all()
     template_name = 'appointments/appointment_list.html'

@@ -85,6 +85,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = 'user'
         permissions = [
             ("disable_user", "Can disable user"),
+            ("add_patient", "Can add patient"),
+            ("change_patient", "Can change patient"),
+            ("view_patient", "Can view patient"),
+            ("disable_patient", "Can disable patient"),
+            ("renew_membership", "Can disable patient"),
+            ("reset_password", "Can reset patient password"),
+            ("generate_password", "Can generate patient password"),
+
         ]
 
 

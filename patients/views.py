@@ -15,9 +15,10 @@ User = get_user_model()
 
 
 # Create your views here.
+# for therapist
 @login_required
 @admin_required
-@permission_required('patients.view_offer', raise_exception=True)
+@permission_required('user_profile.view_patient', raise_exception=True)
 def patient_list(request):
     patients_list = User.objects.filter(is_patient=True).order_by('-created_at')
     template_name = 'patients/patient_list.html'
@@ -27,6 +28,7 @@ def patient_list(request):
 
 @login_required
 @admin_required
+@permission_required('user_profile.add_patient', raise_exception=True)
 def patient_create(request):
     registration_form = RegistrationForm(request.POST or None)
     custom_form = CustomRegistration(request.POST or None)
@@ -53,6 +55,7 @@ def patient_create(request):
 # for therapist
 @login_required
 @admin_required
+@permission_required('user_profile.view_patient', raise_exception=True)
 def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
     transactions = Transaction.objects.filter(user=pk).order_by('-date_added')
@@ -69,6 +72,8 @@ def patient_info(request, pk):
 
 
 @login_required
+@admin_required
+@permission_required('user_profile.change_patient', raise_exception=True)
 def patient_edit(request, pk):
     patient = get_object_or_404(User, id=pk)
     registration_form = RegistrationForm(request.POST or None, instance=patient)
@@ -88,6 +93,8 @@ def patient_edit(request, pk):
 
 
 @login_required
+@admin_required
+@permission_required('user_profile.disable_patient', raise_exception=True)
 def patient_disable(request, pk):
     patients = get_object_or_404(User, id=pk)
     patients.is_active = False
@@ -96,6 +103,9 @@ def patient_disable(request, pk):
     return redirect('patients:patient_list')
 
 
+@login_required
+@admin_required
+@permission_required('user_profile.renew_membership', raise_exception=True)
 def patient_renewal(request, pk):
     patient = get_object_or_404(User, id=pk)
     user_profile = UserProfile.objects.get(user=patient)
@@ -117,6 +127,7 @@ def patient_renewal(request, pk):
 
 @login_required
 @admin_required
+@permission_required('user_profile.reset_password', raise_exception=True)
 def reset_password(request, pk):
     patient = get_object_or_404(User, id=pk)
     template_name = 'patients/patient_reset_password.html'
@@ -126,6 +137,7 @@ def reset_password(request, pk):
 
 @login_required
 @admin_required
+@permission_required('user_profile.generate_password', raise_exception=True)
 def generate_password(request, pk):
     patient = get_object_or_404(User, id=pk)
     generated_password = request.POST.get('password')
