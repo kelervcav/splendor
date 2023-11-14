@@ -1,15 +1,21 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 
 from redeem_points.forms import RedeemPointsForm
 from redeem_points.models import RedeemPoints
+from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
 
 User = get_user_model()
 
 
 # Create your views here.
+
+@login_required
+@admin_required
+@permission_required('redeem_points.add_redeempoints', raise_exception=True)
 def redeem_points(request, pk):
     user = User.objects.get(id=pk)
     user_profile = UserProfile.objects.get(user=user)
@@ -33,6 +39,9 @@ def redeem_points(request, pk):
     return render(request, template_name, context)
 
 
+@login_required
+@admin_required
+@permission_required('redeem_points.view_redeempoints', raise_exception=True)
 def redeemed_list(request):
     redeemed_list = RedeemPoints.objects.all().order_by('-date_redeemed')
     template_name = 'redeemed_list.html'

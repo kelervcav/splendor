@@ -53,18 +53,25 @@
                         <p>Appointments</p>
                     </a>
                 </li>
+                {% if perms.users.view_user %}
                 <li class="nav-item">
                     <a href="{% url 'users:list' %}" class="nav-link">
                         <i class="nav-icon fas fa-user-cog"></i>
                         <p>System Users</p>
                     </a>
                 </li>
+                {% endif %}
+
+                {% if perms.offers.view_offer %}
                  <li class="nav-item">
                     <a href="{% url 'offers:offer_list' %}" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>Offers</p>
                     </a>
                 </li>
+                {% endif %}
+
+                {% if perms.offers.view_offer %}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cogs"></i>
@@ -97,6 +104,7 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -25,7 +25,7 @@ class Appointment(models.Model):
     ]
     time = models.CharField(max_length=10, choices=TIME_CHOICES)
     treatment = models.ForeignKey(Treatment, on_delete=models.DO_NOTHING)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now())
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
@@ -35,3 +35,6 @@ class Appointment(models.Model):
 
     class Meta:
         db_table = 'appointments'
+        permissions = [
+            ("approve_appointment", "Can approve appointment")
+        ]

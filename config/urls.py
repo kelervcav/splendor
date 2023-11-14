@@ -37,6 +37,7 @@ urlpatterns = [
     path('transactions/', include('transactions.urls'), name='transactions'),
     path('redeem_points/', include('redeem_points.urls'), name='redeem_points'),
     path('offers/', include('offers.urls'), name='offers'),
+    path('report_analytics/', include('report_analytics.urls'),  name='report_analytics'),
     # path('', include('scanner.urls')),
 ]
 if settings.DEBUG:

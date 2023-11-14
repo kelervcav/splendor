@@ -1,13 +1,18 @@
 from datetime import datetime
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from offers.forms import OfferForm
 from offers.models import Offer
+from user_profile.decorators import admin_required
 
 
 # Create your views here.
+@login_required
+@admin_required
+@permission_required('offers.view_offer', raise_exception=True)
 def offer_list(request):
     offer_list = Offer.objects.all()
     template_name = 'offer_list.html'
@@ -15,6 +20,9 @@ def offer_list(request):
     return render(request, template_name, context)
 
 
+@login_required
+@admin_required
+@permission_required('offers.add_offer', raise_exception=True)
 def offer_create(request):
     form = OfferForm(request.POST or None, request.FILES or None)
     if form.is_valid():
@@ -26,6 +34,9 @@ def offer_create(request):
     return render(request, template_name, context)
 
 
+@login_required
+@admin_required
+@permission_required('offers.change_offer', raise_exception=True)
 def offer_edit(request, pk):
     offer = get_object_or_404(Offer, id=pk)
     form = OfferForm(request.POST or None, request.FILES or None, instance=offer)
@@ -38,6 +49,9 @@ def offer_edit(request, pk):
     return render(request, template_name, context)
 
 
+@login_required
+@admin_required
+@permission_required('offers.disable_offer', raise_exception=True)
 def offer_disable(request, pk):
     offer = get_object_or_404(Offer, id=pk)
     offer.is_offer_active = False

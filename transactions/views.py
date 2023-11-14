@@ -2,11 +2,13 @@ from _decimal import Decimal
 
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required, permission_required
 from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 
 from offers.models import Offer
 from redeem_points.models import RedeemPoints
+from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
 from .forms import TransactionForm
 from .models import Transaction
@@ -14,13 +16,9 @@ from .models import Transaction
 User = get_user_model()
 
 
-# Create your views here.
-# def transaction_list(request):
-#     transactions = Transaction.objects.all().order_by('-date_added')
-#     template_name = 'transaction_list.html'
-#     context = {'transactions': transactions}
-#     return render(request, template_name, context)
-
+@login_required
+@admin_required
+@permission_required('transactions.add_transaction', raise_exception=True)
 def transaction_create(request, pk):
     user = User.objects.get(id=pk)
     user_profile = UserProfile.objects.get(user=user)

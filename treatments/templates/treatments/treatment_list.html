@@ -24,9 +24,11 @@
 				   <div class="card-header">
 					  <h3 class="card-title">Treatment List</h3>
 					  <div class="card-tools">
+						  {% if perms.treatments.add_treatment %}
 						 <a href="{% url 'treatments:treatment_create' %}" class="btn btn-sm btn-block bg-gradient-success">
 							Add Treatment
 						 </a>
+						  {% endif %}
 					  </div>
 				   </div>
 				   <!-- /.card-header -->
@@ -41,7 +43,9 @@
 								<th>TREATMENT AREA</th>
 								<th>PRICING TYPE</th>
 								<th>STATUS</th>
+								{% if perms.treatments.change_treatment %}
 								<th>ACTIONS</th>
+								{% endif %}
 
 							</tr>
 						 </thead>
@@ -60,10 +64,12 @@
 										<span class="badge bg-danger">Inactive</span>
 									{% endif %}
 								</td>
+								{% if perms.treatments.change_treatment %}
 								<td>
 								  	<a href="{% url 'treatments:treatment_edit' treatment.id %}" class="pull-right text-blue actions-gap"><i class="fas fa-pencil-alt"></i></a>
 									<a href="{% url 'treatments:treatment_disable' treatment.id %}" class="pull-right text-red actions-gap"><i class="fas fa-ban"></i></a>
 								</td>
+								{% endif %}
 							</tr>
 							{% endfor %}
 						 </tbody>

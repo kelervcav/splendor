@@ -12,7 +12,6 @@ from django.contrib.auth.mixins import (
 from user_profile.forms import ProfileCreationForm, EditProfileForm, AdminEditPasswordForm, UserProfileEdit
 from .decorators import admin_required
 
-
 User = get_user_model()
 
 
@@ -20,7 +19,7 @@ def process_admin_login(request):
     if request.method == 'POST':
         username = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(username=username,  password=password)
+        user = authenticate(username=username, password=password)
 
         if user is not None:
             if not user.is_patient and user.is_active:
@@ -38,6 +37,7 @@ def process_admin_login(request):
 
 @login_required
 @admin_required
+@permission_required('users.view_user', raise_exception=True)
 def profile_list(request):
     users = User.objects.filter(is_patient=False).order_by('-created_at')
     template_name = 'user_list.html'
@@ -47,7 +47,7 @@ def profile_list(request):
 
 @login_required
 @admin_required
-# @permission_required('profiles.add_user', raise_exception=True)
+@permission_required('users.add_user', raise_exception=True)
 def profile_create(request):
     form = ProfileCreationForm(request.POST or None)
     if form.is_valid():
@@ -66,6 +66,7 @@ def profile_create(request):
 
 @login_required
 @admin_required
+@permission_required('users.change_user', raise_exception=True)
 def my_profile_edit(request):
     user = get_object_or_404(User, id=request.user.id)
     form = UserProfileEdit(request.POST or None, instance=request.user)
@@ -82,6 +83,7 @@ def my_profile_edit(request):
 
 @login_required
 @admin_required
+@permission_required('users.change_user', raise_exception=True)
 def user_profile_edit(request, pk):
     user = get_object_or_404(User, id=pk)
     group = Group.objects.filter(user=user).first()
@@ -100,6 +102,7 @@ def user_profile_edit(request, pk):
 
 @login_required
 @admin_required
+@permission_required('users.disable_user', raise_exception=True)
 def profile_disable(request, pk):
     users = get_object_or_404(User, id=pk)
     users.is_active = False
@@ -110,6 +113,7 @@ def profile_disable(request, pk):
 
 @login_required
 @admin_required
+@permission_required('auth.view_group', raise_exception=True)
 def group_list(request):
     group_list = Group.objects.all()
     template = 'group_list.html'
@@ -119,6 +123,7 @@ def group_list(request):
 
 @login_required
 @admin_required
+@permission_required('auth.add_group', raise_exception=True)
 def group_create(request):
     if request.method == 'POST':
         permissions = request.POST.getlist('permission')
@@ -138,6 +143,7 @@ def group_create(request):
 
 @login_required
 @admin_required
+@permission_required('auth.change_group', raise_exception=True)
 def group_edit(request, pk):
     if request.method == 'GET':
         group = Group.objects.get(id=pk)
@@ -187,7 +193,3 @@ def profile_edit_password(request):
     template_name = 'user_profile_edit_password.html'
     context = {'form': form}
     return render(request, template_name, context)
-
-
-
-

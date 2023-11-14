@@ -24,9 +24,11 @@
                <div class="card-header">
                   <h3 class="card-title">Offer List</h3>
                    <div class="card-tools">
-                     <a href="{% url 'offers:offer_create' %}" class="btn btn-sm btn-block bg-gradient-success">
-                        Add Offer
-                     </a>
+                       {% if perms.offers.add_offer %}
+                       <a href="{% url 'offers:offer_create' %}" class="btn btn-sm btn-block bg-gradient-success">
+                           Add Offer
+                       </a>
+                       {% endif %}
                   </div>
                </div>
                <!-- /.card-header -->
@@ -40,7 +42,9 @@
                             <th>DISCOUNT</th>
                             <th>IMAGE</th>
                             <th>STATUS</th>
+                            {% if perms.offers.change_offer %}
                             <th>ACTIONS</th>
+                            {% endif %}
                         </tr>
                      </thead>
 
@@ -58,8 +62,11 @@
                                         <span class="badge bg-danger">Inactive</span>
                                     {% endif %}
                                </td>
+                               {% if perms.offers.change_offer %}
                                <td> <a href="{% url 'offers:offer_edit' offer.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
                                     <a href="{% url 'offers:offer_disable' offer.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
+                               </td>
+                               {% endif %}
                            </tr>
                         {% endfor %}
                      </tbody>

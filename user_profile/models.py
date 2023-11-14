@@ -83,6 +83,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'user'
+        permissions = [
+            ("disable_user", "Can disable user"),
+        ]
 
 
 class UserProfile(models.Model):
@@ -107,3 +110,4 @@ class UserProfile(models.Model):
 
     class Meta:
         db_table = 'user_profile'
+

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from patients.forms import RegistrationForm, CustomRegistration, MembershipRenewalForm
@@ -17,6 +17,7 @@ User = get_user_model()
 # Create your views here.
 @login_required
 @admin_required
+@permission_required('patients.view_offer', raise_exception=True)
 def patient_list(request):
     patients_list = User.objects.filter(is_patient=True).order_by('-created_at')
     template_name = 'patients/patient_list.html'
@@ -49,6 +50,7 @@ def patient_create(request):
     return render(request, template_name, context)
 
 
+# for therapist
 @login_required
 @admin_required
 def patient_info(request, pk):
@@ -122,6 +124,8 @@ def reset_password(request, pk):
     return render(request, template_name, context)
 
 
+@login_required
+@admin_required
 def generate_password(request, pk):
     patient = get_object_or_404(User, id=pk)
     generated_password = request.POST.get('password')
@@ -133,7 +137,7 @@ def generate_password(request, pk):
 
 
 # patient UI
-
+@login_required
 def patient_profile(request, pk):
     patient_info = User.objects.get(id=pk)
     patient = get_object_or_404(User, id=request.user.id)
@@ -147,6 +151,8 @@ def patient_profile(request, pk):
     return render(request, template_name, context)
 
 
+# patient UI
+@login_required
 def change_password(request):
     patient = get_object_or_404(User, id=request.user.id)
     form = AdminEditPasswordForm(data=request.POST or None, user=patient)
@@ -154,6 +160,6 @@ def change_password(request):
         form.save()
         return redirect('/')
 
-    template_name = 'user_profile_edit_password.html'
+    template_name = 'patients/patient_change_password.html'
     context = {'form': form}
     return render(request, template_name, context)
