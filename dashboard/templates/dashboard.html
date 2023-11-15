@@ -120,12 +120,28 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Most Chosen Treatment by Appointment</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 
-{% endblock content %} {% block script %}
+{% endblock content %}
+
+{% block script %}
 <script>
     $(function () {
         $("#my-transaction-table").DataTable({
@@ -143,5 +159,29 @@
     setInterval(function () {
         window.location.reload();
     }, 60000); // refresh every 1 min
+</script>
+
+<script>
+    var config = {
+        type: "doughnut",
+        data: {
+            datasets: [
+                {
+                    data: {{treatment_data|safe}},
+                    backgroundColor: ["red", "blue", "green", "yellow", "orange", "pink"],
+                    label: "Count",
+                },
+            ],
+            labels: {{treatment_label|safe}},
+        },
+        options: {
+            responsive: true,
+        },
+    };
+
+    window.onload = function () {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        window.mypie = new Chart(ctx, config);
+    };
 </script>
 {% endblock script %}

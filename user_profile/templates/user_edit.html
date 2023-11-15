@@ -66,14 +66,14 @@
                            <span class="help-block">{{ form.mobile.errors }}</span>
                         </div>
                      </div>
-                     {% if not user_profile.is_superuser %}
+                    <!-- {% if not user_profile.is_superuser %}
                      <div class="form-check">
                          <div class="col-md-4">
                              {{ form.is_active }}
                              <label class="form-check-label" for="">Is active?</label>
                          </div>
                       </div>
-                     {% endif %}
+                     {% endif %}-->
                      <div class="form-group">
                          <div class="col-md-4">
                              <a href="{% url 'users:admin_password_update' user_profile.id %}"><p class="text-right">Change password</p></a>

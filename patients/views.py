@@ -36,6 +36,7 @@ def patient_create(request):
     if registration_form.is_valid() and custom_form.is_valid():
         registration = registration_form.save(commit=False)
         registration.is_patient = True
+        registration.is_active = True
         registration.set_custom_password()
         registration.save()
         user = User.objects.get(id=registration.id)
@@ -81,6 +82,7 @@ def patient_edit(request, pk):
     if registration_form.is_valid() and custom_form.is_valid():
         registration = registration_form.save(commit=False)
         registration.is_patient = True
+        registration.is_active = True
         registration.save()
         gender = custom_form.save(commit=False)
         gender.user = registration

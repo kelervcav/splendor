@@ -68,9 +68,9 @@
                             </td>
                             <td>
                                 <a href="{% url 'users:edit' user.id %}" class="pull-right text-blue actions-gap"><i class="fas fa-pencil-alt"></i></a>
-                                {% if not user.is_superuser %}
-                                    <a href="{% url 'users:disable' user.id %}" class="pull-right text-red actions-gap"><i class="fas fa-ban"></i></a>
-                                {% endif %}
+<!--                                {% if not user.is_superuser %}-->
+<!--                                    <a href="{% url 'users:disable' user.id %}" class="pull-right text-red actions-gap"><i class="fas fa-ban"></i></a>-->
+<!--                                {% endif %}-->
                             </td>
                         </tr>
                         {% endfor %}

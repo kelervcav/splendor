@@ -77,12 +77,12 @@
                            </div>
                            <span class="help-block">{{ custom_form.address.errors }}</span>
                         </div>
-                        <div class="form-check">
+                        <!--<div class="form-check">
                             <div class="col-md-4">
-                                {{ registration_form.is_active }}
+                               {{ registration_form.is_active }}
                                 <label class="form-check-label" for="">Is active?</label>
                             </div>
-                        </div>
+                        </div>-->
                          <div class="form-group">
                              <div class="col-md-4">
                                  <a href="{% url 'patients:reset_password' patient.id %}"><p class="text-right">Reset password</p></a>

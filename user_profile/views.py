@@ -89,7 +89,9 @@ def user_profile_edit(request, pk):
     group = Group.objects.filter(user=user).first()
     form = EditProfileForm(request.POST or None, instance=user, initial={'group': group})
     if form.is_valid():
-        form.save()
+        user_edit = form.save(commit=False)
+        user_edit.is_active = True
+        user_edit.save()
         user.groups.clear()
         user.groups.add(request.POST['group'])
         messages.success(request, 'Users updated successfully.')
