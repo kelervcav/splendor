@@ -114,7 +114,7 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                     <a href="{% url 'appointments:appointment_list' %}"><button type="submit" class="btn btn-info float-right">View Appointments</button></a>
+                     <a href="{% url 'appointments:appointment_list' %}"><button type="submit" class="btn btn-info btn-sm float-right">View Appointments</button></a>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -126,9 +126,11 @@
                 <div class="card card-outline card-info">
                     <div class="card-header">
                         <h3 class="card-title">Most Chosen Treatment by Appointment</h3>
+                        <button class="btn btn-outline-info btn-sm" id="btn-download" style="float:right">
+                            <i class="fas fa-arrow-circle-down"></i> Download</button>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart"></canvas>
+                        <canvas id="chart"></canvas>
                     </div>
                 </div>
             </div>
@@ -162,26 +164,36 @@
 </script>
 
 <script>
-    var config = {
-        type: "doughnut",
+   const myChart = new Chart(document.getElementById('chart').getContext("2d"),
+    {
+        type: 'doughnut',
         data: {
-            datasets: [
-                {
-                    data: {{treatment_data|safe}},
-                    backgroundColor: ["red", "blue", "green", "yellow", "orange", "pink"],
-                    label: "Count",
-                },
-            ],
             labels: {{treatment_label|safe}},
+            datasets: [{
+                data: {{treatment_data|safe}},
+                backgroundColor: ["#EE0733", "#073EA8", "#6CCE32", "#FD3E81", "#FFC92E", "#FF761C", "#D51EFF"],
+                label: "Count",
+                borderWidth: 1
+            }]
         },
-        options: {
-            responsive: true,
-        },
-    };
+    options: {
+        animation: {
+            duration: 1500,
+        }
+    },
+ });
 
-    window.onload = function () {
-        var ctx = document.getElementById("myChart").getContext("2d");
-        window.mypie = new Chart(ctx, config);
-    };
+var image = myChart.toBase64Image();
+console.log(image);
+
+document.getElementById('btn-download').onclick = function() {
+  // Trigger the download
+  var a = document.createElement('a');
+  a.href = myChart.toBase64Image();
+  var now = new Date();
+  var reports = 'reports_' + now.getFullYear() + (now.getMonth() + 1) + now.getDate() + '_' + now.getHours() + now.getMinutes() + now.getSeconds() + '.png';
+  a.download = reports;
+  a.click();
+}
 </script>
 {% endblock script %}

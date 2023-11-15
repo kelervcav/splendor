@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from treatments.models import Treatment
 from user_profile.models import User
+from datetime import time
 
 
 # Create your models here.
@@ -11,19 +12,20 @@ class Appointment(models.Model):
     date = models.DateField(null=False, blank=False)
     TIME_CHOICES = [
         ("------", "------"),
-        ("10 AM", "10:00 AM"),
-        ("11 AM", "11:00 AM"),
-        ("12 PM", "12:00 PM"),
-        ("1 PM", "1:00 PM"),
-        ("2 PM", "2:00 PM"),
-        ("3 PM", "3:00 PM"),
-        ("4 PM", "4:00 PM"),
-        ("5 PM", "5:00 PM"),
-        ("6 PM", "6:00 PM"),
-        ("7 PM", "7:00 PM"),
-        ("8 PM", "8:00 PM"),
+        (time(10, 0), "10:00 AM"),
+        (time(11, 0), "11:00 AM"),
+        (time(12, 0), "12:00 PM"),
+        (time(13, 0), "1:00 PM"),
+        (time(14, 0), "2:00 PM"),
+        (time(15, 0), "3:00 PM"),
+        (time(16, 0), "4:00 PM"),
+        (time(17, 0), "5:00 PM"),
+        (time(18, 0), "6:00 PM"),
+        (time(19, 0), "7:00 PM"),
+        (time(20, 0), "8:00 PM"),
     ]
-    time = models.CharField(max_length=10, choices=TIME_CHOICES)
+
+    time = models.TimeField(choices=TIME_CHOICES)
     treatment = models.ForeignKey(Treatment, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(default=timezone.now())
     updated_at = models.DateTimeField(auto_now=True)

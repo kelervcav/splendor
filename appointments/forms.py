@@ -31,19 +31,17 @@ class BookingAppointmentForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #
-    #     current_datetime = timezone.now()
-    #     selected_date = cleaned_data.get('date')
-    #     selected_time = cleaned_data.get('time')
-    #
-    #     if selected_date and selected_date == current_datetime.date() and selected_time:
-    #         current_time = current_datetime.time().strftime('%I:%M %p')
-    #         if selected_time < current_time:
-    #             raise forms.ValidationError("Please select a future time for today.")
-    #
-    #     return selected_time
+    def clean_time(self):
+        current_date_time = timezone.now()
+
+        selected_time = self.cleaned_data['time']
+        selected_date = self.cleaned_data['date']
+
+        selected_date_time = datetime.combine(selected_date, selected_time)
+
+        if selected_date_time <= current_date_time:
+            raise forms.ValidationError("Selected time has already passed.")
+        return selected_time
 
     treatment = forms.ModelChoiceField(
         queryset=Treatment.objects.all(),

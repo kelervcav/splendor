@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'redeem_points',
     'offers',
     'scanner',
-    'report_analytics',
+
 ]
 
 MIDDLEWARE = [
