@@ -29,6 +29,7 @@
                             <li class="list-group-item"><b>Birthdate</b><a class="float-right">{{ patient.date_of_birth|date:"d M Y" }}</a></li>
                             <li class="list-group-item"><b>Mobile</b><a class="float-right">{{ patient.mobile }}</a></li>
                             <li class="list-group-item"><b>Email</b><a class="float-right">{{ patient.email }}</a></li>
+                            <li class="list-group-item"><b>Address</b><a class="float-right">{{ patient.userprofile.address }}</a></li>
                             {% for total in total_points %}
                                <li class="list-group-item"><b>Points Earned</b><a class="float-right"><span>&#8369;</span>{{ total.total_points}}</a></li>
                             {% endfor %}
@@ -47,7 +48,7 @@
                         <div class="card">
                             {% for qr in patient_info %}
                                 <div class="card-body">
-                                    <img src="{{ MEDIA_URL }}{{ qr.qr_code.url }}" height="300px" alt="QR Code Image" data-toggle="modal" data-target="#qrModal" />
+                                    <img src="{{ MEDIA_URL }}{{ qr.qr_code.url }}" height="350px" alt="QR Code Image" data-toggle="modal" data-target="#qrModal" />
                                 </div>
                             {% endfor %}
                         </div>

@@ -24,18 +24,28 @@ class RegistrationForm(forms.ModelForm):
         max_length=100,
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
-        )
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z]*$',
+                message='First name must be letters only'),
+        ]
     )
     last_name = forms.CharField(
         max_length=100,
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
-        )
+        ),
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z]*$',
+                message='Last name must be letters only'),
+        ]
     )
     mobile = forms.CharField(
         max_length=100,
         widget=forms.TextInput(
-            attrs={'class': 'form-control', 'name': 'mobile'}
+            attrs={'class': 'form-control'}
         ),
         validators=[
             RegexValidator(
@@ -91,9 +101,14 @@ class CustomRegistration(ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
+    address = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = UserProfile
-        fields = ['gender']
+        fields = ['gender', 'address']
 
 
 class MembershipRenewalForm(ModelForm):

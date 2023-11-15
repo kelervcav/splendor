@@ -24,8 +24,9 @@
                     <li class="list-group-item"><b>Last Name</b><a class="float-right"> {{ patient.last_name }}</a></li>
                     <li class="list-group-item"><b>Gender</b><a class="float-right">{{ patient_info.userprofile.gender }}</a></li>
                     <li class="list-group-item"><b>Birthdate</b><a class="float-right">{{ patient_info.date_of_birth|date:"d M Y" }}</a></li>
-                    <li class="list-group-item"><b>Email</b><a class="float-right">{{ patient_info.email }}</a></li>
                     <li class="list-group-item"><b>Mobile</b><a class="float-right">{{ patient_info.mobile }}</a></li>
+                    <li class="list-group-item"><b>Email</b><a class="float-right">{{ patient_info.email }}</a></li>
+                    <li class="list-group-item"><b>Address</b><a class="float-right">{{ patient_info.userprofile.address }}</a></li>
                 </ul>
             </div>
 

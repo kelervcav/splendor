@@ -17,13 +17,13 @@ class ServiceForm(ModelForm):
         ],
     )
 
-    description = forms.CharField(
-        required=False,
-        widget=forms.Textarea(
-            attrs={
-                'class': 'form-control',
-                'rows': 5,
-            }))
+    # description = forms.CharField(
+    #     required=False,
+    #     widget=forms.Textarea(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'rows': 5,
+    #         }))
 
     is_active = forms.BooleanField(
         required=False,
@@ -37,7 +37,7 @@ class ServiceForm(ModelForm):
 
     class Meta:
         model = Service
-        fields = ['name', 'description', 'is_active']
+        fields = ['name', 'is_active']
 
 
 class TreatmentForm(ModelForm):
@@ -62,13 +62,13 @@ class TreatmentForm(ModelForm):
         ],
     )
 
-    description = forms.CharField(
-        required=False,
-        widget=forms.Textarea(
-            attrs={
-                'class': 'form-control',
-                'rows': 5,
-            }))
+    # description = forms.CharField(
+    #     required=False,
+    #     widget=forms.Textarea(
+    #         attrs={
+    #             'class': 'form-control',
+    #             'rows': 5,
+    #         }))
 
     area = forms.ModelChoiceField(
         queryset=TreatmentArea.objects.exclude(is_active=False),
@@ -97,7 +97,6 @@ class TreatmentForm(ModelForm):
         fields = [
             'service',
             'name',
-            'description',
             'area',
             'type',
             'is_active'

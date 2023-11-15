@@ -14,10 +14,10 @@
 <form method="post" action="{% url 'loyalty_login' %}" id="form-base" novalidate>
     {% csrf_token %}
     <div class="input-group mb-3">
-        <input type="text" name="mobile" class="form-control" placeholder="Phone/Email" autocomplete="on" />
+        <input type="text" name="mobile" class="form-control" placeholder="Mobile number" autocomplete="on" />
         <div class="input-group-append">
             <div class="input-group-text">
-              <i class="fas fa-user"></i>
+              <i class="fas fa-phone"></i>
             </div>
         </div>
     </div>
