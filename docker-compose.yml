@@ -28,6 +28,7 @@ services:
       - 8000
     volumes:
       - .:/app
+      - /var/www/static/:/var/www/static/
     depends_on:
       - db
     networks:
