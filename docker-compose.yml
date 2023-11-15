@@ -11,6 +11,8 @@ services:
     restart: unless-stopped
     ports:
       - 80:80
+    volumes:
+      - /var/www/static/:/var/www/static/
     depends_on:
       - app
     networks:
