@@ -36,6 +36,8 @@ class BookingAppointmentForm(forms.ModelForm):
 
         selected_time = self.cleaned_data['time']
         selected_date = self.cleaned_data['date']
+        if isinstance(selected_time, str):
+            selected_time = datetime.strptime(selected_time, '%H:%M:%S').time()
 
         selected_date_time = datetime.combine(selected_date, selected_time)
 

@@ -12,7 +12,7 @@
 <div class="card card-outline card-info">
     <div class="card-header">
         <h3 class="card-title">Profile</h3>
-        <a href="{% url 'patients:change_password' %}"><p class="text-right">Change password</p></a>
+        <a href="{% url 'patients:change_password' %}"><h6 class="text-right">Change password</h6></a>
     </div>
     <!-- /.card-header -->
 
@@ -30,11 +30,10 @@
                 </ul>
             </div>
 
-
             <div class="col-md-6 patient-qr">
                 <div class="card">
                     <div class="card-body">
-                        <img src="{{ MEDIA_URL }}{{ patient_info.qr_code.url }}" height="253px" alt="QR Code Image" data-toggle="modal" data-target="#qrModal" />
+                        <img src="{{ MEDIA_URL }}{{ patient_info.qr_code.url }}" height="300px" alt="QR Code Image" data-toggle="modal" data-target="#qrModal" />
                     </div>
                     <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -47,7 +46,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
