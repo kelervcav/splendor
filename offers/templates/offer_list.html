@@ -55,7 +55,7 @@
                                <td>{{ offer.title }}</td>
                                <td>{{ offer.code }}</td>
                                <td>{{ offer.percentage_discount }}</td>
-                               <td><img src="{{ MEDIA_URL }}{{offer.offer_image.url}}" alt="Offer Image" width="150"></td>
+                               <td><img src="{{ MEDIA_URL }}{{offer.offer_image.url}}" class="img-fluid" alt="Offer Image" width="150px"></td>
                                <td>{% if offer.is_offer_active %}
                                         <span class="badge bg-success">Active</span>
                                     {% else %}

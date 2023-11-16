@@ -39,7 +39,6 @@
 								<th>ID</th>
 								<th>SERVICE</th>
 								<th>TREATMENT NAME</th>
-								<th>DESCRIPTION</th>
 								<th>TREATMENT AREA</th>
 								<th>PRICING TYPE</th>
 								<th>STATUS</th>
@@ -55,7 +54,6 @@
 								<th>{{ treatment.id}}</th>
 								<td>{{ treatment.service }}</td>
 								<td>{{ treatment.name }}</td>
-								<td>{{ treatment.description }}</td>
 								<td>{{ treatment.area }}</td>
 								<td>{{ treatment.type }}</td>
 								<td>{% if treatment.is_active %}
@@ -66,8 +64,8 @@
 								</td>
 								{% if perms.treatments.change_treatment %}
 								<td>
-								  	<a href="{% url 'treatments:treatment_edit' treatment.id %}" class="pull-right text-blue actions-gap"><i class="fas fa-pencil-alt"></i></a>
-									<a href="{% url 'treatments:treatment_disable' treatment.id %}" class="pull-right text-red actions-gap"><i class="fas fa-ban"></i></a>
+								  	<a href="{% url 'treatments:treatment_edit' treatment.id %}" class="pull-right text-blue mr-3"><i class="fas fa-pencil-alt"></i></a>
+									<a href="{% url 'treatments:treatment_disable' treatment.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
 								</td>
 								{% endif %}
 							</tr>

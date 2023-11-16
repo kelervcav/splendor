@@ -16,7 +16,11 @@ urlpatterns = [
     # reset password
     path('<int:pk>/reset/password/', views.reset_password, name='reset_password'),
     path('<int:pk>/generate-password/', views.generate_password, name='generate_password'),
-
+    # change password for patient
     path('change password', views.change_password, name='change_password'),
+    # scanner
+    path('qr_scan', views.scanner, name='scanner'),
+    # scanned patient information
+    path('patient-information', views.scanned_patient_info, name='scanned_patient_info'),
 
 ]

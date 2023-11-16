@@ -4,12 +4,16 @@ from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+
+from appointments.models import Appointment
 from patients.forms import RegistrationForm, CustomRegistration, MembershipRenewalForm
 from redeem_points.models import RedeemPoints
 from transactions.models import Transaction
 from user_profile.decorators import admin_required
 from user_profile.forms import AdminEditPasswordForm
 from user_profile.models import UserProfile
+from django.urls import reverse
+from django.http import JsonResponse
 
 User = get_user_model()
 
@@ -59,17 +63,45 @@ def patient_create(request):
 @permission_required('user_profile.view_patient', raise_exception=True)
 def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
-    transactions = Transaction.objects.filter(user=pk).order_by('-date_added')
+    transactions = Transaction.objects.filter(user=pk).order_by('-date_added')[:5]
     total_points = UserProfile.objects.filter(user=pk)
-    redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')
+    redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')[:5]
+    appointment_list = Appointment.objects.filter(user=pk).order_by('-created_at')[:5]
     date_now = datetime.now()
     template_name = 'patients/patient_info.html'
     context = {'patient_info': patient_info,
                'transactions': transactions,
                'total_points': total_points,
                'redeemed_list': redeemed_list,
+               'appointment_list': appointment_list,
                'date_now': date_now}
     return render(request, template_name, context)
+
+
+@login_required
+@admin_required
+@permission_required('user_profile.view_patient', raise_exception=True)
+def scanned_patient_info(request, pk):
+    patient_info = User.objects.filter(id=pk)
+    transactions = Transaction.objects.filter(user=pk).order_by('-date_added')[:5]
+    total_points = UserProfile.objects.filter(user=pk)
+    redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')[:5]
+    appointment_list = Appointment.objects.filter(user=pk).order_by('-created_at')[:5]
+    date_now = datetime.now()
+    template_name = 'patients/patient_info.html'
+    context = {'patient_info': patient_info,
+               'transactions': transactions,
+               'total_points': total_points,
+               'redeemed_list': redeemed_list,
+               'appointment_list': appointment_list,
+               'date_now': date_now}
+
+    # Construct the URL for the patient's profile
+    patient_info_url = reverse('patientInfo', args=[pk])
+
+    # Return the URL in the JSON response
+    response_data = {'patient_info_url': patient_info_url}
+    return JsonResponse(response_data)
 
 
 @login_required
@@ -177,3 +209,7 @@ def change_password(request):
     template_name = 'patients/patient_change_password.html'
     context = {'form': form}
     return render(request, template_name, context)
+
+
+def scanner(request):
+    return render(request, 'patients/patient_scanner.html')

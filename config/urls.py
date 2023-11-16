@@ -37,7 +37,7 @@ urlpatterns = [
     path('transactions/', include('transactions.urls'), name='transactions'),
     path('redeem_points/', include('redeem_points.urls'), name='redeem_points'),
     path('offers/', include('offers.urls'), name='offers'),
-    # path('', include('scanner.urls')),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

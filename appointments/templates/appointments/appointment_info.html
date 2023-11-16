@@ -20,7 +20,7 @@
     </div>
     <div class="card-body pt-3">
         <div class="row">
-            <div class="col-12">
+            <div class="col-11">
                 {% for appointment in appointment_info %}
                  <ul class="list-group list-group ml-0">
                      <li class="list-group-item pt-4"><h6>{{ appointment.treatment }}
@@ -31,15 +31,18 @@
                             <p style="color: #25993F"><i class="far fa-check-circle"></i> Appointment approved</p>
                          {% else %}
                             <p style="color: #fd7012"><i class="far fa-clock"></i> Pending</p>
-
                          {% endif %}
+
                      </div>
+
                  </ul>
                 {% endfor %}
             </div>
+            <div class="col-1">
+                   <a href="#" class="btn btn-sm btn-primary">Edit</a>
+            </div>
         </div>
     </div>
-    <div class="card-footer"></div>
 </div>
 
 {% endblock %}

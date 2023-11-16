@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'transactions',
     'redeem_points',
     'offers',
-    'scanner',
 
 ]
 

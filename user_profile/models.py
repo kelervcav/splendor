@@ -65,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             box_size=10,
             border=4,
         )
-        redirect_url = f"13.250.37.238/patients/{self.pk}/patient-information"
+        redirect_url = f"{self.pk}/patient-information"
         qr.add_data(str(redirect_url))
         print(f"QR Code Content: {str(self.pk)}")
         qr.make(fit=True)

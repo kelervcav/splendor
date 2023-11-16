@@ -32,18 +32,18 @@ def appointment_create(request):
     return render(request, 'appointments/appointment_create.html', context)
 
 
-# @login_required
-# def appointment_edit(request, pk):
-#     set_appointment = get_object_or_404(Appointment, id=pk)
-#     form = BookingAppointmentForm(request.POST or None, instance=set_appointment)
-#     if form.is_valid():
-#         form.save()
-#         messages.success(request,
-#                          'Appointment updated successfully.')
-#         return redirect('appointments:appointment_info')
-#     template_name = 'appointments/appointment_edit.html'
-#     context = {'set_appointment': set_appointment, 'form': form}
-#     return render(request, template_name, context)
+@login_required
+def appointment_edit(request, pk):
+    set_appointment = get_object_or_404(Appointment, id=pk)
+    form = BookingAppointmentForm(request.POST or None, instance=set_appointment)
+    if form.is_valid():
+        form.save()
+        messages.success(request,
+                         'Appointment updated successfully.')
+        return redirect('appointments:appointment_info')
+    template_name = 'appointments/appointment_edit.html'
+    context = {'set_appointment': set_appointment, 'form': form}
+    return render(request, template_name, context)
 
 
 # @login_required
