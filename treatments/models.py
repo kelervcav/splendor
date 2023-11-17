@@ -8,7 +8,7 @@ from django.utils import timezone
 # Create your models here.
 class Service(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    description = models.CharField(max_length=255, default=None, blank=True)
+    description = models.CharField(max_length=255)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils import timezone
 from appointments.models import Appointment
@@ -11,8 +13,8 @@ from django.db.models import Count
 @login_required
 @admin_required
 def dashboard(request):
-    now = timezone.now()
-    appointment_list = Appointment.objects.filter(created_at__date=now.date()).order_by('-created_at')
+    now = datetime.now()
+    appointment_list = Appointment.objects.filter(date=now.date()).order_by('time')
     service_count = Service.objects.exclude(is_active=False).count()
     treatment_count = Treatment.objects.exclude(is_active=False).count()
     patient_count = User.objects.filter(is_patient=True).count()
