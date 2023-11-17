@@ -37,7 +37,9 @@ AUTHENTICATION_BACKENDS = ['user_profile.backends.CustomAuthenticationBackend']
 
 LOGIN_REDIRECT_URL = '/dashboard'
 
-LOGIN_URL = '/'
+LOGIN_URL = '/admin'
+
+CSRF_TRUSTED_ORIGINS = ['https://www.splendorloyalty.skin', 'https://www.splendorloyalty.skin/admin/']
 
 
 # Application definition
