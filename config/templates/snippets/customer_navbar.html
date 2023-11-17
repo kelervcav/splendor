@@ -24,9 +24,9 @@
 </div>
 
 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-    <li class="nav-item dropdown mx-2">
-        <a class="nav-link text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-           aria-expanded="false"><i class="fas fa-user-circle" style="font-size: 30px; margin-right: -19px"></i></a>
+    <li class="nav-item dropdown">
+        <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-expanded="false"><i class="far fa-user-circle" style="font-size: 30px"></i></a>
 
         <ul class="dropdown-menu" aria-labelledby="profileDropdown">
             <li><a class="dropdown-item" href="{% url 'patients:patient_profile' user.id %}">Profile</a></li>

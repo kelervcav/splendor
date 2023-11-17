@@ -54,8 +54,18 @@ class BookingAppointmentForm(forms.ModelForm):
                 if selected_datetime <= current_datetime:
                      self.add_error('time', self.fields['time'].error_messages['time_in_past'])
 
-            print(selected_date)
-            print(selected_datetime)
+                else:
+                    # Check if the maximum appointments for the selected date and time are reached
+                    max_appointments = 5  # Change this to your desired limit
+                    if selected_date and selected_time:
+                        existing_appointments = Appointment.objects.filter(date=selected_date, time=selected_time).count()
+                        print(existing_appointments)
+
+                        if existing_appointments >= max_appointments:
+                            formatted_time = selected_datetime.strftime('%I:%M %p')
+                            self.add_error('time', f'Maximum appointments for {selected_date} at {formatted_time} have been reached.')
+                        else:
+                            return cleaned_data
 
         return cleaned_data
 
