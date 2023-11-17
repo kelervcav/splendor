@@ -39,6 +39,8 @@ LOGIN_REDIRECT_URL = '/dashboard'
 
 LOGIN_URL = '/'
 
+CSRF_TRUSTED_ORIGINS = ['https://www.splendorloyalty.skin', 'https://www.splendorloyalty.skin/admin/']
+
 
 # Application definition
 
