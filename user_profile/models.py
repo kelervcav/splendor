@@ -57,7 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.set_password(custom_password)
         self.save()
 
-    def generate_qr(self, *args, **kwargs):
+    def generate_qr(self):
         # Generate and save the QR code when the user is saved
         qr = qrcode.QRCode(
             version=1,
@@ -65,7 +65,8 @@ class User(AbstractBaseUser, PermissionsMixin):
             box_size=10,
             border=4,
         )
-        qr.add_data(str(self.pk))
+        redirect_url = f"{self.pk}/patient-information"
+        qr.add_data(str(redirect_url))
         print(f"QR Code Content: {str(self.pk)}")
         qr.make(fit=True)
 
@@ -74,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         img.save(buffer)
         filename = f'qr_{self.last_name}.png'
         file_buffer = File(buffer, name=filename)
-        self.qr_code = file_buffer
+        self.qr_code.save(filename, file_buffer)
         self.save()
 
     def __str__(self):
@@ -82,6 +83,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'user'
+        permissions = [
+            ("disable_user", "Can disable user"),
+            ("add_patient", "Can add patient"),
+            ("change_patient", "Can change patient"),
+            ("view_patient", "Can view patient"),
+            ("disable_patient", "Can disable patient"),
+            ("renew_membership", "Can disable patient"),
+            ("reset_password", "Can reset patient password"),
+            ("generate_password", "Can generate patient password"),
+
+        ]
 
 
 class UserProfile(models.Model):
@@ -97,8 +109,6 @@ class UserProfile(models.Model):
     total_points = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     account_expiry = models.DateTimeField(default=datetime.now() + timedelta(days=365))
 
-    USERNAME_FIELD = 'mobile'
-
     # Add any additional fields you need for your user profile
 
     def __str__(self):
@@ -106,3 +116,4 @@ class UserProfile(models.Model):
 
     class Meta:
         db_table = 'user_profile'
+

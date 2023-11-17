@@ -20,4 +20,9 @@ class Offer(models.Model):
 
     class Meta:
         db_table = 'offers'
+        permissions = [
+            ("disable_offer", "Can disable offer"),
+        ]
+
+
 

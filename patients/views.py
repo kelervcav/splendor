@@ -1,23 +1,28 @@
 from datetime import datetime, timedelta
-
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+
+from appointments.models import Appointment
 from patients.forms import RegistrationForm, CustomRegistration, MembershipRenewalForm
 from redeem_points.models import RedeemPoints
 from transactions.models import Transaction
 from user_profile.decorators import admin_required
 from user_profile.forms import AdminEditPasswordForm
 from user_profile.models import UserProfile
+from django.urls import reverse
+from django.http import JsonResponse
 
 User = get_user_model()
 
 
 # Create your views here.
+# for therapist
 @login_required
 @admin_required
+@permission_required('user_profile.view_patient', raise_exception=True)
 def patient_list(request):
     patients_list = User.objects.filter(is_patient=True).order_by('-created_at')
     template_name = 'patients/patient_list.html'
@@ -27,6 +32,7 @@ def patient_list(request):
 
 @login_required
 @admin_required
+@permission_required('user_profile.add_patient', raise_exception=True)
 def patient_create(request):
     registration_form = RegistrationForm(request.POST or None)
     custom_form = CustomRegistration(request.POST or None)
@@ -34,9 +40,12 @@ def patient_create(request):
     if registration_form.is_valid() and custom_form.is_valid():
         registration = registration_form.save(commit=False)
         registration.is_patient = True
+        registration.is_active = True
         registration.set_custom_password()
-        registration.generate_qr()
         registration.save()
+        user = User.objects.get(id=registration.id)
+        user.generate_qr()
+        user.save()
         gender = custom_form.save(commit=False)
         gender.user = registration
         gender.save()
@@ -48,24 +57,56 @@ def patient_create(request):
     return render(request, template_name, context)
 
 
+# for therapist
 @login_required
 @admin_required
+@permission_required('user_profile.view_patient', raise_exception=True)
 def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
-    transactions = Transaction.objects.filter(user=pk).order_by('-date_added')
+    transactions = Transaction.objects.filter(user=pk).order_by('-date_added')[:5]
     total_points = UserProfile.objects.filter(user=pk)
-    redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')
+    redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')[:5]
+    appointment_list = Appointment.objects.filter(user=pk).order_by('-created_at')[:5]
     date_now = datetime.now()
     template_name = 'patients/patient_info.html'
     context = {'patient_info': patient_info,
                'transactions': transactions,
                'total_points': total_points,
                'redeemed_list': redeemed_list,
+               'appointment_list': appointment_list,
                'date_now': date_now}
     return render(request, template_name, context)
 
 
 @login_required
+@admin_required
+@permission_required('user_profile.view_patient', raise_exception=True)
+def scanned_patient_info(request, pk):
+    patient_info = User.objects.filter(id=pk)
+    transactions = Transaction.objects.filter(user=pk).order_by('-date_added')[:5]
+    total_points = UserProfile.objects.filter(user=pk)
+    redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')[:5]
+    appointment_list = Appointment.objects.filter(user=pk).order_by('-created_at')[:5]
+    date_now = datetime.now()
+    template_name = 'patients/patient_info.html'
+    context = {'patient_info': patient_info,
+               'transactions': transactions,
+               'total_points': total_points,
+               'redeemed_list': redeemed_list,
+               'appointment_list': appointment_list,
+               'date_now': date_now}
+
+    # Construct the URL for the patient's profile
+    patient_info_url = reverse('patientInfo', args=[pk])
+
+    # Return the URL in the JSON response
+    response_data = {'patient_info_url': patient_info_url}
+    return JsonResponse(response_data)
+
+
+@login_required
+@admin_required
+@permission_required('user_profile.change_patient', raise_exception=True)
 def patient_edit(request, pk):
     patient = get_object_or_404(User, id=pk)
     registration_form = RegistrationForm(request.POST or None, instance=patient)
@@ -73,6 +114,7 @@ def patient_edit(request, pk):
     if registration_form.is_valid() and custom_form.is_valid():
         registration = registration_form.save(commit=False)
         registration.is_patient = True
+        registration.is_active = True
         registration.save()
         gender = custom_form.save(commit=False)
         gender.user = registration
@@ -85,6 +127,8 @@ def patient_edit(request, pk):
 
 
 @login_required
+@admin_required
+@permission_required('user_profile.disable_patient', raise_exception=True)
 def patient_disable(request, pk):
     patients = get_object_or_404(User, id=pk)
     patients.is_active = False
@@ -93,6 +137,9 @@ def patient_disable(request, pk):
     return redirect('patients:patient_list')
 
 
+@login_required
+@admin_required
+@permission_required('user_profile.renew_membership', raise_exception=True)
 def patient_renewal(request, pk):
     patient = get_object_or_404(User, id=pk)
     user_profile = UserProfile.objects.get(user=patient)
@@ -114,6 +161,7 @@ def patient_renewal(request, pk):
 
 @login_required
 @admin_required
+@permission_required('user_profile.reset_password', raise_exception=True)
 def reset_password(request, pk):
     patient = get_object_or_404(User, id=pk)
     template_name = 'patients/patient_reset_password.html'
@@ -121,6 +169,9 @@ def reset_password(request, pk):
     return render(request, template_name, context)
 
 
+@login_required
+@admin_required
+@permission_required('user_profile.generate_password', raise_exception=True)
 def generate_password(request, pk):
     patient = get_object_or_404(User, id=pk)
     generated_password = request.POST.get('password')
@@ -132,7 +183,7 @@ def generate_password(request, pk):
 
 
 # patient UI
-
+@login_required
 def patient_profile(request, pk):
     patient_info = User.objects.get(id=pk)
     patient = get_object_or_404(User, id=request.user.id)
@@ -146,6 +197,8 @@ def patient_profile(request, pk):
     return render(request, template_name, context)
 
 
+# patient UI
+@login_required
 def change_password(request):
     patient = get_object_or_404(User, id=request.user.id)
     form = AdminEditPasswordForm(data=request.POST or None, user=patient)
@@ -153,6 +206,10 @@ def change_password(request):
         form.save()
         return redirect('/')
 
-    template_name = 'user_profile_edit_password.html'
+    template_name = 'patients/patient_change_password.html'
     context = {'form': form}
     return render(request, template_name, context)
+
+
+def scanner(request):
+    return render(request, 'patients/patient_scanner.html')

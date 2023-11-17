@@ -24,9 +24,11 @@
                <div class="card-header">
                   <h3 class="card-title">Offer List</h3>
                    <div class="card-tools">
-                     <a href="{% url 'offers:offer_create' %}" class="btn btn-sm btn-block bg-gradient-success">
-                        Add Offer
-                     </a>
+                       {% if perms.offers.add_offer %}
+                       <a href="{% url 'offers:offer_create' %}" class="btn btn-sm btn-block bg-gradient-success">
+                           Add Offer
+                       </a>
+                       {% endif %}
                   </div>
                </div>
                <!-- /.card-header -->
@@ -40,7 +42,9 @@
                             <th>DISCOUNT</th>
                             <th>IMAGE</th>
                             <th>STATUS</th>
+                            {% if perms.offers.change_offer %}
                             <th>ACTIONS</th>
+                            {% endif %}
                         </tr>
                      </thead>
 
@@ -51,15 +55,18 @@
                                <td>{{ offer.title }}</td>
                                <td>{{ offer.code }}</td>
                                <td>{{ offer.percentage_discount }}</td>
-                               <td><img src="{{ MEDIA_URL }}{{offer.offer_image.url}}" alt="Offer Image" width="150"></td>
+                               <td><img src="{{ MEDIA_URL }}{{offer.offer_image.url}}" class="img-fluid" alt="Offer Image" width="150px"></td>
                                <td>{% if offer.is_offer_active %}
                                         <span class="badge bg-success">Active</span>
                                     {% else %}
                                         <span class="badge bg-danger">Inactive</span>
                                     {% endif %}
                                </td>
-                               <td> <a href="{% url 'offers:offer_edit' offer.id %}" class="pull-right text-blue"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="{% url 'offers:offer_disable' offer.id %}" class="pull-right text-red"><i class="fas fa-ban"></i></a>
+                               {% if perms.offers.change_offer %}
+                               <td> <a href="{% url 'offers:offer_edit' offer.id %}" class="pull-right text-blue actions-gap"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="{% url 'offers:offer_disable' offer.id %}" class="pull-right text-red actions-gap"><i class="fas fa-ban"></i></a>
+                               </td>
+                               {% endif %}
                            </tr>
                         {% endfor %}
                      </tbody>

@@ -31,28 +31,28 @@
                   <div class="card-body">
                      {% csrf_token %}
                      <div class="form-group ">
-                        <label for="" class="col-md-2 control-label">Title:</label>
+                        <label for="" class="control-label">Title:</label>
                         <div class="col-md-4">
                            {{ form.title }}
                            <span class="help-block">{{ form.title.errors }}</span>
                         </div>
                      </div>
                      <div class="form-group">
-                        <label for="" class="col-md-2 control-label">Code:</label>
+                        <label for="" class="control-label">Code:</label>
                         <div class="col-md-4">
                            {{ form.code }}
                            <span class="help-block">{{ form.code.errors }}</span>
                         </div>
                      </div>
                       <div class="form-group">
-                        <label for="" class="col-md-2 control-label">Offer Discount:</label>
+                        <label for="" class="control-label">Offer Discount:</label>
                         <div class="col-md-4">
                            {{ form.percentage_discount }}
                            <span class="help-block">{{ form.percentage_discount.errors }}</span>
                         </div>
                      </div>
                       <div class="form-group">
-                        <label for="" class="col-md-2 control-label">Image:</label>
+                        <label for="" class="control-label">Image:</label>
                         <div class="col-md-4">
                             <input type="file" name="offer_image" id="offer_image">
                            <span class="help-block"></span>

@@ -58,3 +58,25 @@
 .patient-qr {
     text-align: center;
 }
+
+.canvas-chart {
+    margin: 0px auto;
+    text-align: center;
+}
+
+.qr-card-body {
+    text-align: center;
+}
+
+#reader {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    padding-bottom: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+#html5-qrcode-anchor-scan-type-change{
+        display: none;
+}

@@ -25,20 +25,24 @@
                  <ul class="list-group list-group ml-0">
                      <li class="list-group-item pt-4"><h6>{{ appointment.treatment }}
                          <p class="float-right">{{ appointment.date|date:"D, d M Y" }} | {{ appointment.time }}</p></h6>
-                     </li>
-                     <div class="text-right pt-2 pb-3">
-                         {% if appointment.is_approved %}
-                            <i class="far fa-check-circle" style="color: #25993F"> Appointment approved</i>
-                         {% else %}
-                            <i class="far fa-clock" style="color: #fd7012;"> Pending</i>
+
+                        <div class="text-right pt-2 pb-1">
+                             {% if appointment.is_approved %}
+                                <p style="color: #25993F"><i class="far fa-check-circle"></i> Appointment approved</p>
+                             {% else %}
+                                <h6 style="color: #fd7012"><i class="far fa-clock"></i> Pending</h6>
+                             {% endif %}
+                        </div>
+                         {% if not appointment.is_approved%}
+                         <a href="{% url 'appointments:appointment_edit' appointment.id %}"><button class="btn btn-primary btn-sm float-right">Edit</button></a>
                          {% endif %}
-                     </div>
+                     </li>
+
                  </ul>
                 {% endfor %}
             </div>
         </div>
     </div>
-    <div class="card-footer"></div>
 </div>
 
 {% endblock %}

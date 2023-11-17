@@ -10,6 +10,12 @@ from .models import Appointment
 
 
 class BookingAppointmentForm(forms.ModelForm):
+    treatment = forms.ModelChoiceField(
+        queryset=Treatment.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control'}))
+
     date = forms.DateField(
         widget=NumberInput(
             attrs={'type': 'date',
@@ -19,37 +25,35 @@ class BookingAppointmentForm(forms.ModelForm):
 
     def clean_date(self):
         current_date = timezone.now()
-        date = self.cleaned_data['date']
-
-        if date < current_date.date():
+        date = self.cleaned_data.get('date')
+        if date and date < current_date.date():
             raise forms.ValidationError("Please select a future date.")
         return date
 
     time = forms.ChoiceField(
         required=True,
         choices=Appointment.TIME_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        error_messages={
+            'invalid': 'This field is required.',
+        }
     )
 
     def clean(self):
         cleaned_data = super().clean()
-
-        current_datetime = timezone.now()
         selected_date = cleaned_data.get('date')
         selected_time = cleaned_data.get('time')
 
-        if selected_date and selected_date == current_datetime.date() and selected_time:
-            current_time = current_datetime.time().strftime('%I:%M %p')
-            if selected_time < current_time:
-                raise forms.ValidationError("Please select a future time for today.")
+        if selected_date and selected_time:
+            current_date_time = timezone.now()
+            if selected_time and selected_time != '--:-- --':
+                selected_date_time = datetime.combine(selected_date,
+                                                      datetime.strptime(selected_time, '%H:%M:%S').time())
+
+                if selected_date_time <= current_date_time:
+                    raise forms.ValidationError("Selected date and time must be in the future.")
 
         return cleaned_data
-
-    treatment = forms.ModelChoiceField(
-        queryset=Treatment.objects.all(),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control'}))
 
     class Meta:
         model = Appointment

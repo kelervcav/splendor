@@ -18,6 +18,9 @@ class Service(models.Model):
 
     class Meta:
         db_table = 'services'
+        permissions = [
+            ("disable_service", "Can disable service"),
+        ]
 
 
 class TreatmentArea(models.Model):
@@ -31,6 +34,9 @@ class TreatmentArea(models.Model):
 
     class Meta:
         db_table = 'treatment_areas'
+        permissions = [
+            ("disable_treatmentarea", "Can disable treatment area"),
+        ]
 
 
 class PriceType(models.Model):
@@ -44,6 +50,9 @@ class PriceType(models.Model):
 
     class Meta:
         db_table = 'price_types'
+        permissions = [
+            ("disable_pricetype", "Can disable price type"),
+        ]
 
 
 class Treatment(models.Model):
@@ -61,3 +70,6 @@ class Treatment(models.Model):
 
     class Meta:
         db_table = 'treatments'
+        permissions = [
+            ("disable_treatment", "Can disable treatment"),
+        ]

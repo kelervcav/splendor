@@ -1,38 +1,61 @@
-{% extends 'base.html' %}
+{% extends 'customer_base.html' %}
 
-{% block title %}
-    Appointment
-{% endblock %}
+{% block title %} Appointment {% endblock title %}
+
+{% block title %} Appointment {% endblock %}
 
 {% block content %}
-    <h1> Edit Appointment </h1>
-    <form method="POST">
-        {% csrf_token %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 pl-0">
+                <p style="font-size: 27px">Appointment</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-        <div class="form-group">
-			<label>User:</label>
-			{{form.user}}
-		</div>
+<div class="card card-outline card-info">
+    <div class="card-header ">
+          <h3 class="card-title">Book Appointment</h3>
+          <div class="card-tools">
 
-        <div class="form-group">
-			<label>Date:</label>
-			{{form.date}}
-            {{form.date.errors}}
-		</div>
-
-        <div class="form-group">
-			<label>Time:</label>
-			{{form.time}}
-            {{form.time.errors}}
-		</div>
-
-          <div class="form-group">
-			<label>Treatment:</label>
-			{{form.treatment}}
-            {{form.treatment.errors}}
-		</div>
-
-        <button type="submit" class="btn btn-md btn-success">Update</button>
+             <a href="{% url 'appointments:appointment_info' %}" class="btn btn-sm btn-block bg-gradient-info">
+               View Booked Appointment
+             </a>
+          </div>
+    </div>
+    <!-- /.card-header -->
+    <form class="form-horizontal" method="POST" novalidate>
+        <div class="card-body">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="" class="control-label">Treatment:</label>
+                <div class="col-md-4">
+                    {{ form.treatment }}
+                    <span class="help-block">{{ form.treatment.errors }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="control-label">Date:</label>
+                <div class="col-md-4">
+                    {{ form.date }}
+                    <span class="help-block">{{ form.date.errors }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="control-label">Time:</label>
+                <div class="col-md-4">
+                    {{ form.time }}
+                    <span class="help-block">{{ form.time.errors }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-info">Submit</button>
+        </div>
     </form>
+    <!-- /.card-body -->
+</div>
 
-{% endblock %}
+{% endblock %} {% block script %} {% endblock script %}

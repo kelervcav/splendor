@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block page_title %} Patient {% endblock page_title %} {% block content %}
+{% extends "base.html" %}
+{% block title %} Patient {% endblock %}
+{% block page_title %} Patient {% endblock page_title %} {% block content %}
 
 <!-- Main content -->
 <section class="content">
@@ -29,35 +31,40 @@
                             <li class="list-group-item"><b>Birthdate</b><a class="float-right">{{ patient.date_of_birth|date:"d M Y" }}</a></li>
                             <li class="list-group-item"><b>Mobile</b><a class="float-right">{{ patient.mobile }}</a></li>
                             <li class="list-group-item"><b>Email</b><a class="float-right">{{ patient.email }}</a></li>
+                            <li class="list-group-item"><b>Address</b><a class="float-right">{{ patient.userprofile.address }}</a></li>
                             {% for total in total_points %}
                                <li class="list-group-item"><b>Points Earned</b><a class="float-right"><span>&#8369;</span>{{ total.total_points}}</a></li>
-                            {% endfor %}
-                            <li class="list-group-item">
-                                <b>Status</b>
-                                {% if patient.is_active %}
-                                <a class="float-right">Active</a>
-                                {% else %}
-                                <a class="float-right">Inactive</a>
-                            </li>
-                            {% endif %}
+<!--                            {% endfor %}-->
+<!--                            <li class="list-group-item">-->
+<!--                                <b>Status</b>-->
+<!--                                {% if patient.is_active %}-->
+<!--                                <a class="float-right">Active</a>-->
+<!--                                {% else %}-->
+<!--                                <a class="float-right">Inactive</a>-->
+<!--                            </li>-->
+<!--                            {% endif %}-->
                         </ul>
                         {% endfor %}
                     </div>
                     <div class="col-md-6 patient-qr">
-                        <div class="card">
-                            {% for qr in patient_info %}
-                                <div class="card-body">
-                                    <img src="{{ MEDIA_URL }}{{ qr.qr_code.url }}" height="300px" alt="QR Code Image" data-toggle="modal" data-target="#qrModal" />
-                                </div>
-                            {% endfor %}
-                        </div>
+                        {% for qr in patient_info %}
+                            <div class="card-body">
+                                <img src="{{ MEDIA_URL }}{{ qr.qr_code.url }}" height="300px" alt="QR Code Image" data-toggle="modal" data-target="#qrModal" />
+                            </div>
+                        {% endfor %}
+
                     </div>
                 </div>
             </div>
             <div class="card-footer">
                 {% for patient in patient_info %}
-                    <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-primary">Add Transaction</button></a>
-                    <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary">Edit</button></a>
+                    {% if date_now > patient.userprofile.account_expiry %}
+                        <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-info" disabled>Add Transaction</button></a>
+                        <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary" disabled>Edit</button></a>
+                    {% else %}
+                        <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-info">Add Transaction</button></a>
+                        <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary">Edit</button></a>
+                    {% endif %}
                     {% if date_now > patient.userprofile.account_expiry %}
                         <a href="{% url 'patients:patient_renewal' patient.id %}"><button class="btn btn-primary float-right">Renew Membership</button></a>
                     {% endif %}
@@ -104,7 +111,7 @@
                                         <td><span>&#8369;</span>{{ transact.price_amount }}</td>
                                     {% endif %}
                                     <td><span>&#8369;</span>{{ transact.points }}</td>
-                                    <td>{{ transact.date_added|date:"d M Y" }}</td>
+                                    <td>{{ transact.date_added }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -131,13 +138,49 @@
                                 {% for redeem in redeemed_list %}
                                 <tr>
                                     <th>{{ redeem.id }}</th>
-                                    <td><span>&#8369;</span>{{ redeem.redeemed_points }}</td>
-                                    <td>{{ redeem.date_redeemed }}</td>
+                                    <td><span>&#8369;</span>{{ redeem.redeemed_points|floatformat:2 }}</td>
+                                    <td>{{ redeem.date_redeemed|date:"d M Y G:i" }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">Booked Appointment List</h3>
+                </div>
+                <div class="card-body">
+                    <table id="booked-table" class="table table-striped projects">
+                       <thead>
+                        <tr>
+                            <th>TREATMENT</th>
+                            <th>DATE</th>
+                            <th>TIME</th>
+                        </tr>
+                     </thead>
+
+                     <tbody>
+                        {% for appointment in appointment_list %}
+                           <tr>
+                               <td>{{ appointment.treatment }}</td>
+                               <td>{{ appointment.date|date:"d M Y" }}</td>
+                               <td>{{ appointment.time }}</td>
+                           </tr>
+                        {% endfor %}
+                     </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -153,7 +196,7 @@
         $("#patient_info-table").DataTable({
             paging: true,
             lengthChange: false,
-            searching: true,
+            searching: false,
             ordering: false,
             info: true,
             autoWidth: false,
@@ -168,7 +211,22 @@
         $("#redeemed_points-table").DataTable({
             paging: true,
             lengthChange: false,
-            searching: true,
+            searching: false,
+            ordering: false,
+            info: true,
+            autoWidth: false,
+            responsive: true,
+            pageLength: 10,
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#booked-table").DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
             ordering: false,
             info: true,
             autoWidth: false,

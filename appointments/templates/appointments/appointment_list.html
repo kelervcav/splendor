@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% block title %} Appointment {% endblock %}
 {% block page_title %} Appointments {% endblock %}
 
 {% block content %}
@@ -53,7 +53,7 @@
                                </td>
                                <td>
                                    <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
-                                       <button type="submit" class="btn btn-success">Approve</button></a>
+                                       <button type="submit" class="btn btn-success btn-sm">Approve</button></a>
 								</td>
                            </tr>
                         {% endfor %}

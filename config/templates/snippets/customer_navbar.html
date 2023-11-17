@@ -9,24 +9,25 @@
 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="{% url 'loyalty:home' %}" class="nav-link">HOME</a>
+            <a href="{% url 'loyalty:home' %}" class="nav-link"><p style="font-size:15px">HOME</p></a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'offers:offer_list_loyalty' %}" class="nav-link">OFFERS</a>
+            <a href="{% url 'offers:offer_list_loyalty' %}" class="nav-link"><p style="font-size:15px">OFFERS</p></a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'transactions:transaction_history' %}" class="nav-link">TRANSACTIONS</a>
+            <a href="{% url 'transactions:transaction_history' %}" class="nav-link"><p style="font-size:15px">TRANSACTIONS</p></a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'appointments:appointment_create' %}" class="nav-link">BOOK APPOINTMENT</a>
+            <a href="{% url 'appointments:appointment_create' %}" class="nav-link"><p style="font-size:15px">BOOK APPOINTMENT</p></a>
         </li>
     </ul>
 </div>
 
 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
     <li class="nav-item dropdown mx-2">
-        <a class="nav-link dropdown-toggle text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-           aria-expanded="false">Hi, {{ user }}</a>
+        <a class="nav-link text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-expanded="false"><i class="fas fa-user-circle" style="font-size: 30px; margin-right: -19px"></i></a>
+
         <ul class="dropdown-menu" aria-labelledby="profileDropdown">
             <li><a class="dropdown-item" href="{% url 'patients:patient_profile' user.id %}">Profile</a></li>
             <li>{% if user.is_authenticated %}

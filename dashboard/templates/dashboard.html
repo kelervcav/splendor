@@ -1,11 +1,13 @@
-{% extends "base.html" %} {% block page_title %} Dashboard {% endblock page_title %} {% block content %}
+{% extends 'base.html' %} {% block title %} Dashboard {% endblock title %}
+
+{% block page_title %} Dashboard {% endblock page_title %} {% block content %}
 
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-3 col-sm-6">
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
@@ -19,7 +21,7 @@
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-3 col-sm-6">
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
@@ -33,7 +35,7 @@
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-3 col-sm-6">
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
@@ -42,6 +44,20 @@
                     </div>
                     <div class="icon">
                         <i class="fas fa-users"></i>
+                    </div>
+                    <a href="{% url 'patients:patient_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ appointment_count }}</h3>
+                        <p>Appointments</p>
+                    </div>
+                    <div class="icon">
+                        <i class="nav-icon fas fa-calendar-check"></i>
                     </div>
                     <a href="{% url 'patients:patient_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -100,18 +116,36 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                     <a href="{% url 'appointments:appointment_list' %}"><button type="submit" class="btn btn-info float-right">View Appointments</button></a>
+                     <a href="{% url 'appointments:appointment_list' %}"><button type="submit" class="btn btn-info btn-sm float-right">View Appointments</button></a>
                     </div>
                     <!-- /.card-body -->
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Most Chosen Treatment by Appointment</h3>
+                        <button class="btn btn-outline-info btn-sm" id="btn-download" style="float:right">
+                            <i class="fas fa-arrow-circle-down"></i> Download</button>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 
-{% endblock content %} {% block script %}
+{% endblock content %}
+
+{% block script %}
 <script>
     $(function () {
         $("#my-transaction-table").DataTable({
@@ -129,5 +163,39 @@
     setInterval(function () {
         window.location.reload();
     }, 60000); // refresh every 1 min
+</script>
+
+<script>
+   const myChart = new Chart(document.getElementById('chart').getContext("2d"),
+    {
+        type: 'doughnut',
+        data: {
+            labels: {{treatment_label|safe}},
+            datasets: [{
+                data: {{treatment_data|safe}},
+                backgroundColor: ["#EE0733", "#073EA8", "#6CCE32", "#FD3E81", "#FFC92E", "#FF761C", "#D51EFF"],
+                label: "Count",
+                borderWidth: 1
+            }]
+        },
+    options: {
+        animation: {
+            duration: 1500,
+        }
+    },
+ });
+
+var image = myChart.toBase64Image();
+console.log(image);
+
+document.getElementById('btn-download').onclick = function() {
+  // Trigger the download
+  var a = document.createElement('a');
+  a.href = myChart.toBase64Image();
+  var now = new Date();
+  var reports = 'reports_' + now.getFullYear() + (now.getMonth() + 1) + now.getDate() + '_' + now.getHours() + now.getMinutes() + now.getSeconds() + '.png';
+  a.download = reports;
+  a.click();
+}
 </script>
 {% endblock script %}
