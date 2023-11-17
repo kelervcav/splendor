@@ -20,16 +20,12 @@ class BookingAppointmentForm(forms.ModelForm):
     date = forms.DateField(
         widget=NumberInput(
             attrs={'type': 'date',
-                   'class': 'form-control'},
-        )
+                   'class': 'form-control'}),
+        error_messages={
+            'invalid_date': 'Please select future date.',
+            'time_in_past': 'Selected time has already passed.',
+        }
     )
-
-    def clean_date(self):
-        current_date = timezone.now()
-        date = self.cleaned_data.get('date')
-        if date and date < current_date.date():
-            raise forms.ValidationError("Please select a future date.")
-        return date
 
     time = forms.ChoiceField(
         required=True,
@@ -44,13 +40,18 @@ class BookingAppointmentForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         selected_time = cleaned_data.get('time')
+        selected_date = self.cleaned_data.get('date')
 
-        if selected_time and selected_time != '--:-- --':
-            current_time = datetime.now().time()
-            selected_time_obj = datetime.strptime(selected_time, '%H:%M:%S').time()
+        if selected_date:
+            current_date = timezone.now().date()
+            if selected_date < current_date:
+                 self.add_error('date', self.fields['date'].error_messages['invalid_date'])
 
-            if selected_time_obj <= current_time:
-                 self.add_error('time', self.fields['time'].error_messages['time_in_past'])
+            if selected_time != '--:-- --':
+                selected_datetime = datetime.combine(selected_date, datetime.strptime(selected_time, '%H:%M:%S').time())
+                current_datetime = timezone.now()
+                if selected_datetime <= current_datetime:
+                     self.add_error('time', self.fields['time'].error_messages['time_in_past'])
 
         return cleaned_data
 
