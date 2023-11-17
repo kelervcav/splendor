@@ -50,8 +50,12 @@ class BookingAppointmentForm(forms.ModelForm):
             if selected_time != '--:-- --':
                 selected_datetime = datetime.combine(selected_date, datetime.strptime(selected_time, '%H:%M:%S').time())
                 current_datetime = timezone.now()
+
                 if selected_datetime <= current_datetime:
                      self.add_error('time', self.fields['time'].error_messages['time_in_past'])
+
+            print(selected_date)
+            print(selected_datetime)
 
         return cleaned_data
 
