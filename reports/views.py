@@ -1,54 +1,25 @@
-from datetime import timedelta
+from django.contrib.auth.decorators import login_required, permission_required
 
-from django.db.models import Count
-from django.shortcuts import render, get_object_or_404
-
-from appointments.models import Appointment
-from treatments.models import Treatment
-
+from reports.forms import DateRangeForm
 from django.shortcuts import render
-from django.utils import timezone
+
+from reports.utils import most_availed_treatment
+from user_profile.decorators import admin_required
 
 
 # Create your views here.
 
+@login_required
+@admin_required
+@permission_required('user_profile.view_user', raise_exception=True)
 def report(request):
-    most_chosen_treatment = Appointment.objects.values('treatment').annotate(treatment_count=Count('treatment'))
+    form = DateRangeForm(request.POST or None)
+    if form.is_valid():
+        date_from = request.POST.get('date_from')
+        date_to = request.POST.get('date_to')
+        result = most_availed_treatment(date_from, date_to)
+        return render(request, 'generate_report.html', {'form': form, 'result': result})
 
-    treatment_data = []
-    treatment_label = []
-    for treatment in most_chosen_treatment:
-        treatment_id = treatment.get('treatment')
-        treatment_instance = get_object_or_404(Treatment, pk=treatment_id)
-
-        treatment_data.append(treatment['treatment_count'])
-        treatment_label.append(str(treatment_instance))
-
-    template_name = 'reports.html'
-    context = {
-        'treatment_data': treatment_data,
-        'treatment_label': treatment_label,
-
-    }
-    return render(request, template_name, context)
+    return render(request, 'reports.html', {'form': form})
 
 
-def weekly_report(request):
-    end_date = timezone.now().date()
-    start_date = end_date - timedelta(days=7)
-    result = report(start_date, end_date)
-    return render(request, 'report.html', {'result': result})
-
-#
-# def monthly_report(request):
-#     end_date = timezone.now().date()
-#     start_date = end_date - timedelta(days=30)
-#     result = report(start_date, end_date)
-#     return render(request, 'report.html', {'result': result})
-#
-#
-# def daily_report(request):
-#     end_date = timezone.now().date()
-#     start_date = end_date - timedelta(days=1)
-#     result = report(start_date, end_date)
-#     return render(request, 'report.html', {'result': result})

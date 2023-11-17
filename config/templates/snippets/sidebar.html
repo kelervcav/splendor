@@ -82,13 +82,13 @@
                 {% if perms.user_profile.view_user %}
                  <li class="nav-item">
                     <a href="{% url 'reports:report' %}" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
+                        <i class="nav-icon fas fa-paste"></i>
                         <p>Reports</p>
                     </a>
                 </li>
                 {% endif %}
 
-                {% if perms.user_profile.change_user %}
+                {% if perms.user_profile.view_user %}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cogs"></i>
