@@ -1,0 +1,109 @@
+{% extends 'base.html' %} {% block title %} Reports {% endblock title %} {% block page_title %} Reports {% endblock page_title %} {% block content %}
+
+<!-- Main content -->
+<section class="content">
+   <div class="container-fluid">
+       <div class="row">
+			   <div class="col-12">
+				   {% if messages %}
+					<div class="alert alert-success alert-dismissible">
+					  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+					  {% for message in messages %}
+						<span class="lh-1">{{ message }}</span>
+					  {% endfor %}
+					</div>
+					{% endif %}
+			   </div>
+		   </div>
+      <div class="row">
+         <div class="col-12">
+            <div class="card card-outline card-info">
+               <div class="card-header">
+                  <h3 class="card-title">Edit Profile</h3>
+               </div>
+                <form class="form-horizontal" method="POST">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                   <label for="id_date_from">Date from:</label>
+                                 <div class="col-md-4">
+
+                                    <input type="date" name="date_from" id="id_date_from" required value="{{ form.cleaned_data.date_from|default:'' }}" />
+                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                 <label for="id_date_to">Date to:</label>
+                                 <div class="col-md-12">
+                                    <input type="date" name="date_to" id="id_date_to" required value="{{ form.cleaned_data.date_to|default:'' }}" />
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-info">Generate Report</button>
+                        </div>
+                    </form>
+
+            </div>
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+   </div>
+   <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+
+
+
+{% endblock content %} {% block script %}
+<script>
+    setInterval(function () {
+        window.location.reload();
+    }, 60000); // refresh every 1 min
+</script>
+
+<script>
+       const myChart = new Chart(document.getElementById('chart').getContext("2d"),
+        {
+            type: 'doughnut',
+            data: {
+                labels: {{treatment_label|safe}},
+                datasets: [{
+                    data: {{treatment_data|safe}},
+                    backgroundColor: ["#EE0733", "#073EA8", "#6CCE32", "#FD3E81", "#FFC92E", "#FF761C", "#D51EFF"],
+                    label: "Count",
+                    borderWidth: 1
+                }]
+            },
+        options: {
+            animation: {
+                duration: 1500,
+            }
+        },
+     });
+
+    var image = myChart.toBase64Image();
+    console.log(image);
+
+    document.getElementById('btn-download').onclick = function() {
+      // Trigger the download
+      var a = document.createElement('a');
+      a.href = myChart.toBase64Image();
+      var now = new Date();
+      var reports = 'reports_' + now.getFullYear() + (now.getMonth() + 1) + now.getDate() + '_' + now.getHours() + now.getMinutes() + now.getSeconds() + '.png';
+      a.download = reports;
+      a.click();
+    }
+</script>
+
+
+
+    <script>
+        function printReport() {
+            // Open the print dialog
+            window.print();
+        }
+    </script>
+{% endblock script %}

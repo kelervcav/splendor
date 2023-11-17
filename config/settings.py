@@ -39,7 +39,7 @@ LOGIN_REDIRECT_URL = '/dashboard'
 
 LOGIN_URL = '/admin'
 
-CSRF_TRUSTED_ORIGINS = ['https://www.splendorloyalty.skin', 'https://www.splendorloyalty.skin/admin/']
+CSRF_TRUSTED_ORIGINS = ['https://splendorloyalty.skin', 'https://www.splendorloyalty.skin']
 
 
 # Application definition
@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'transactions',
     'redeem_points',
     'offers',
+    'reports'
 
 ]
 

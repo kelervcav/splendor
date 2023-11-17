@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block title %} Reports {% endblock title %} {% block page_title %} Reports {% endblock page_title %} {% block content %}
+
+<!-- Main content -->
+<section class="content" xmlns="">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Most Chosen Treatment by Appointment</h3>
+<!--                    <button onclick="printReport()" class="btn btn-outline-info btn-sm" style="float:right">-->
+<!--                            <i class="fas fa-arrow-circle-down"></i> Download</button>-->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <h6>Date Range: {{ form.cleaned_data.date_from }} to {{ form.cleaned_data.date_to }}</h6>
+
+                    <table id="reports-table" class="table table-striped projects">
+                        <tr>
+                            <th>Treatment</th>
+                            <th>Frequency</th>
+                        </tr>
+                        {% for entry in result %}
+                        <tr>
+                            <td>{{ entry.treatment_name }}</td>
+                            <td>{{ entry.count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock content %} {% block script %}
+<!--<script>-->
+<!--    function printReport() {-->
+<!--        // Open the print dialog-->
+<!--        window.print();-->
+<!--    }-->
+<!--</script>-->
+{% endblock script %}

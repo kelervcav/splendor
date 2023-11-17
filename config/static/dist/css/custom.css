@@ -28,14 +28,18 @@
 }
 
 .background-div {
-    background: url('../img/loginbg.png') no-repeat;
-    background-size: cover;
+    /*background: url('../img/loginbg.png') no-repeat;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    height: 740px;
-    padding-top: 100px;
+    height: 658px;
+    padding-top: 10px;
 
+}
+
+.login-page {
+    background: linear-gradient(to right, #1a70bb, #79e009);
+    background: linear-gradient(30deg, #1a70bb, #79e009);
 }
 
 .banner-title {
