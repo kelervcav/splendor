@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 
 from django import forms
@@ -36,22 +37,20 @@ class BookingAppointmentForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'}),
         error_messages={
             'invalid': 'This field is required.',
+            'time_in_past': 'Selected time has already passed.',
         }
     )
 
     def clean(self):
         cleaned_data = super().clean()
-        selected_date = cleaned_data.get('date')
         selected_time = cleaned_data.get('time')
 
-        if selected_date and selected_time:
-            current_date_time = timezone.now()
-            if selected_time and selected_time != '--:-- --':
-                selected_date_time = datetime.combine(selected_date,
-                                                      datetime.strptime(selected_time, '%H:%M:%S').time())
+        if selected_time and selected_time != '--:-- --':
+            current_time = datetime.now().time()
+            selected_time_obj = datetime.strptime(selected_time, '%H:%M:%S').time()
 
-                if selected_date_time <= current_date_time:
-                    raise forms.ValidationError("Selected date and time must be in the future.")
+            if selected_time_obj <= current_time:
+                 self.add_error('time', self.fields['time'].error_messages['time_in_past'])
 
         return cleaned_data
 

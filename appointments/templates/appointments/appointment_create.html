@@ -24,8 +24,14 @@
           </div>
     </div>
     <!-- /.card-header -->
-    <form class="form-horizontal" method="POST" novalidate>
+    <form class="form-horizontal" method="POST" action="{% url 'appointments:appointment_create' %}" novalidate>
         <div class="card-body">
+            {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {{ form.non_field_errors }}
+    </div>
+{% endif %}
+
             {% csrf_token %}
             <div class="form-group">
                 <label for="" class="control-label">Treatment:</label>
