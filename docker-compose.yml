@@ -11,6 +11,8 @@ services:
     restart: unless-stopped
     ports:
       - 80:80
+    volumes:
+      - /var/www/static/:/var/www/static/
     depends_on:
       - app
     networks:
@@ -26,6 +28,7 @@ services:
       - 8000
     volumes:
       - .:/app
+      - /var/www/static/:/var/www/static/
     depends_on:
       - db
     networks:
