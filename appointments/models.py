@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.db import models
 from django.utils import timezone
 from treatments.models import Treatment
@@ -11,7 +10,7 @@ class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     date = models.DateField(null=False, blank=False)
     TIME_CHOICES = [
-        ("------", "------"),
+        ("--:-- --", "--:-- --"),
         (time(10, 0), "10:00 AM"),
         (time(11, 0), "11:00 AM"),
         (time(12, 0), "12:00 PM"),

@@ -10,6 +10,12 @@ from .models import Appointment
 
 
 class BookingAppointmentForm(forms.ModelForm):
+    treatment = forms.ModelChoiceField(
+        queryset=Treatment.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control'}))
+
     date = forms.DateField(
         widget=NumberInput(
             attrs={'type': 'date',
@@ -19,37 +25,35 @@ class BookingAppointmentForm(forms.ModelForm):
 
     def clean_date(self):
         current_date = timezone.now()
-        date = self.cleaned_data['date']
-
-        if date < current_date.date():
+        date = self.cleaned_data.get('date')
+        if date and date < current_date.date():
             raise forms.ValidationError("Please select a future date.")
         return date
 
     time = forms.ChoiceField(
         required=True,
         choices=Appointment.TIME_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        error_messages={
+            'invalid': 'This field is required.',
+        }
     )
 
-    def clean_time(self):
-        current_date_time = timezone.now()
+    def clean(self):
+        cleaned_data = super().clean()
+        selected_date = cleaned_data.get('date')
+        selected_time = cleaned_data.get('time')
 
-        selected_time = self.cleaned_data['time']
-        selected_date = self.cleaned_data['date']
-        if isinstance(selected_time, str):
-            selected_time = datetime.strptime(selected_time, '%H:%M:%S').time()
+        if selected_date and selected_time:
+            current_date_time = timezone.now()
+            if selected_time and selected_time != '--:-- --':
+                selected_date_time = datetime.combine(selected_date,
+                                                      datetime.strptime(selected_time, '%H:%M:%S').time())
 
-        selected_date_time = datetime.combine(selected_date, selected_time)
+                if selected_date_time <= current_date_time:
+                    raise forms.ValidationError("Selected date and time must be in the future.")
 
-        if selected_date_time <= current_date_time:
-            raise forms.ValidationError("Selected time has already passed.")
-        return selected_time
-
-    treatment = forms.ModelChoiceField(
-        queryset=Treatment.objects.all(),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control'}))
+        return cleaned_data
 
     class Meta:
         model = Appointment
