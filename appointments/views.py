@@ -22,15 +22,12 @@ User = get_user_model()
 def appointment_create(request):
     form = BookingAppointmentForm()
     if request.method == 'POST':
-        form = BookingAppointmentForm(request.POST)
+        form = BookingAppointmentForm(request.POST or None)
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.user = request.user
             appointment.save()
             return redirect('appointments:appointment_info')
-
-        else:
-            print("Form errors:", form.errors)
     context = {'form': form}
     return render(request, 'appointments/appointment_create.html', context)
 
