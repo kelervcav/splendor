@@ -35,7 +35,7 @@ def redeem_points(request, pk):
         messages.success(request, 'Points redeemed successfully.')
         return redirect('patients:patient_info', pk)
     template_name = 'redeem_points.html'
-    context = {'form': form, 'users': user}
+    context = {'form': form, 'users': user, 'user_profile': user_profile}
     return render(request, template_name, context)
 
 
