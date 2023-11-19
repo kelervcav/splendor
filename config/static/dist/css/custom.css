@@ -32,8 +32,9 @@
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    height: 658px;
-    padding-top: 10px;
+    height: auto;
+    padding-top: 130px;
+    padding-bottom: 186px;
 
 }
 
@@ -48,8 +49,8 @@
 }
 
 .banner-description {
-  text-shadow: 1.5px 1.5px 5px #0F0F0F;
-   color: #FFFFFF;
+    text-shadow: 1.5px 1.5px 5px #0F0F0F;
+    color: #FFFFFF;
 }
 .text-right {
     text-align: right;
