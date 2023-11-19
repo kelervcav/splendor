@@ -15,17 +15,12 @@
     {% csrf_token %}
     <div class="input-group mb-3">
         <input type="text" name="mobile" class="form-control" placeholder="Mobile number" autocomplete="on" />
-        <div class="input-group-append">
-            <div class="input-group-text">
-              <i class="fas fa-phone"></i>
-            </div>
-        </div>
     </div>
     <div class="input-group mb-3">
-        <input type="password" name="password" class="form-control" placeholder="Password" />
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password"/>
         <div class="input-group-append">
             <div class="input-group-text">
-                <span class="fas fa-lock"></span>
+              <span id="eyeicon"><i class="fas fa-eye-slash" style="width:17px"></i></span>
             </div>
         </div>
     </div>
@@ -37,7 +32,19 @@
 {% endblock content %}
 
 {% block script %}
+<script>
+        let eyeicon = document.getElementById("eyeicon");
+        let password = document.getElementById("password");
 
-<script></script>
+        eyeicon.addEventListener("click", function() {
+            if (password.type === "password") {
+                password.type = "text";
+                eyeicon.innerHTML = '<i class="fas fa-eye"></i>';
+            } else {
+                password.type = "password";
+                eyeicon.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            }
+        });
 
+</script>
 {% endblock script %}
