@@ -53,16 +53,16 @@ def transaction_create(request, pk):
             user_profile.save()
 
         messages.success(request, 'Points added successfully.')
-        return redirect('patients:patient_info', pk)
+        return redirect('transactions:transaction_create', pk)
     template_name = 'transaction_create.html'
     context = {'form': form, 'users': user}
     return render(request, template_name, context)
 
 
+# Patients UI
 def transaction_history(request):
-    user = User.objects.all()
-    transaction_list = Transaction.objects.all().order_by('-date_added')
-    redeemed_list = RedeemPoints.objects.all().order_by('-date_redeemed')
+    user = request.user
+    transaction_list = Transaction.objects.filter(user=user).order_by('-date_added')
     template_name = 'transaction_history_list.html'
-    context = {'transaction_list': transaction_list, 'users': user, 'redeemed_list': redeemed_list}
+    context = {'transaction_list': transaction_list, 'users': user}
     return render(request, template_name, context)

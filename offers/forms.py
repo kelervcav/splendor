@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from offers.models import Offer
+from offers.models import Offer, file_size
 
 
 class OfferForm(ModelForm):

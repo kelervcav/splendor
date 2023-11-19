@@ -24,9 +24,10 @@
                <!-- /.card-header -->
                <form class="form-horizontal" method="POST" novalidate>
                   <div class="card-body">
+                      <h6>Available Points: {{ user_profile.total_points|floatformat:0|add:0 }}</h6>
                      {% csrf_token %}
                      <div class="form-group">
-                        <label for="" class="col-md-2 control-label">Enter points:</label>
+                        <label for="" class="control-label">Enter points:</label>
                         <div class="col-md-4">
                            {{ form.redeemed_points }}
                            <span class="help-block">{{ form.redeemed_points.errors }}</span>
