@@ -55,7 +55,7 @@
                         <label for="" class="control-label">Image:</label>
                         <div class="col-md-4">
                             <input type="file" name="offer_image" id="offer_image">
-                           <span class="help-block"></span>
+                            <span class="help-block">{{ form.offer_image.errors }}</span>
                         </div>
                      </div>
                      <div class="form-check">
@@ -69,7 +69,6 @@
                      <button type="submit" class="btn btn-info">Save</button>
                   </div>
                </form>
-
                <!-- /.card-body -->
             </div>
          </div>
