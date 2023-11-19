@@ -17,55 +17,50 @@
             <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
                 <div class="container px-1 py-3 px-md-12">
                     <a href="#" class="navbar-brand"><img src="{% static 'dist/img/splendor_logo.png' %}" class="brand-image" alt="Image Logo" width="100%" /></a>
-                    <div class="collapse navbar-collapse">
                         <ul class="navbar-nav">
                             <li>
                                 <h4>Log In</h4>
                             </li>
                         </ul>
-                    </div>
                 </div>
             </nav>
         </div>
-        <div class="background-div login-page">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 align-self-center">
-                        <h1 class="display-3 mb-3 font-weight-bolder banner-title">
-                           THE BEST CLINIC IN THE INDUSTRY
-                        </h1>
-                        <p class="lead mb-4 banner-description">
-                            A most prefered dermatologic clinic by providing the latest, quality and affordable dermatologic and cosmetic surgical treatment in
-                            a clean, sanitized and safe facility.
-                        </p>
-                    </div>
+       <div class="background-div login-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 align-self-center">
+                    <h1 class="display-3 font-weight-bolder banner-title">
+                        THE BEST CLINIC IN THE INDUSTRY
+                    </h1>
+                    <p class="lead banner-description">
+                        A most prefered dermatologic clinic by providing the latest, quality and affordable dermatologic and cosmetic surgical treatment in a clean, sanitized and safe facility.
+                    </p>
+                </div>
 
-                    <div class="col-md-5 ml-auto">
-                        <div class="">
-                            <!-- /.login-logo -->
-                            <div class="card card-outline">
-                                <div class="card-header text-center">
-                                    <h4>Splendor Skin</h4>
-                                </div>
-                                <div class="card-body">
-                                    <p class="login-box-msg">Please log in to access this page</p>
-                                    {% block content %}
-
-                                    {% endblock content%}
-                                </div>
-                                <!-- /.card-body -->
+                <div class="col-md-5 ml-auto">
+                    <div class="">
+                        <!-- /.login-logo -->
+                        <div class="card card-outline">
+                            <div class="card-header text-center">
+                                <h4>Splendor Skin</h4>
                             </div>
-                            <!-- /.card -->
+                            <div class="card-body">
+                                <p class="login-box-msg">Please log in to access this page</p>
+                                {% block content %} {% endblock content%}
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                        <!-- /.login-box -->
+                        <!-- /.card -->
                     </div>
+                    <!-- /.login-box -->
                 </div>
+            </div>
+        </div>
+    </div>
 
-                </div>
-              </div>
-        {% include 'snippets/js.html' %}
+{% include 'snippets/js.html' %}
 
-        <!-- Custom JS -->
-        {% block script %} {% endblock script %}
+<!-- Custom JS -->
+{% block script %} {% endblock script %}
     </body>
 </html>
