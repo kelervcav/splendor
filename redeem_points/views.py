@@ -41,7 +41,8 @@ def redeem_points(request, pk):
 
 @login_required
 def redeemed_list(request):
-    redeemed_list = RedeemPoints.objects.all().order_by('-date_redeemed')
+    user = request.user
+    redeemed_list = RedeemPoints.objects.filter(user=user).order_by('-date_redeemed')
     template_name = 'redeemed_list.html'
     context = {'redeemed_list': redeemed_list}
     return render(request, template_name, context)
