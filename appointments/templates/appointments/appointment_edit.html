@@ -1,7 +1,5 @@
 {% extends 'customer_base.html' %}
 
-{% block title %} Appointment {% endblock title %}
-
 {% block title %} Appointment {% endblock %}
 
 {% block content %}
@@ -48,6 +46,13 @@
                 <div class="col-md-4">
                     {{ form.time }}
                     <span class="help-block">{{ form.time.errors }}</span>
+                </div>
+            </div>
+             <div class="form-group">
+                <label for="" class="control-label">Note:</label>
+                <div class="col-md-4">
+                    {{ form.notes }}
+                    <span class="help-block">{{ form.notes.errors }}</span>
                 </div>
             </div>
         </div>

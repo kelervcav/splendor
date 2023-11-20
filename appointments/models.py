@@ -31,6 +31,7 @@ class Appointment(models.Model):
     is_deleted = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
+    notes = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.date} {self.time}"

@@ -45,32 +45,43 @@ class BookingAppointmentForm(forms.ModelForm):
         if selected_date:
             current_date = timezone.now().date()
             if selected_date < current_date:
-                 self.add_error('date', self.fields['date'].error_messages['invalid_date'])
+                self.add_error('date', self.fields['date'].error_messages['invalid_date'])
 
             if selected_time != '--:-- --':
                 selected_datetime = datetime.combine(selected_date, datetime.strptime(selected_time, '%H:%M:%S').time())
                 current_datetime = timezone.now()
 
                 if selected_datetime <= current_datetime:
-                     self.add_error('time', self.fields['time'].error_messages['time_in_past'])
+                    self.add_error('time', self.fields['time'].error_messages['time_in_past'])
 
                 else:
                     # Check if the maximum appointments for the selected date and time are reached
                     max_appointments = 5
                     if selected_date and selected_time:
-                        existing_appointments = Appointment.objects.filter(date=selected_date, time=selected_time).count()
+                        existing_appointments = Appointment.objects.filter(date=selected_date,
+                                                                           time=selected_time).count()
 
                         if existing_appointments >= max_appointments:
                             formatted_time = selected_datetime.strftime('%I:%M %p')
-                            self.add_error('time', f'Maximum appointments for {selected_date} at {formatted_time} have been reached.')
-                            print(existing_appointments)
+                            self.add_error('time',
+                                           f'Maximum appointments for {selected_date} at {formatted_time} have been reached.')
+                            print("adsda", existing_appointments)
                         else:
                             appointment = Appointment.objects.filter(date=selected_date, time=selected_time).first()
-                            print(existing_appointments)
+                            print("asxasxs", existing_appointments)
                             if appointment and appointment.is_completed:
                                 # Decrement the count if the appointment is completed
                                 existing_appointments -= 1
+                                print("asxasxs", existing_appointments)
         return cleaned_data
+
+    notes = forms.CharField(
+        required=False,
+        max_length=100,
+        widget=forms.Textarea(
+            attrs={'class': 'form-control',
+                   'rows': 4, }),
+    )
 
     class Meta:
         model = Appointment
@@ -78,5 +89,5 @@ class BookingAppointmentForm(forms.ModelForm):
             'date',
             'time',
             'treatment',
-            'is_approved',
+            'notes',
         ]
