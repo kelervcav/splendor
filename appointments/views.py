@@ -87,7 +87,7 @@ def complete_appointment(request, pk):
 @admin_required
 @permission_required('appointments.view_appointment', raise_exception=True)
 def appointment_list(request):
-    appointment_list = Appointment.objects.all().order_by('date', 'is_approved')
+    appointment_list = Appointment.objects.all().order_by('is_approved', 'date')
     template_name = 'appointments/appointment_list.html'
     context = {'appointment_list': appointment_list}
     return render(request, template_name, context)
