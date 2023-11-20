@@ -70,12 +70,24 @@ def approve_appointment(request, pk):
     return redirect('appointments:appointment_list')
 
 
+@login_required
+@admin_required
+@permission_required('appointments.approve_appointment', raise_exception=True)
+def complete_appointment(request, pk):
+    appointment = get_object_or_404(Appointment, id=pk)
+    appointment.is_completed = True
+    appointment.save()
+    messages.success(request,
+                     'Appointment has been completed.')
+    return redirect('appointments:appointment_list')
+
+
 # for therapist
 @login_required
 @admin_required
 @permission_required('appointments.view_appointment', raise_exception=True)
 def appointment_list(request):
-    appointment_list = Appointment.objects.all()
+    appointment_list = Appointment.objects.all().order_by('date', 'is_approved')
     template_name = 'appointments/appointment_list.html'
     context = {'appointment_list': appointment_list}
     return render(request, template_name, context)
