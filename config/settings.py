@@ -96,6 +96,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+PUSHER_APP_ID = '1711676'
+PUSHER_KEY = '35f3c6a202ac29846649'
+PUSHER_SECRET = 'd76d685ea0a5379a5089'
+PUSHER_CLUSTER = 'ap1'
+
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
