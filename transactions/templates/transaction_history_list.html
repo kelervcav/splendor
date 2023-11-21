@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6 pl-0">
-                <p style="font-size: 27px">Transactions</p>
+                <h4>Transactions</h4>
             </div>
         </div>
     </div>
@@ -36,8 +36,8 @@
                              {% endif %}
                          </div>
                          <div class="col-6">
-                             <p class="text-right">{{ transact.date_added|date:"d M Y G:i"}}</p>
-                             <h6 class= "text-right">{{transact.points}}</h6>
+                             <h6 class="text-right">{{ transact.date_added|date:"d M Y G:i"}}</h6>
+                             <h6 class= "text-right"><b>{{transact.points}}</b></h6>
                          </div>
                      </div>
                 </li>
