@@ -1,24 +1,31 @@
-from datetime import time, datetime
+from datetime import time, datetime, date
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
-from django.db.models import F
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from pusher import Pusher
 
 from user_profile.decorators import admin_required
 from .forms import BookingAppointmentForm
 from .models import Appointment
-from treatments.models import Treatment
-from django.utils import timezone
+
 
 User = get_user_model()
 
-
 # Create your views here.
-# for patients
 
+pusher = Pusher(
+    app_id=settings.PUSHER_APP_ID,
+    key=settings.PUSHER_KEY,
+    secret=settings.PUSHER_SECRET,
+    cluster=settings.PUSHER_CLUSTER,
+)
+
+
+# for patients
 @login_required
 def appointment_create(request):
     form = BookingAppointmentForm()
@@ -28,6 +35,12 @@ def appointment_create(request):
             appointment = form.save(commit=False)
             appointment.user = request.user
             appointment.save()
+            appointment_date = form.cleaned_data['date']
+            appointment_time = form.cleaned_data['time']
+            appointment_datetime = datetime.combine(appointment_date, datetime.strptime(appointment_time, '%H:%M:%S').time())
+            formatted_datetime = appointment_datetime.strftime("%m/%d/%Y at %I:%M %p")
+            data = {'message': f"{appointment.user.first_name} booked an appointment for {formatted_datetime}"}
+            pusher.trigger('splendor-channel', 'my-event', data)
             return redirect('appointments:appointment_info')
     context = {'form': form}
     return render(request, 'appointments/appointment_create.html', context)
@@ -96,7 +109,7 @@ def appointment_list(request):
 @login_required
 def appointment_info(request):
     user = request.user
-    appointment_info = Appointment.objects.filter(user=user)
+    appointment_info = Appointment.objects.filter(user=user).order_by('-created_at')
     template_name = 'appointments/appointment_info.html'
     context = {'appointment_info': appointment_info, 'users': user}
     return render(request, template_name, context)
