@@ -65,14 +65,7 @@ class BookingAppointmentForm(forms.ModelForm):
                             formatted_time = selected_datetime.strftime('%I:%M %p')
                             self.add_error('time',
                                            f'Maximum appointments for {selected_date} at {formatted_time} have been reached.')
-                            print("adsda", existing_appointments)
-                        else:
-                            appointment = Appointment.objects.filter(date=selected_date, time=selected_time).first()
-                            print("asxasxs", existing_appointments)
-                            if appointment and appointment.is_completed:
-                                # Decrement the count if the appointment is completed
-                                existing_appointments -= 1
-                                print("asxasxs", existing_appointments)
+
         return cleaned_data
 
     notes = forms.CharField(

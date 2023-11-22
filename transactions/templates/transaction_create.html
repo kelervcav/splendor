@@ -52,7 +52,7 @@
                       <div class="form-group">
                         <label for="" class="col-md-2 control-label">Redeem Points:</label>
                         <div class="col-md-4">
-                           <input type="text" id="redeem_points" name="redeemed_points" class="form-control" placeholder="{{ users.userprofile.total_points|floatformat:0|add:0 }}">
+                           <input type="text" id="redeemed_points" name="redeemed_points" class="form-control" placeholder='{{ users.userprofile.total_points }}'>
                            <span class="help-block">{{ redeem_form.redeemed_points.errors }}</span>
                         </div>
                      </div>
@@ -76,5 +76,12 @@
 {% endblock content %}
 
 {% block script %}
+<script>
+   let floatPoints = {{ users.userprofile.total_points }};
+   let truncatedValue = Math.floor(floatPoints);
+   let inputPoints = document.getElementById('redeemed_points');
 
+   // Update the placeholder attribute with the truncated value
+   inputPoints.placeholder = truncatedValue;
+</script>
 {% endblock script %}

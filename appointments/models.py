@@ -30,8 +30,7 @@ class Appointment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
-    is_completed = models.BooleanField(default=False)
-    notes = models.TextField(null=True, blank=True)
+    notes = models.TextField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.date} {self.time}"

@@ -29,12 +29,13 @@
                   <table id="appointment-table" class="table table-sm table-bordered table-hover">
                      <thead>
                         <tr>
-                           <th>PATIENT</th>
-                           <th>TREATMENT</th>
-                           <th>DATE</th>
-                           <th>TIME</th>
-                           <th>STATUS</th>
-                           <th>ACTIONS</th>
+                            <th>PATIENT</th>
+                            <th>TREATMENT</th>
+                            <th>DATE</th>
+                            <th>TIME</th>
+                            <th>NOTES</th>
+                            <th>STATUS</th>
+                            <th>ACTIONS</th>
                         </tr>
                      </thead>
 
@@ -45,25 +46,19 @@
                                <td>{{ appointment.treatment }}</td>
                                <td>{{ appointment.date|date:"D, d M Y" }}</td>
                                <td>{{ appointment.time }}</td>
-                               <td> {% if appointment.is_completed %}
-                                        <span class="badge bg-info">Completed</span>
-                                    {% elif appointment.is_approved %}
+                               <td>{{ appointment.notes }}</td>
+                               <td>
+                                    {% if appointment.is_approved %}
                                         <span class="badge bg-success">Approved</span>
                                     {% else %}
                                         <span class="badge bg-warning">Pending</span>
                                     {% endif %}
                                </td>
                                <td>
-                                   {% if not appointment.is_completed %}
-                                        {% if appointment.is_approved %}
-                                            <a href="{% url 'appointments:complete_appointment' appointment.id %}" class="pull-right text-blue">
-                                                <button type="submit" class="btn btn-info btn-sm">Complete</button>
-                                            </a>
-                                        {% else %}
-                                            <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
-                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                            </a>
-                                        {% endif %}
+                                    {% if not appointment.is_approved %}
+                                        <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
+                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                        </a>
                                     {% endif %}
 								</td>
                            </tr>

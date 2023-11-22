@@ -40,46 +40,51 @@ def transaction_create(request, pk):
                             redeem.redeemed_points = points
                             redeem.save()
                             percent_discount = Decimal(offer.percentage_discount / 100)  # convert discount into percentage
-                            amount = transaction_form.cleaned_data['price_amount']
-                            new_amount = amount - (percent_discount * amount)  # new amount after using discount in percent
-                            new_updated_amount = new_amount - points  # new updates amount after redeeming points
-                            transaction.discounted_amount = new_updated_amount  # updated amount for transaction
-                            transaction.points = new_updated_amount / 150  # earned points on transaction
+                            new_amount = transaction.price_amount - (percent_discount * transaction.price_amount)  # new amount after using offer code
+                            if user_profile.total_points >= points:
+                                user_profile.total_points -= points
+                                user_profile.save()
+                                new_updated_amount = new_amount - points  # new updated amount after redeeming points
+                                transaction.discounted_amount = new_updated_amount
+                                transaction.points = new_updated_amount / 150  # earned points on transaction
+                                transaction.offer_code = transaction_form.cleaned_data['offer_code'].upper()
+                                transaction.save()
+                                user_profile.total_points += transaction.points  # total points on each transaction
+                                user_profile.save()
+                            else:
+                                messages.error(request, 'Insufficient amount of points.')
+                                return redirect('transactions:transaction_create', pk)
+                        else:
+                            percent_discount = Decimal(offer.percentage_discount / 100)
+                            new_amount = transaction.price_amount - (percent_discount * transaction.price_amount)  # new amount after using discount in percent
+                            transaction.discounted_amount = new_amount
+                            transaction.points = new_amount / 150  # points on each transaction
                             transaction.offer_code = transaction_form.cleaned_data['offer_code'].upper()
                             transaction.save()
                             user_profile.total_points += transaction.points  # total points on each transaction
                             user_profile.save()
 
-                        amount = transaction_form.cleaned_data['price_amount']
-                        new_amount = amount - (percent_discount * amount)  # new amount after using discount in percent
-                        transaction.discounted_amount = new_amount
-                        transaction.points = new_amount / 150  # points on each transaction
-                        transaction.offer_code = transaction_form.cleaned_data['offer_code'].upper()
-                        transaction.save()
-                        user_profile.total_points += transaction.points  # total points on each transaction
-                        user_profile.save()
-
         else:
-            if redeem.redeemed_points:
+            if redeem.redeemed_points:  # check if not empty
                 points = redeem_form.cleaned_data['redeemed_points']
                 redeem.redeemed_points = points
                 redeem.save()
                 if user_profile.total_points >= points:
                     user_profile.total_points -= points
-                    user_profile.save()
-                    new_amount = transaction.price_amount - points
+                    new_amount = transaction.price_amount - points  # calculate new amount after deducting redeemed points
                     transaction.discounted_amount = new_amount
-                    transaction.points = new_amount / 150
+                    transaction.points = new_amount / 150  # calculate points based on the discounted amount
                     transaction.save()
+                    user_profile.total_points += transaction.points   # update total points
+                    user_profile.save()
                 else:
                     messages.error(request, 'Insufficient amount of points.')
                     return redirect('transactions:transaction_create', pk)
-
-            amount = transaction_form.cleaned_data['price_amount']
-            transaction.points = amount / 150  # points each transaction
-            transaction.save()
-            user_profile.total_points += transaction.points  # total points on each transaction
-            user_profile.save()
+            else:
+                transaction.points = transaction.price_amount / 150  # points each transaction
+                transaction.save()
+                user_profile.total_points += transaction.points  # total points on each transaction
+                user_profile.save()
 
         messages.success(request, 'Points added successfully.')
         return redirect('patients:patient_info', pk)
