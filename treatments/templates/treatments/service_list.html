@@ -38,7 +38,6 @@
 							<tr>
 								<th>ID</th>
 								<th>SERVICE NAME</th>
-								<th>DESCRIPTION</th>
 								<th>STATUS</th>
 								<th>ACTIONS</th>
 							</tr>
@@ -48,7 +47,6 @@
 							<tr>
 								<th>{{ service.id}}</th>
 								<td>{{ service.name }}</td>
-								<td>{{ service.description }}</td>
 								<td>{% if service.is_active %}
 										<span class="badge bg-success">Active</span>
 									{% else %}
