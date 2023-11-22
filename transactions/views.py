@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 from offers.models import Offer
+from redeem_points.models import RedeemPoints
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
 from .forms import TransactionForm, RedeemPointsForm
@@ -17,7 +18,9 @@ User = get_user_model()
 @permission_required('transactions.add_transaction', raise_exception=True)
 def transaction_create(request, pk):
     user = User.objects.get(id=pk)
+
     user_profile = UserProfile.objects.get(user=user)
+
     offers = Offer.objects.all()
     transaction_form = TransactionForm(request.POST or None)
     redeem_form = RedeemPointsForm(request.POST or None)
@@ -38,6 +41,8 @@ def transaction_create(request, pk):
                         if redeem.redeemed_points:
                             points = redeem_form.cleaned_data['redeemed_points']
                             redeem.redeemed_points = points
+                            transaction.save()
+                            redeem.transaction = transaction
                             redeem.save()
                             percent_discount = Decimal(offer.percentage_discount / 100)  # convert discount into percentage
                             new_amount = transaction.price_amount - (percent_discount * transaction.price_amount)  # new amount after using offer code
@@ -68,6 +73,8 @@ def transaction_create(request, pk):
             if redeem.redeemed_points:  # check if not empty
                 points = redeem_form.cleaned_data['redeemed_points']
                 redeem.redeemed_points = points
+                transaction.save()
+                redeem.transaction = transaction
                 redeem.save()
                 if user_profile.total_points >= points:
                     user_profile.total_points -= points

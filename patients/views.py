@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+from itertools import chain
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required

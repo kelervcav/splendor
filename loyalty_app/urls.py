@@ -5,5 +5,4 @@ app_name = 'loyalty'
 
 urlpatterns = [
     path('home', views.home, name='home'),
-
 ]

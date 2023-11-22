@@ -18,7 +18,7 @@
           <h3 class="card-title">Transaction History</h3>
           <div class="card-tools">
              <a href="{% url 'redeem_points:redeemed_list' %}" class="btn btn-sm btn-block bg-gradient-info">
-                Redeemed Points
+                Points Redeemed
              </a>
           </div>
     </div>
@@ -32,7 +32,7 @@
                          <div class="col-6">
                              <h6>{{ transact.reference_id }}</h6>
                              {% if transact.offer_code %}
-                                <p class="pt-2">{{transact.offer_code|upper}}</p>
+                                <h6 class="pt-2">{{transact.offer_code|upper}}</h6>
                              {% endif %}
                          </div>
                          <div class="col-6">

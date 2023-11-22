@@ -10,10 +10,10 @@
             <div id="carouselBanner" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="{% static 'dist/img/splendorService_Acne.png' %}" class="d-block w-100" alt="banner image services">
+                        <img src="{% static 'dist/img/front-banner.png' %}" class="d-block w-100" alt="banner image services">
                     </div>
                     <div class="carousel-item">
-                        <img src="{% static 'dist/img/splendorService_Acne.png' %}" class="d-block w-100" alt="banner image services">
+                        <img src="{% static 'dist/img/splendorAcne.png' %}" class="d-block w-100" alt="banner image services">
                     </div>
                      <div class="carousel-item">
                         <img src="{% static 'dist/img/splendorService_Hair.png' %}" class="d-block w-100" alt="banner image services">
@@ -24,24 +24,70 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-group">
-        <div class="card">
-            <div id="carouselOffer" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{% static 'dist/img/splendor100_all.png' %}" class="d-block w-100" alt="banner image offers" >
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'dist/img/splendor101_Acne.png' %}" class="d-block w-100" alt="banner image offers">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'dist/img/splendor102_Hair.png' %}" class="d-block w-100" alt="banner image offers">
-                    </div>
-                </div>
+<!--<div class="card">-->
+<!--    <div class="card-group">-->
+<!--        <div class="card">-->
+<!--            <div id="carouselOffer" class="carousel slide" data-ride="carousel">-->
+<!--                <div class="carousel-inner">-->
+<!--                    <div class="carousel-item active">-->
+<!--                        <img src="{% static 'dist/img/splendor100_all.png' %}" class="d-block w-100" alt="banner image offers" >-->
+<!--                    </div>-->
+<!--                    <div class="carousel-item">-->
+<!--                        <img src="{% static 'dist/img/splendor101_Acne.png' %}" class="d-block w-100" alt="banner image offers">-->
+<!--                    </div>-->
+<!--                    <div class="carousel-item">-->
+<!--                        <img src="{% static 'dist/img/splendor102_Hair.png' %}" class="d-block w-100" alt="banner image offers">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 pl-0">
+                <h4>Transactions</h4>
             </div>
         </div>
     </div>
-</div>
+</section>
 
+<div class="card card-outline card-info">
+    <div class="card-header ">
+          <h3 class="card-title">Transaction History</h3>
+          <div class="card-tools">
+             <a href="{% url 'redeem_points:redeemed_list' %}" class="btn btn-sm btn-block bg-gradient-info">
+                Points Redeemed
+             </a>
+          </div>
+    </div>
+
+    <div class="card-body pt-4">
+        <div class="col-12">
+            {% for transact in transaction_list %}
+             <ul class="list-group list-group ml-1">
+                 <li class="list-group-item">
+                     <div class="row">
+                         <div class="col-6">
+                             <h6>{{ transact.reference_id }}</h6>
+                             {% if transact.offer_code %}
+                                <h6 class="pt-2">{{transact.offer_code|upper}}</h6>
+                             {% endif %}
+                         </div>
+                         <div class="col-6">
+                             <h6 class="text-right">{{ transact.date_added|date:"d M Y G:i"}}</h6>
+                             <h6 class= "text-right"><b>{{transact.points}}</b></h6>
+                         </div>
+                     </div>
+                </li>
+             </ul>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="card-footer"></div>
+</div>
 {% endblock %}
