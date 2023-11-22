@@ -63,9 +63,9 @@ def patient_create(request):
 @permission_required('user_profile.view_patient', raise_exception=True)
 def patient_info(request, pk):
     patient_info = User.objects.filter(id=pk)
-    transactions = Transaction.objects.filter(user=pk).order_by('-date_added')[:5]
+    transactions = Transaction.objects.filter(user=pk).order_by('-date_added')
     total_points = UserProfile.objects.filter(user=pk)
-    redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')[:5]
+    redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')
     appointment_list = Appointment.objects.filter(user=pk).order_by('-created_at')[:5]
     date_now = datetime.now()
     template_name = 'patients/patient_info.html'

@@ -85,7 +85,7 @@
                         <h3 class="card-title">Transaction List</h3>
                     </div>
                     <div class="card-body">
-                        <table id="patient_info-table" class="table table-striped projects">
+                        <table id="transaction-table" class="table table-striped projects">
                             <thead>
                                 <tr>
                                     <th>REFERENCE ID</th>
@@ -106,9 +106,10 @@
                                          {% endif %}
                                      </td>
                                     {% if transact.offer_code %}
-                                        <td>{{ transact.discounted_amount }}</td>
+                                        <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>
                                     {% else %}
-                                        <td>{{ transact.price_amount }}</td>
+
+                                        <td><span>&#8369;</span>{{ transact.price_amount }}</td>
                                     {% endif %}
                                     <td>{{ transact.points }}</td>
                                     <td>{{ transact.date_added|date:"d M Y G:i" }}</td>
@@ -193,15 +194,15 @@
 {% block script %}
 <script>
     $(function () {
-        $("#patient_info-table").DataTable({
+        $("#transaction-table").DataTable({
             paging: true,
             lengthChange: false,
-            searching: false,
+            searching: true,
             ordering: false,
             info: true,
             autoWidth: false,
             responsive: true,
-            pageLength: 10,
+            pageLength: 5,
         });
     });
 </script>
@@ -211,12 +212,12 @@
         $("#redeemed_points-table").DataTable({
             paging: true,
             lengthChange: false,
-            searching: false,
+            searching: true,
             ordering: false,
             info: true,
             autoWidth: false,
             responsive: true,
-            pageLength: 10,
+            pageLength: 5,
         });
     });
 </script>
@@ -226,12 +227,12 @@
         $("#booked-table").DataTable({
             paging: true,
             lengthChange: false,
-            searching: false,
+            searching: true,
             ordering: false,
             info: true,
             autoWidth: false,
             responsive: true,
-            pageLength: 10,
+            pageLength: 5,
         });
     });
 </script>
