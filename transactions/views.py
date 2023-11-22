@@ -1,16 +1,12 @@
 from _decimal import Decimal
-
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
-from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
-
 from offers.models import Offer
-from redeem_points.models import RedeemPoints
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
-from .forms import TransactionForm
+from .forms import TransactionForm, RedeemPointsForm
 from .models import Transaction
 
 User = get_user_model()
@@ -23,11 +19,15 @@ def transaction_create(request, pk):
     user = User.objects.get(id=pk)
     user_profile = UserProfile.objects.get(user=user)
     offers = Offer.objects.all()
-    form = TransactionForm(request.POST or None)
+    transaction_form = TransactionForm(request.POST or None)
+    redeem_form = RedeemPointsForm(request.POST or None)
 
-    if form.is_valid():
-        transaction = form.save(commit=False)
+    if transaction_form.is_valid() and redeem_form.is_valid():
+        transaction = transaction_form.save(commit=False)
         transaction.user = user
+        redeem = redeem_form.save(commit=False)
+        redeem.user = user
+
         if transaction.offer_code:
             for offer in offers:
                 if transaction.offer_code.upper() == offer.code:
@@ -35,27 +35,57 @@ def transaction_create(request, pk):
                         messages.error(request, 'Code was already used.')
                         return redirect('transactions:transaction_create', pk)
                     else:
-                        discount = offer.percentage_discount
-                        percent_discount = Decimal(discount / 100)  # convert discount into percentage
-                        amount = form.cleaned_data['price_amount']
+                        if redeem.redeemed_points:
+                            points = redeem_form.cleaned_data['redeemed_points']
+                            redeem.redeemed_points = points
+                            redeem.save()
+                            percent_discount = Decimal(offer.percentage_discount / 100)  # convert discount into percentage
+                            amount = transaction_form.cleaned_data['price_amount']
+                            new_amount = amount - (percent_discount * amount)  # new amount after using discount in percent
+                            new_updated_amount = new_amount - points  # new updates amount after redeeming points
+                            transaction.discounted_amount = new_updated_amount  # updated amount for transaction
+                            transaction.points = new_updated_amount / 150  # earned points on transaction
+                            transaction.offer_code = transaction_form.cleaned_data['offer_code'].upper()
+                            transaction.save()
+                            user_profile.total_points += transaction.points  # total points on each transaction
+                            user_profile.save()
+
+                        amount = transaction_form.cleaned_data['price_amount']
                         new_amount = amount - (percent_discount * amount)  # new amount after using discount in percent
                         transaction.discounted_amount = new_amount
                         transaction.points = new_amount / 150  # points on each transaction
-                        transaction.offer_code = form.cleaned_data['offer_code'].upper()
+                        transaction.offer_code = transaction_form.cleaned_data['offer_code'].upper()
                         transaction.save()
                         user_profile.total_points += transaction.points  # total points on each transaction
                         user_profile.save()
+
         else:
-            amount = form.cleaned_data['price_amount']
+            if redeem.redeemed_points:
+                points = redeem_form.cleaned_data['redeemed_points']
+                redeem.redeemed_points = points
+                redeem.save()
+                if user_profile.total_points >= points:
+                    user_profile.total_points -= points
+                    user_profile.save()
+                    new_amount = transaction.price_amount - points
+                    transaction.discounted_amount = new_amount
+                    transaction.points = new_amount / 150
+                    transaction.save()
+                else:
+                    messages.error(request, 'Insufficient amount of points.')
+                    return redirect('transactions:transaction_create', pk)
+
+            amount = transaction_form.cleaned_data['price_amount']
             transaction.points = amount / 150  # points each transaction
             transaction.save()
             user_profile.total_points += transaction.points  # total points on each transaction
             user_profile.save()
 
         messages.success(request, 'Points added successfully.')
-        return redirect('transactions:transaction_create', pk)
+        return redirect('patients:patient_info', pk)
+
     template_name = 'transaction_create.html'
-    context = {'form': form, 'users': user}
+    context = {'form': transaction_form, 'users': user, 'redeem_form': redeem_form}
     return render(request, template_name, context)
 
 

@@ -1,5 +1,7 @@
 from django import forms
 from django.forms import ModelForm
+
+from redeem_points.models import RedeemPoints
 from .models import Transaction
 from offers.models import Offer
 
@@ -38,4 +40,16 @@ class TransactionForm(ModelForm):
         model = Transaction
         fields = ['reference_id', 'price_amount', 'offer_code']
 
+
+class RedeemPointsForm(ModelForm):
+    redeemed_points = forms.IntegerField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'}),
+    )
+
+    class Meta:
+        model = RedeemPoints
+        fields = ['redeemed_points']
 
