@@ -14,11 +14,11 @@ from django.db.models import Count
 @admin_required
 def dashboard(request):
     now = datetime.now()
-    appointment_list = Appointment.objects.filter(date=now.date()).order_by('time')
+    appointment_list = Appointment.objects.filter(date=now.date()).order_by('-created_at')
     service_count = Service.objects.exclude(is_active=False).count()
     treatment_count = Treatment.objects.exclude(is_active=False).count()
     patient_count = User.objects.filter(is_patient=True).count()
-    appointment_count = Appointment.objects.filter(created_at__date=now.date()).count()
+    appointment_count = Appointment.objects.filter(date=now.date(), is_approved=True).count()
 
     # treatment_analytics
     most_chosen_treatment = Appointment.objects.values('treatment').annotate(treatment_count=Count('treatment'))

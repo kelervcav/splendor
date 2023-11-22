@@ -100,9 +100,10 @@ def complete_appointment(request, pk):
 @admin_required
 @permission_required('appointments.view_appointment', raise_exception=True)
 def appointment_list(request):
-    appointment_list = Appointment.objects.all().order_by('is_approved', '-date')
+    date_now = datetime.now()
+    appointment_list = Appointment.objects.all().order_by('-created_at')
     template_name = 'appointments/appointment_list.html'
-    context = {'appointment_list': appointment_list}
+    context = {'appointment_list': appointment_list, 'date_now': date_now}
     return render(request, template_name, context)
 
 

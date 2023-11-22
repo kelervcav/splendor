@@ -68,7 +68,7 @@ def patient_info(request, pk):
     transactions = Transaction.objects.filter(user=pk).order_by('-date_added')
     total_points = UserProfile.objects.filter(user=pk)
     redeemed_list = RedeemPoints.objects.filter(user=pk).order_by('-date_redeemed')
-    appointment_list = Appointment.objects.filter(user=pk).order_by('-created_at')[:5]
+    appointment_list = Appointment.objects.filter(user=pk).order_by('-created_at')
     date_now = datetime.now()
     template_name = 'patients/patient_info.html'
     context = {'patient_info': patient_info,
