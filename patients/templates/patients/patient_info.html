@@ -54,15 +54,18 @@
                 </div>
             </div>
             <div class="card-footer">
-                {% for patient in patient_info %} {% if date_now > patient.userprofile.account_expiry %}
-                <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-info" disabled>Add Transaction</button></a>
-                <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary" disabled>Edit</button></a>
+                {% for patient in patient_info %}
+                {% if date_now > patient.userprofile.account_expiry %}
+                    <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-info" disabled>Add Transaction</button></a>
+                    <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary" disabled>Edit</button></a>
                 {% else %}
                 <a href="{% url 'transactions:transaction_create' patient.id %}"><button class="btn btn-info">Add Transaction</button></a>
                 <a href="{% url 'patients:patient_edit' patient.id %}"><button class="btn btn-primary">Edit</button></a>
-                {% endif %} {% if date_now > patient.userprofile.account_expiry %}
-                <a href="{% url 'patients:patient_renewal' patient.id %}"><button class="btn btn-primary float-right">Renew Membership</button></a>
-                {% endif %} {% endfor %}
+                {% endif %}
+                {% if date_now > patient.userprofile.account_expiry %}
+                    <a href="{% url 'patients:patient_renewal' patient.id %}"><button class="btn btn-primary float-right">Renew Membership</button></a>
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -70,85 +73,87 @@
 </section>
 <!-- /.content -->
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card card-primary card-outline">
-                    <div class="card-header">
-                        <h3 class="card-title">Transaction List</h3>
-                    </div>
-                    <div class="card-body">
-                        <table id="transaction-table" class="table table-striped projects">
-                            <thead>
-                                <tr>
-                                    <th>REFERENCE ID</th>
-                                    <th>CODE</th>
-                                    <th>AMOUNT</th>
-                                    <th>POINTS</th>
-                                    <th>DATE</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for transact in transactions %}
-                                <tr>
-                                    <td>{{ transact.reference_id }}</td>
-                                    <td>
-                                        {% if transact.offer_code %} {{ transact.offer_code|upper }} {% else %}
-                                        <h6>_</h6>
-                                        {% endif %}
-                                    </td>
-                                    {% if transact.offer_code %}
-                                    <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>
-                                    {% else %}
-                                        {% if transact.redeempoints_set.all %}
-                                        <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>
-                                        {% else %}
-                                        <td><span>&#8369;</span>{{ transact.price_amount }}</td>
-                                        {% endif %}
-                                    {% endif %}
-                                    <td>{{ transact.points }}</td>
-                                    <td>{{ transact.date_added|date:"d M Y G:i" }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+<!--<section class="content">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-6">-->
+<!--                <div class="card card-primary card-outline">-->
+<!--                    <div class="card-header">-->
+<!--                        <h3 class="card-title">Transaction List</h3>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <table id="transaction-table" class="table table-striped projects">-->
+<!--                            <thead>-->
+<!--                                <tr>-->
+<!--                                    <th>REFERENCE ID</th>-->
+<!--                                    <th>CODE</th>-->
+<!--                                    <th>AMOUNT</th>-->
+<!--                                    <th>POINTS</th>-->
+<!--                                    <th>DATE</th>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                {% for transact in transactions %}-->
+<!--                                <tr>-->
+<!--                                    <td>{{ transact.reference_id }}</td>-->
+<!--                                    <td>-->
+<!--                                        {% if transact.offer_code %}-->
+<!--                                            {{ transact.offer_code|upper }}-->
+<!--                                        {% else %}-->
+<!--                                        <h6>_</h6>-->
+<!--                                        {% endif %}-->
+<!--                                    </td>-->
+<!--                                    {% if transact.offer_code %}-->
+<!--                                    <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>-->
+<!--                                    {% else %}-->
+<!--                                        {% if transact.redeempoints_set.all %}-->
+<!--                                        <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>-->
+<!--                                        {% else %}-->
+<!--                                        <td><span>&#8369;</span>{{ transact.price_amount }}</td>-->
+<!--                                        {% endif %}-->
+<!--                                    {% endif %}-->
+<!--                                    <td>{{ transact.points }}</td>-->
+<!--                                    <td>{{ transact.date_added|date:"d M Y G:i" }}</td>-->
+<!--                                </tr>-->
+<!--                                {% endfor %}-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="col-md-6">
-                <div class="card card-primary card-outline">
-                    <div class="card-header">
-                        <h3 class="card-title">Redeemed Points List</h3>
-                    </div>
-                    <div class="card-body">
-                        <table id="redeemed_points-table" class="table table-striped projects">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>POINTS</th>
-                                    <th>DATE REDEEMED</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for redeem in redeemed_list %}
-                                <tr>
-                                    <th>{{ redeem.id }}</th>
-                                    <td>{{ redeem.redeemed_points|floatformat:2 }}</td>
-                                    <td>{{ redeem.date_redeemed|date:"d M Y G:i" }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.container-fluid -->
-</section>
-<!-- /.content -->
+<!--            <div class="col-md-6">-->
+<!--                <div class="card card-primary card-outline">-->
+<!--                    <div class="card-header">-->
+<!--                        <h3 class="card-title">Redeemed Points List</h3>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <table id="redeemed_points-table" class="table table-striped projects">-->
+<!--                            <thead>-->
+<!--                                <tr>-->
+<!--                                    <th>ID</th>-->
+<!--                                    <th>POINTS</th>-->
+<!--                                    <th>DATE REDEEMED</th>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                {% for redeem in redeemed_list %}-->
+<!--                                <tr>-->
+<!--                                    <th>{{ redeem.id }}</th>-->
+<!--                                    <td>{{ redeem.redeemed_points|floatformat:2 }}</td>-->
+<!--                                    <td>{{ redeem.date_redeemed|date:"d M Y G:i" }}</td>-->
+<!--                                </tr>-->
+<!--                                {% endfor %}-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; /.container-fluid &ndash;&gt;-->
+<!--</section>-->
+<!--&lt;!&ndash; /.content &ndash;&gt;-->
 
 <section class="content">
     <div class="container-fluid">
@@ -158,7 +163,7 @@
                     <h3 class="card-title">Transaction List</h3>
                 </div>
                 <div class="card-body">
-                    <table id="table" class="table table-striped projects">
+                    <table id="transaction-table" class="table table-striped projects">
                         <thead>
                             <tr>
                                 <th>REFERENCE ID</th>
@@ -177,6 +182,16 @@
                                 <td>{{ transact.reference_id }}</td>
                                  {% if transact.offer_code %}
                                     <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>
+                                    <td>
+                                        {% if transact.offer_code %}
+                                            {% if transact.redeempoints_set.all %}
+                                                {{ transact.redeempoints_set.first.redeemed_points }}
+                                            {% else %}
+                                                No Points Redeemed
+                                            {% endif %}
+
+                                        {% endif %}
+                                    </td>
                                  {% else %}
                                     {% if transact.redeempoints_set.all %}
                                         <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>
@@ -258,20 +273,20 @@
     });
 </script>
 
-<script>
-    $(function () {
-        $("#redeemed_points-table").DataTable({
-            paging: true,
-            lengthChange: false,
-            searching: true,
-            ordering: false,
-            info: true,
-            autoWidth: false,
-            responsive: true,
-            pageLength: 5,
-        });
-    });
-</script>
+<!--<script>-->
+<!--    $(function () {-->
+<!--        $("#redeemed_points-table").DataTable({-->
+<!--            paging: true,-->
+<!--            lengthChange: false,-->
+<!--            searching: true,-->
+<!--            ordering: false,-->
+<!--            info: true,-->
+<!--            autoWidth: false,-->
+<!--            responsive: true,-->
+<!--            pageLength: 5,-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 
 <script>
     $(function () {

@@ -103,9 +103,8 @@
                                     <td>{{ appointment.treatment }}</td>
                                     <td>{{ appointment.date }}</td>
                                     <td>{{ appointment.time }}</td>
-                                    <td> {% if appointment.is_completed %}
-                                        <span class="badge bg-info">Completed</span>
-                                    {% elif appointment.is_approved %}
+                                    <td>
+                                    {% if appointment.is_approved %}
                                         <span class="badge bg-success">Approved</span>
                                     {% else %}
                                         <span class="badge bg-danger">Pending</span>

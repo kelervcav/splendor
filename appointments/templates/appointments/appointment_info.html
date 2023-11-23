@@ -28,7 +28,30 @@
 
                         <div class="text-right pt-2 pb-1">
                              {% if appointment.is_approved %}
-                                <p style="color: #25993F"><i class="far fa-check-circle"></i> Appointment approved</p>
+                                <h6 style="color: #28A745"><i class="far fa-check-circle"></i> Appointment approved</h6>
+                                <i class="fas fa-info-circle" data-toggle="modal" data-target="#bookInfo""></i>
+
+                                <div class="modal fade text-left" id="bookInfo" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <h6> Appointment Terms and Condition: <br> <br>
+                                                    Your appointmnet is approved. Stay Safe!
+                                                    <br> <br>
+                                                    1. Treatments must be still upon the approval and assessment of our skin specialist and/or dermatologist.
+                                                    <br><br>
+                                                    2. We also highly advise you to be at the clinic 5 minutes before your scheduled time.
+                                                    If you haven't arrived 15 minutes after your scheduled time, it is considered late and/or canceled.
+                                                    <br>
+                                                    The skin specialist can now accommodate walk-ins at this time.
+                                                </h6>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
                              {% else %}
                                 <h6 style="color: #fd7012"><i class="far fa-clock"></i> Pending</h6>
                              {% endif %}
