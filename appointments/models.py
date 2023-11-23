@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from treatments.models import Treatment
 from user_profile.models import User
-from datetime import time
+from datetime import time, datetime
 
 
 # Create your models here.
@@ -26,10 +26,11 @@ class Appointment(models.Model):
 
     time = models.TimeField(choices=TIME_CHOICES)
     treatment = models.ForeignKey(Treatment, on_delete=models.DO_NOTHING)
-    created_at = models.DateTimeField(default=timezone.now())
+    created_at = models.DateTimeField(default=datetime.now())
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
+    notes = models.TextField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.date} {self.time}"

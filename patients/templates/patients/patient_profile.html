@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6 pl-0">
-                <p style="font-size: 27px;">Profile</p>
+                <h4>Profile</h4>
             </div>
         </div>
     </div>
@@ -20,19 +20,18 @@
         <div class="form-group row">
             <div class="col-md-6">
                 <ul class="list-group list-group mb-3">
-                    <li class="list-group-item"><b>First Name</b><a class="float-right">{{ patient_info.first_name }}</a></li>
-                    <li class="list-group-item"><b>Last Name</b><a class="float-right"> {{ patient.last_name }}</a></li>
-                    <li class="list-group-item"><b>Gender</b><a class="float-right">{{ patient_info.userprofile.gender }}</a></li>
-                    <li class="list-group-item"><b>Birthdate</b><a class="float-right">{{ patient_info.date_of_birth|date:"d M Y" }}</a></li>
-                    <li class="list-group-item"><b>Mobile</b><a class="float-right">{{ patient_info.mobile }}</a></li>
-                    <li class="list-group-item"><b>Email</b><a class="float-right">{{ patient_info.email }}</a></li>
-                    <li class="list-group-item"><b>Address</b><a class="float-right">{{ patient_info.userprofile.address }}</a></li>
+                    <li class="list-group-item">Name<h6 class="float-right profile">{{ patient_info.first_name }} {{ patient.last_name }}</h6></li>
+                    <li class="list-group-item">Gender<h6 class="float-right profile">{{ patient_info.userprofile.gender }}</h6></li>
+                    <li class="list-group-item">Birthdate<h6 class="float-right profile">{{ patient_info.date_of_birth|date:"d M Y" }}</h6></li>
+                    <li class="list-group-item">Mobile<h6 class="float-right profile">{{ patient_info.mobile }}</h6></li>
+                    <li class="list-group-item">Email<h6 class="float-right profile">{{ patient_info.email }}</h6></li>
+                    <li class="list-group-item">Address<h6 class="float-right profile">{{ patient_info.userprofile.address }}</h6></li>
                 </ul>
             </div>
 
             <div class="col-md-6 patient-qr">
-                <div class="card">
-                    <div class="card-body">
+                <div class="">
+                    <div class="">
                         <img src="{{ MEDIA_URL }}{{ patient_info.qr_code.url }}" height="300px" alt="QR Code Image" data-toggle="modal" data-target="#qrModal" />
                     </div>
                     <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">

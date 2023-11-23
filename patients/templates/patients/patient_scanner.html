@@ -49,14 +49,12 @@ function success(result) {
     window.location.href = result;
 
     scanner.clear();
-    // Clears scanning instance
-
     document.getElementById('reader').remove();
 }
-
 function error(err) {
     console.error(err);
     // Prints any errors to the console
 }
 </script>
+
 {% endblock script %}

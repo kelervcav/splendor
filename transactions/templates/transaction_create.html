@@ -22,13 +22,6 @@
             <div class="card card-outline card-info">
                <div class="card-header">
                   <h3 class="card-title">  Add Transaction</h3>
-                  <div class="card-tools">
-                     {% if users.userprofile.total_points > 0 %}
-                        <a href="{% url 'redeem_points:redeem_points' users.id %}" class="btn btn-sm btn-block bg-gradient-success">
-                           Redeem Points
-                        </a>
-                     {% endif %}
-                  </div>
                </div>
                <!-- /.card-header -->
                <form class="form-horizontal" method="POST" novalidate>
@@ -51,10 +44,19 @@
                      <div class="form-group">
                         <label for="" class="col-md-2 control-label">Offer Code:</label>
                         <div class="col-md-4">
-                           <input type="text" name="offer_code" id="offer_code" value="{{ offer_code|upper }}" class="form-control" required>
+                           <input type="text" name="offer_code" id="offer_code" value="{{ offer_code|upper }}" class="form-control">
                            <span class="help-block">{{ form.offer_code.errors }}</span>
                         </div>
                      </div>
+                     {% if users.userprofile.total_points > 0 %}
+                      <div class="form-group">
+                        <label for="" class="col-md-2 control-label">Redeem Points:</label>
+                        <div class="col-md-4">
+                           <input type="text" id="redeemed_points" name="redeemed_points" class="form-control" placeholder='{{ users.userprofile.total_points|stringformat:"d" }}'>
+                           <span class="help-block">{{ redeem_form.redeemed_points.errors }}</span>
+                        </div>
+                     </div>
+                     {% endif %}
                   </div>
                   <div class="card-footer">
                      <button type="submit" class="btn btn-info">Save</button>
@@ -74,5 +76,4 @@
 {% endblock content %}
 
 {% block script %}
-
 {% endblock script %}

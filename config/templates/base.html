@@ -87,5 +87,35 @@
     }, 5000)
 </script>
 
+<script>
+    Pusher.logToConsole = true;
+    var pusher = new Pusher('35f3c6a202ac29846649', {
+      cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('splendor-channel');
+    channel.bind('my-event', function(data) {
+      new Notify ({
+        status: 'info',
+        title: 'New Appointment',
+        text: '<a href="{% url "appointments:appointment_list" %}">' + data.message + '</a>',
+        effect: 'fade',
+        speed: 300,
+        customClass: '',
+        customIcon: '',
+        showIcon: true,
+        showCloseButton: true,
+        autoclose: false,
+        autotimeout: 3000,
+        gap: 20,
+        distance: 20,
+        type: 1,
+        position: 'left bottom'
+      })
+    });
+
+</script>
+
+
 </body>
 </html>

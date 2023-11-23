@@ -26,15 +26,16 @@
                </div>
                <!-- /.card-header -->
                <div class="card-body">
-                  <table id="users-table" class="table table-sm table-bordered table-hover">
+                  <table id="appointment-table" class="table table-sm table-bordered table-hover">
                      <thead>
                         <tr>
-                           <th>PATIENT</th>
-                           <th>TREATMENT</th>
-                           <th>DATE</th>
-                           <th>TIME</th>
-                           <th>STATUS</th>
-                           <th>ACTIONS</th>
+                            <th>PATIENT</th>
+                            <th>TREATMENT</th>
+                            <th>DATE</th>
+                            <th>TIME</th>
+                            <th>NOTES</th>
+                            <th>STATUS</th>
+                            <th>ACTIONS</th>
                         </tr>
                      </thead>
 
@@ -45,15 +46,28 @@
                                <td>{{ appointment.treatment }}</td>
                                <td>{{ appointment.date|date:"D, d M Y" }}</td>
                                <td>{{ appointment.time }}</td>
-                               <td>{% if appointment.is_approved %}
+                               <td>{{ appointment.notes }}</td>
+                               <td>
+                                    {% if appointment.is_approved %}
                                         <span class="badge bg-success">Approved</span>
-                                   {% else %}
+                                    {% else %}
                                         <span class="badge bg-danger">Pending</span>
-                                   {% endif %}
+                                    {% endif %}
                                </td>
                                <td>
-                                   <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
-                                       <button type="submit" class="btn btn-success btn-sm">Approve</button></a>
+                                   {% if not appointment.is_approved %}
+                                        {% if date_now.date == appointment.date %}
+                                            {% if date_now.time < appointment.time %}
+                                                <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
+                                                    <button type="button" class="btn btn-success btn-sm">Approve</button>
+                                                </a>
+                                            {% endif %}
+                                        {% else %}
+                                            <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
+                                                <button type="button" class="btn btn-success btn-sm">Approve</button>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
 								</td>
                            </tr>
                         {% endfor %}
@@ -68,3 +82,21 @@
 </section>
 
 {% endblock %}
+
+
+{% block script %}
+ <script>
+      $(function () {
+        $('#appointment-table').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": false,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+          "pageLength": 10,
+        });
+      });
+    </script>
+{% endblock script %}
