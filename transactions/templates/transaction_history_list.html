@@ -15,7 +15,7 @@
 
 <div class="card card-outline card-info">
     <div class="card-header ">
-          <h3 class="card-title">Transaction History</h3>
+          <h3 class="card-title">Points Transaction History</h3>
           <div class="card-tools">
              <a href="{% url 'redeem_points:redeemed_list' %}" class="btn btn-sm btn-block bg-gradient-info">
                 Points Redeemed
@@ -37,7 +37,7 @@
                          </div>
                          <div class="col-6">
                              <h6 class="text-right">{{ transact.date_added|date:"d M Y G:i"}}</h6>
-                             <h6 class= "text-right"><b>{{transact.points}}</b></h6>
+                             <h6 class= "text-right"><b>+{{transact.points}}</b></h6>
                          </div>
                      </div>
                 </li>

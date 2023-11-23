@@ -25,10 +25,11 @@
                      <li class="list-group-item">
                          <div class="row">
                              <div class="col-6">
-                                 <h6>{{ redeem.date_redeemed|date:"d M Y G:i"  }}</h6>
+                                <h6>{{redeem.transaction.reference_id }}</h6>
                              </div>
                              <div class="col-6">
-                                 <h6 class= "text-right">{{ redeem.redeemed_points|floatformat:2 }}</h6>
+                                 <h6  class= "text-right">{{ redeem.date_redeemed|date:"d M Y G:i"  }}</h6>
+                                 <h6 class= "text-right"><b>-{{redeem.redeemed_points|floatformat:2 }}</b></h6>
                              </div>
 
                          </div>
@@ -42,3 +43,21 @@
     <div class="card-footer"></div>
 </div>
 {% endblock %}
+
+
+{% block script %}
+    <script>
+      $(function () {
+        $('#redeemed-table').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": false,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+          "pageLength": 10,
+        });
+      });
+    </script>
+{% endblock script %}
