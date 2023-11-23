@@ -17,9 +17,10 @@
                     <div class="icon">
                         <i class="fas fa-hand-holding-heart"></i>
                     </div>
-                    {% if perms.treatments.change_treatment %}
+
                     <a href="{% url 'treatments:service_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    {% endif %}
+
+
                 </div>
             </div>
             <!-- ./col -->
@@ -130,8 +131,7 @@
                 <div class="card card-outline card-info">
                     <div class="card-header">
                         <h3 class="card-title">Most Chosen Treatment by Appointment</h3>
-<!--                        <button class="btn btn-outline-info btn-sm" id="btn-download" style="float:right">-->
-<!--                            <i class="fas fa-arrow-circle-down"></i> Download</button>-->
+
                     </div>
                     <div class="card-body">
                         <canvas id="chart"></canvas>
@@ -190,14 +190,6 @@
 var image = myChart.toBase64Image();
 console.log(image);
 
-<!--document.getElementById('btn-download').onclick = function() {-->
-<!--  // Trigger the download-->
-<!--  var a = document.createElement('a');-->
-<!--  a.href = myChart.toBase64Image();-->
-<!--  var now = new Date();-->
-<!--  var reports = 'reports_' + now.getFullYear() + (now.getMonth() + 1) + now.getDate() + '_' + now.getHours() + now.getMinutes() + now.getSeconds() + '.png';-->
-<!--  a.download = reports;-->
-<!--  a.click();-->
-<!--}-->
+
 </script>
 {% endblock script %}
