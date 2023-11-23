@@ -44,20 +44,3 @@
 </div>
 {% endblock %}
 
-
-{% block script %}
-    <script>
-      $(function () {
-        $('#redeemed-table').DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": true,
-          "ordering": false,
-          "info": true,
-          "autoWidth": false,
-          "responsive": true,
-          "pageLength": 10,
-        });
-      });
-    </script>
-{% endblock script %}
