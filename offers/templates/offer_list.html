@@ -33,7 +33,7 @@
                </div>
                <!-- /.card-header -->
                <div class="card-body">
-                  <table id="users-table" class="table table-sm table-bordered table-hover">
+                  <table id="offer-table" class="table table-sm table-bordered table-hover">
                      <thead>
                         <tr>
                             <th>ID</th>
@@ -80,3 +80,20 @@
 </section>
 
 {% endblock %}
+
+{% block script %}
+    <script>
+      $(function () {
+        $('#offer-table').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": false,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+          "pageLength": 10,
+        });
+      });
+    </script>
+{% endblock script %}
