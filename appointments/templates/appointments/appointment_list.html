@@ -56,12 +56,10 @@
                                </td>
                                <td>
                                    {% if not appointment.is_approved %}
-                                        {% if date_now.date == appointment.date %}
-                                            {% if date_now.time < appointment.time %}
-                                                <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
-                                                    <button type="button" class="btn btn-success btn-sm">Approve</button>
-                                                </a>
-                                            {% endif %}
+                                        {% if date_now.date > appointment.date and date_now.time <= appointment.time %}
+                                            <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
+                                                <button type="button" class="btn btn-success btn-sm" disabled>Approve</button>
+                                            </a>
                                         {% else %}
                                             <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
                                                 <button type="button" class="btn btn-success btn-sm">Approve</button>

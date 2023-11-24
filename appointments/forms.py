@@ -40,31 +40,32 @@ class BookingAppointmentForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         selected_time = cleaned_data.get('time')
-        selected_date = self.cleaned_data.get('date')
+        selected_date = cleaned_data.get('date')
 
         if selected_date:
             current_date = timezone.now().date()
             if selected_date < current_date:
                 self.add_error('date', self.fields['date'].error_messages['invalid_date'])
 
-            if selected_time != '--:-- --':
-                selected_datetime = datetime.combine(selected_date, datetime.strptime(selected_time, '%H:%M:%S').time())
-                current_datetime = timezone.now()
+            else:
+                if selected_time != '--:-- --':
+                    selected_datetime = datetime.combine(selected_date, datetime.strptime(selected_time, '%H:%M:%S').time())
+                    current_datetime = timezone.now()
 
-                if selected_datetime <= current_datetime:
-                    self.add_error('time', self.fields['time'].error_messages['time_in_past'])
+                    if selected_datetime <= current_datetime:
+                        self.add_error('time', self.fields['time'].error_messages['time_in_past'])
 
-                else:
-                    # Check if the maximum appointments for the selected date and time are reached
-                    max_appointments = 5
-                    if selected_date and selected_time:
-                        existing_appointments = Appointment.objects.filter(date=selected_date,
-                                                                           time=selected_time).count()
+                    else:
+                        # Check if the maximum appointments for the selected date and time are reached
+                        max_appointments = 5
+                        if selected_date and selected_time:
+                            existing_appointments = Appointment.objects.filter(date=selected_date,
+                                                                               time=selected_time).count()
 
-                        if existing_appointments >= max_appointments:
-                            formatted_time = selected_datetime.strftime('%I:%M %p')
-                            self.add_error('time',
-                                           f'Maximum appointments for {selected_date} at {formatted_time} have been reached.')
+                            if existing_appointments >= max_appointments:
+                                formatted_time = selected_datetime.strftime('%I:%M %p')
+                                self.add_error('time',
+                                               f'Maximum appointments for {selected_date} at {formatted_time} have been reached.')
 
         return cleaned_data
 
