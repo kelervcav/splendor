@@ -37,12 +37,12 @@ def appointment_create(request):
             appointment.save()
             appointment_date = form.cleaned_data['date']
             appointment_time = form.cleaned_data['time']
-
+            # pusher notification
             appointment_datetime = datetime.combine(appointment_date, datetime.strptime(appointment_time, '%H:%M:%S').time())
             formatted_datetime = appointment_datetime.strftime("%m/%d/%Y at %I:%M %p")
             data = {'message': f"{appointment.user.first_name} booked an appointment for {formatted_datetime}"}
             pusher.trigger('splendor-channel', 'my-event', data)
-            print(appointment_datetime)
+
             return redirect('appointments:appointment_info')
     context = {'form': form}
     return render(request, 'appointments/appointment_create.html', context)
