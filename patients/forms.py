@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.forms import (
     UserCreationForm, UserChangeForm, AdminPasswordChangeForm
 )
+from django.utils import timezone
 
 from user_profile.models import UserProfile
 
@@ -61,6 +62,17 @@ class RegistrationForm(forms.ModelForm):
                    'class': 'form-control'},
         )
     )
+
+    def clean_date_of_birth(self):
+        current_date = timezone.now()
+        date_of_birth = self.cleaned_data.get('date_of_birth')
+        if date_of_birth:
+            check_age = current_date.year - date_of_birth.year - ((current_date.month, current_date.day) < (date_of_birth.month, date_of_birth.day))
+
+            if check_age < 18:
+                raise forms.ValidationError("Patient must be 18 and above.")
+
+        return date_of_birth
 
     is_active = forms.BooleanField(
         required=False,
