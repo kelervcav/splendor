@@ -77,7 +77,6 @@ class TreatmentForm(ModelForm):
                 'class': 'form-control'}))
 
     type = forms.ModelChoiceField(
-        required=False,
         queryset=PriceType.objects.exclude(is_active=False),
         widget=forms.Select(
             attrs={
