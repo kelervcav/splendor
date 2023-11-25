@@ -21,7 +21,7 @@ def dashboard(request):
     appointment_count = Appointment.objects.filter(date=now.date(), is_approved=True).count()
 
     # treatment_analytics
-    most_chosen_treatment = Appointment.objects.values('treatment').annotate(treatment_count=Count('treatment'))
+    most_chosen_treatment = Appointment.objects.filter(is_approved=True).values('treatment').annotate(treatment_count=Count('treatment'))
 
     treatment_data = []
     treatment_label = []
