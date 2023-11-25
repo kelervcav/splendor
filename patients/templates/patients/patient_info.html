@@ -155,6 +155,8 @@
                                 <th>TREATMENT</th>
                                 <th>DATE</th>
                                 <th>TIME</th>
+                                <th>STATUS</th>
+                                <th>ACTION</th>
                             </tr>
                         </thead>
 
@@ -164,6 +166,26 @@
                                 <td>{{ appointment.treatment }}</td>
                                 <td>{{ appointment.date|date:"d M Y" }}</td>
                                 <td>{{ appointment.time }}</td>
+                                <td>
+                                    {% if appointment.is_approved %}
+                                        <span class="badge bg-success">Approved</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Pending</span>
+                                    {% endif %}
+                               </td>
+                               <td>
+                                   {% if not appointment.is_approved %}
+                                        {% if date_now.date > appointment.date and date_now.time <= appointment.time %}
+                                            <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
+                                                <button type="button" class="btn btn-success btn-sm" disabled>Approve</button>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
+                                                <button type="button" class="btn btn-success btn-sm">Approve</button>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+								</td>
                             </tr>
                             {% endfor %}
                         </tbody>

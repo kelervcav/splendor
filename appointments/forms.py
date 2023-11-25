@@ -12,7 +12,7 @@ from .models import Appointment
 
 class BookingAppointmentForm(forms.ModelForm):
     treatment = forms.ModelChoiceField(
-        queryset=Treatment.objects.all(),
+        queryset=Treatment.objects.filter(is_active=True),
         widget=forms.Select(
             attrs={
                 'class': 'form-control'}))
