@@ -24,7 +24,7 @@ def process_admin_login(request):
         if user is not None:
             if not user.is_patient and user.is_active:
                 login(request, user)
-                return render(request, 'dashboard.html')
+                return render(request, 'dashboard:main')
             else:
                 messages.error(request, "Sorry, you are not allowed to access this page.")
                 return render(request, 'auth_login.html')
