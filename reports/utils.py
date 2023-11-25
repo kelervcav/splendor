@@ -8,7 +8,7 @@ from treatments.models import Treatment
 def most_availed_treatment(date_from, date_to):
     result = (
         Appointment.objects
-        .filter(date__range=[date_from, date_to])
+        .filter(date__range=[date_from, date_to], is_approved=True)
         .values('treatment')
         .annotate(count=Count('treatment'))
     )
