@@ -92,6 +92,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             ("renew_membership", "Can disable patient"),
             ("reset_password", "Can reset patient password"),
             ("generate_password", "Can generate patient password"),
+            ("view_analytics", "Can view analytics"),
 
         ]
 
