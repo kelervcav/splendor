@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 from offers.models import Offer
 from redeem_points.models import RedeemPoints
+from treatments.models import Service
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
 from .forms import TransactionForm, RedeemPointsForm
@@ -105,6 +106,7 @@ def transaction_create(request, pk):
 def transaction_history(request):
     user = request.user
     transaction_list = Transaction.objects.filter(user=user).order_by('-date_added')
+    services = Service.objects.filter(is_active=True)
     template_name = 'transaction_history_list.html'
-    context = {'transaction_list': transaction_list, 'users': user}
+    context = {'transaction_list': transaction_list, 'services': services}
     return render(request, template_name, context)

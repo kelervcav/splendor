@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from offers.forms import OfferForm
 from offers.models import Offer
+from treatments.models import Service
 from user_profile.decorators import admin_required
 
 
@@ -63,9 +64,10 @@ def offer_disable(request, pk):
 # For patient
 def offer_list_loyalty(request):
     offers = Offer.objects.filter(is_offer_active=True)
+    services = Service.objects.filter(is_active=True)
     date_now = datetime.now()
     template_name = 'offer_list_loyalty.html'
-    context = {'offers': offers, 'date_now': date_now}
+    context = {'offers': offers, 'date_now': date_now, 'services': services}
     return render(request, template_name, context)
 
 

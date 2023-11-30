@@ -2,7 +2,7 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.forms import ModelForm
 
-from .models import Service, Treatment, TreatmentArea, PriceType
+from .models import Service, Treatment
 
 
 class ServiceForm(ModelForm):
@@ -62,25 +62,42 @@ class TreatmentForm(ModelForm):
         ],
     )
 
-    # description = forms.CharField(
-    #     required=False,
-    #     widget=forms.Textarea(
-    #         attrs={
-    #             'class': 'form-control',
-    #             'rows': 5,
-    #         }))
-
-    area = forms.ModelChoiceField(
-        queryset=TreatmentArea.objects.exclude(is_active=False),
-        widget=forms.Select(
+    description = forms.CharField(
+        required=False,
+        widget=forms.Textarea(
             attrs={
-                'class': 'form-control'}))
+                'class': 'form-control',
+                'rows': 5,
+            }))
 
-    type = forms.ModelChoiceField(
-        queryset=PriceType.objects.exclude(is_active=False),
-        widget=forms.Select(
+    area = forms.CharField(
+         widget=forms.TextInput(
             attrs={
-                'class': 'form-control'}))
+                'class': 'form-control'}),
+         validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z\s]*$',
+                message='Treatment area must be letters only'),
+         ],
+    )
+
+    type = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'}),
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z\s]*$',
+                message='Price type must be letters only'),
+        ],
+        )
+
+    price = forms.DecimalField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'}),
+    )
 
     is_active = forms.BooleanField(
         required=False,
@@ -97,61 +114,11 @@ class TreatmentForm(ModelForm):
         fields = [
             'service',
             'name',
+            'description',
             'area',
             'type',
+            'price',
             'is_active'
         ]
 
-
-class AreaForm(ModelForm):
-    area = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'}),
-        validators=[
-            RegexValidator(
-                regex=r'^[a-zA-Z\s]*$',
-                message='Treatment area must be letters only'),
-        ],
-    )
-
-    is_active = forms.BooleanField(
-        required=False,
-        widget=forms.CheckboxInput(
-            attrs={
-                'class': 'form-check-input',
-            }),
-        initial=True
-
-    )
-
-    class Meta:
-        model = TreatmentArea
-        fields = ['area', 'is_active']
-
-
-class TypeForm(ModelForm):
-    type = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'}),
-        validators=[
-            RegexValidator(
-                regex=r'^[a-zA-Z\s]*$',
-                message='Price type must be letters only'),
-        ],
-    )
-
-    is_active = forms.BooleanField(
-        required=False,
-        widget=forms.CheckboxInput(
-            attrs={
-                'class': 'form-check-input',
-            }),
-        initial=True
-    )
-
-    class Meta:
-        model = PriceType
-        fields = ['type', 'is_active']
 

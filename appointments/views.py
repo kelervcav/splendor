@@ -8,6 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from pusher import Pusher
 
+from treatments.models import Service
 from user_profile.decorators import admin_required
 from .forms import BookingAppointmentForm
 from .models import Appointment
@@ -28,6 +29,7 @@ pusher = Pusher(
 # for patients
 @login_required
 def appointment_create(request):
+    services = Service.objects.filter(is_active=True)
     form = BookingAppointmentForm()
     if request.method == 'POST':
         form = BookingAppointmentForm(request.POST or None)
@@ -44,7 +46,7 @@ def appointment_create(request):
             pusher.trigger('splendor-channel', 'my-event', data)
 
             return redirect('appointments:appointment_info')
-    context = {'form': form}
+    context = {'form': form, 'services': services}
     return render(request, 'appointments/appointment_create.html', context)
 
 
@@ -114,7 +116,8 @@ def appointment_list(request):
 def appointment_info(request):
     user = request.user
     appointment_info = Appointment.objects.filter(user=user).order_by('-created_at')
+    services = Service.objects.filter(is_active=True)
     template_name = 'appointments/appointment_info.html'
-    context = {'appointment_info': appointment_info, 'users': user}
+    context = {'appointment_info': appointment_info, 'services': services}
     return render(request, template_name, context)
 

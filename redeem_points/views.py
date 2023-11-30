@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from redeem_points.forms import RedeemPointsForm
 from redeem_points.models import RedeemPoints
+from treatments.models import Service
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
 
@@ -43,6 +44,7 @@ def redeem_points(request, pk):
 def redeemed_list(request):
     user = request.user
     redeemed_list = RedeemPoints.objects.filter(user=user).order_by('-date_redeemed')
+    services = Service.objects.filter(is_active=True)
     template_name = 'redeemed_list.html'
-    context = {'redeemed_list': redeemed_list}
+    context = {'redeemed_list': redeemed_list, 'services': services}
     return render(request, template_name, context)

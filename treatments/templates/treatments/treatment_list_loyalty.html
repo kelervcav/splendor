@@ -1,0 +1,57 @@
+{% extends 'customer_base.html' %} {% block title %} Treatment {% endblock %} {% block page_title %} Treatments {% endblock %} {% block content %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 pl-0">
+                <h4>Treatments</h4>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <div class="card card-outline card-info">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card-header">
+                    <h3 class="card-title">
+                        {% for service in services %}
+                            {{service.name}} Treatments
+                        {% endfor %}</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        {% for treatment in treatment_list %}
+                        <div class="col-12 col-md-4">
+                            <div class="card" style="height:280px">
+
+                                <div class="card-body pt-4">
+                                        <h3 style="text-align:center">{{ treatment.name }}</h3>
+                                        <h6 class="text-muted pt-2" style="text-align:center">{{ treatment.description }}</h6>
+                                        {% if treatment.type %}
+                                            <h6 class="text-muted pt-2" style="text-align:center">{{ treatment.area }} / {{ treatment.type }}</h6>
+                                        {% else %}
+                                            <h6 class="text-muted pt-2" style="text-align:center">{{ treatment.area }}</h6>
+                                        {% endif %}
+                                        <h6 class="text-muted pt-2" style="text-align:center">Php {{ treatment.price }}</h6>
+                                </div>
+
+                                <div class="card-footer">
+                                    <div style="text-align:center">
+                                        <a href="{% url 'appointments:appointment_create' %}" class="btn btn-sm btn-primary"> Book Now </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+{% endblock %}

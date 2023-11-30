@@ -39,8 +39,10 @@
 								<th>ID</th>
 								<th>SERVICE</th>
 								<th>TREATMENT NAME</th>
+								<th>DESCRIPTION</th>
 								<th>TREATMENT AREA</th>
 								<th>PRICING TYPE</th>
+								<th>PRICE</th>
 								<th>STATUS</th>
 								{% if perms.treatments.change_treatment %}
 								<th>ACTIONS</th>
@@ -54,8 +56,10 @@
 								<th>{{ treatment.id}}</th>
 								<td>{{ treatment.service }}</td>
 								<td>{{ treatment.name }}</td>
+								<td>{{ treatment.description }}</td>
 								<td>{{ treatment.area }}</td>
 								<td>{{ treatment.type }}</td>
+								<td>{{ treatment.price }}</td>
 								<td>{% if treatment.is_active %}
 										<span class="badge bg-success">Active</span>
 									{% else %}

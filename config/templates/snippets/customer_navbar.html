@@ -9,8 +9,17 @@
 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="{% url 'loyalty:home' %}" class="nav-link"><p style="font-size:15px">HOME</p></a>
-        </li>
+            <div class="dropdown">
+                <a class="nav-link" href="#" role="button" id="dropservices" data-toggle="dropdown" aria-expanded="false">
+                   <p style="font-size:15px">SERVICES</p>
+                </a>
+                {% for service in services %}
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                        <a class="dropdown-item" href="{% url 'treatments:services_list_loyalty' %}">{{ service.name }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+       </li>
         <li class="nav-item">
             <a href="{% url 'offers:offer_list_loyalty' %}" class="nav-link"><p style="font-size:15px">OFFERS</p></a>
         </li>
