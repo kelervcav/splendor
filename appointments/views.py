@@ -80,14 +80,14 @@ def appointment_edit(request, pk):
     return render(request, template_name, context)
 
 
-# @login_required
-# def appointment_delete(request, pk):
-#     set_appointment = get_object_or_404(Appointment, id=pk)
-#     set_appointment.is_deleted = True
-#     set_appointment.save()
-#     messages.success(request,
-#                      'Appointment has been marked as cancelled.')
-#     return redirect('appointments:appointment_list')
+@login_required
+def appointment_cancel(request, pk):
+    set_appointment = get_object_or_404(Appointment, id=pk)
+    set_appointment.is_cancel = True
+    set_appointment.save()
+    messages.success(request,
+                     'Appointment has been marked as canceled.')
+    return redirect('appointments:appointment_info')
 
 
 # for therapist

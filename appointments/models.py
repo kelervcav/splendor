@@ -31,6 +31,7 @@ class Appointment(models.Model):
     is_deleted = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
     notes = models.TextField(max_length=255, null=True, blank=True)
+    is_cancel = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.date} {self.time}"

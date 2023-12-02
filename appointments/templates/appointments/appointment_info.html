@@ -55,12 +55,17 @@
                                         </div>
                                     </div>
                                 </div>
+                             {% elif appointment.is_cancel %}
+                                <h6 style="color: #E60026"><i class="far fa-window-close"></i> Canceled</h6>
                              {% else %}
                                 <h6 style="color: #fd7012"><i class="far fa-clock"></i> Pending</h6>
                              {% endif %}
                         </div>
                          {% if not appointment.is_approved%}
-                         <a href="{% url 'appointments:appointment_edit' appointment.id %}"><button class="btn btn-primary btn-sm float-right">Edit</button></a>
+                            {% if not appointment.is_cancel %}
+                                <a href="{% url 'appointments:appointment_edit' appointment.id %}"><button class="btn btn-primary btn-sm float-right">Edit</button></a>
+                                <a href="{% url 'appointments:appointment_cancel' appointment.id %}"><button class="btn btn-danger btn-sm float-right">Cancel</button></a>
+                            {% endif %}
                          {% endif %}
                      </li>
 

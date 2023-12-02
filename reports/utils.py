@@ -18,3 +18,5 @@ def most_availed_treatment(date_from, date_to):
         treatment['treatment_name'] = treatment_instance.name
 
     return result
+
+
