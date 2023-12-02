@@ -1,8 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
-
-from user_profile.models import User
+from treatments.models import Treatment
 
 
 # Create your models here.
@@ -13,6 +12,7 @@ def file_size(value): # add this to some file where you can import it from
 
 
 class Offer(models.Model):
+    treatment = models.ForeignKey('treatments.Treatment', on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=100)
     code = models.CharField(unique=True, max_length=50)
     created_at = models.DateTimeField(default=timezone.now)
@@ -20,6 +20,7 @@ class Offer(models.Model):
     is_used = models.BooleanField(default=False)
     offer_image = models.ImageField(upload_to='images/', validators=[file_size])
     percentage_discount = models.IntegerField(default=None)
+
 
     def __str__(self):
         return {self.title}

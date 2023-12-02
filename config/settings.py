@@ -54,13 +54,13 @@ INSTALLED_APPS = [
 
     'user_profile',
     'dashboard',
+    'offers',
     'treatments',
     'patients',
     'appointments',
     'loyalty_app',
     'transactions',
     'redeem_points',
-    'offers',
     'reports'
 
 ]

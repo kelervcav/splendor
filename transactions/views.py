@@ -2,10 +2,11 @@ from _decimal import Decimal
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from offers.models import Offer
 from redeem_points.models import RedeemPoints
-from treatments.models import Service
+from treatments.models import Service, Treatment
 from user_profile.decorators import admin_required
 from user_profile.models import UserProfile
 from .forms import TransactionForm, RedeemPointsForm

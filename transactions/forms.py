@@ -2,15 +2,20 @@ from django import forms
 from django.forms import ModelForm
 
 from redeem_points.models import RedeemPoints
+from treatments.models import Treatment
 from .models import Transaction
 from offers.models import Offer
 
 
 class TransactionForm(ModelForm):
-    reference_id = forms.CharField(
-        widget=forms.TextInput(
+    treatment = forms.ModelChoiceField(
+        queryset=Treatment.objects.exclude(is_active=False),
+        widget=forms.Select(
             attrs={
                 'class': 'form-control'}),
+        error_messages={
+            'required': 'Please select a service.',
+        },
     )
 
     price_amount = forms.DecimalField(
@@ -38,7 +43,7 @@ class TransactionForm(ModelForm):
 
     class Meta:
         model = Transaction
-        fields = ['reference_id', 'price_amount', 'offer_code']
+        fields = ['treatment', 'price_amount', 'offer_code']
 
 
 class RedeemPointsForm(ModelForm):

@@ -17,14 +17,6 @@ class ServiceForm(ModelForm):
         ],
     )
 
-    # description = forms.CharField(
-    #     required=False,
-    #     widget=forms.Textarea(
-    #         attrs={
-    #             'class': 'form-control',
-    #             'rows': 5,
-    #         }))
-
     is_active = forms.BooleanField(
         required=False,
         widget=forms.CheckboxInput(
