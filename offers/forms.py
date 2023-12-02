@@ -51,6 +51,7 @@ class OfferForm(ModelForm):
     class Meta:
         model = Offer
         fields = ['title',
+                  'treatment',
                   'code',
                   'percentage_discount',
                   'offer_image',

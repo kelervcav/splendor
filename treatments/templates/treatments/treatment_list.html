@@ -56,9 +56,19 @@
 								<th>{{ treatment.id}}</th>
 								<td>{{ treatment.service }}</td>
 								<td>{{ treatment.name }}</td>
-								<td>{{ treatment.description }}</td>
+								<td>{% if treatment.description %}
+										{{ treatment.description }}
+									{% else %}
+										<p>_</p>
+									{% endif %}
+								</td>
 								<td>{{ treatment.area }}</td>
-								<td>{{ treatment.type }}</td>
+								<td>{% if treatment.type %}
+										{{ treatment.type }}
+									{% else %}
+										<p>_</p>
+									{% endif %}
+								</td>
 								<td>{{ treatment.price }}</td>
 								<td>{% if treatment.is_active %}
 										<span class="badge bg-success">Active</span>

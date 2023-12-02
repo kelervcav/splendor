@@ -51,9 +51,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def set_custom_password(self):
         surname = self.last_name.lower()
-        underscore = '_'
         birthdate = self.date_of_birth.strftime('%Y%m%d')
-        custom_password = f"{surname}{underscore}{birthdate}"
+        custom_password = f"{surname}{birthdate}"
         self.set_password(custom_password)
         self.save()
 

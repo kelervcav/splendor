@@ -39,6 +39,7 @@ class BookingAppointmentForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        user = cleaned_data.get('user')
         selected_time = cleaned_data.get('time')
         selected_date = cleaned_data.get('date')
 
@@ -56,6 +57,7 @@ class BookingAppointmentForm(forms.ModelForm):
                         self.add_error('time', self.fields['time'].error_messages['time_in_past'])
 
                     else:
+
                         # Check if the maximum appointments for the selected date and time are reached
                         max_appointments = 5
                         if selected_date and selected_time:

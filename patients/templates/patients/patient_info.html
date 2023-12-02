@@ -85,7 +85,7 @@
                     <table id="transaction-table" class="table table-striped projects">
                         <thead>
                             <tr>
-                                <th>REFERENCE ID</th>
+                                <th>TREATMENT</th>
                                 <th>AMOUNT</th>
                                 <th>POINTS REDEEMED</th>
                                 <th>CODE</th>
@@ -98,7 +98,7 @@
                         <tbody>
                          {% for transact in transactions %}
                             <tr>
-                                <td>{{ transact.reference_id }}</td>
+                                <td>{{ transact.treatment }}</td>
                                  {% if transact.offer_code %}
                                     <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>
                                     <td>
