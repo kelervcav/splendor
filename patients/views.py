@@ -54,6 +54,11 @@ def patient_create(request):
         surname = registration.last_name.lower()
         birthdate = registration.date_of_birth.strftime('%Y%m%d')
 
+        phone_number = registration.mobile
+        formatted_phone_number = f"+63{phone_number[1:]}"
+        message_body = f"Your username is {registration.mobile} and {surname}{birthdate} for password."
+        send_sms(formatted_phone_number, message_body)
+
         messages.success(request, 'Patient registered successfully.')
         return redirect('patients:patient_list')
 
