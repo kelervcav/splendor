@@ -16,23 +16,27 @@
         <div class="col-12">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">List of Patients with Available Points</h3>
+                    <h3 class="card-title">List of Canceled Appointment</h3>
                 </div>
                 <!-- /.card-header -->
                   <div class="card-body">
                       <h6>Date Range: {{ form.cleaned_data.date_from }} to {{ form.cleaned_data.date_to }}</h6>
-                  <table id="patient-table" class="table">
+                  <table id="canceled-table" class="table">
                      <thead>
                         <tr>
                             <th>NAME</th>
-                            <th>POINTS</th>
+                            <th>TREATMENT</th>
+                            <th>DATE</th>
+                            <th>TIME</th>
                         </tr>
                      </thead>
                      <tbody>
-                        {% for patient in patients %}
+                        {% for appointment in canceled_appointment %}
                         <tr>
-                            <td>{{ patient.first_name }} {{ patient.last_name }}</td>
-                            <td>{{ patient.userprofile.total_points }}</td>
+                            <td>{{ appointment.user.first_name }} {{ appointment.user.last_name }}</td>
+                            <td>{{ appointment.treatment }}</td>
+                            <td>{{ appointment.date }}</td>
+                            <td>{{ appointment.time }}</td>
                         </tr>
                         {% endfor %}
                      </tbody>
@@ -50,7 +54,7 @@
 {% endblock content %} {% block script %}
 <!--<script>-->
 <!--  $(function () {-->
-<!--    $('#patient-table').DataTable({-->
+<!--    $('#canceled-table').DataTable({-->
 <!--      "paging": true,-->
 <!--      "lengthChange": false,-->
 <!--      "searching": false,-->

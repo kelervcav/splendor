@@ -85,8 +85,6 @@ def appointment_cancel(request, pk):
     set_appointment = get_object_or_404(Appointment, id=pk)
     set_appointment.is_cancel = True
     set_appointment.save()
-    messages.success(request,
-                     'Appointment has been marked as canceled.')
     return redirect('appointments:appointment_info')
 
 

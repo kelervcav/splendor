@@ -10,7 +10,8 @@ urlpatterns = [
     path('<int:pk>/edit', views.service_edit, name='service_edit'),
     path('<int:pk>/disable', views.service_disable, name='service_disable'),
 
-    path('service-list', views.services_list_loyalty, name='services_list_loyalty'),
+    path('<int:pk>/service-list', views.services_list_loyalty, name='services_list_loyalty'),
+    path('service-list', views.service_loyalty, name='service_loyalty'),
 
     # treatment
     path('treatment/', views.treatment_list, name='treatment_list'),

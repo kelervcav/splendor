@@ -20,7 +20,8 @@
                 </div>
                 <!-- /.card-header -->
                   <div class="card-body">
-                  <table id="treatment-table" class="table table-striped projects">
+                      <h6>Date Range: {{ form.cleaned_data.date_from }} to {{ form.cleaned_data.date_to }}</h6>
+                  <table id="treatment-table" class="table">
                      <thead>
                         <tr>
                             <th>TREATMENT</th>

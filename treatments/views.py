@@ -115,10 +115,18 @@ def treatment_disable(request, pk):
     return redirect('treatments:treatment_list')
 
 
-def services_list_loyalty(request):
-    services = Service.objects.all()
-    treatment_list = Treatment.objects.all()
+def services_list_loyalty(request, pk):
+    services = get_object_or_404(Service, id=pk, is_active=True)
+    treatment_list = Treatment.objects.filter(service=services)
     template_name = 'treatments/treatment_list_loyalty.html'
     context = {'services': services, 'treatment_list': treatment_list}
     return render(request, template_name, context)
+
+
+def service_loyalty(request):
+    services = Service.objects.filter(is_active=True)
+    template_name = 'treatments/treatment_list_loyalty.html'
+    context = {'services': services}
+    return render(request, template_name, context)
+
 

@@ -13,11 +13,13 @@
                 <a class="nav-link" href="#" role="button" id="dropservices" data-toggle="dropdown" aria-expanded="false">
                    <p style="font-size:15px">SERVICES</p>
                 </a>
-                {% for service in services %}
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                        <a class="dropdown-item" href="{% url 'treatments:services_list_loyalty' %}">{{ service.name }}</a>
-                    </div>
-                {% endfor %}
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                    {% for service in services.all %}
+                    <a class="dropdown-item" href="{% url 'treatments:services_list_loyalty' service.id %}">{{ service.name }}</a>
+                    {% endfor %}
+                </div>
+
             </div>
        </li>
         <li class="nav-item">

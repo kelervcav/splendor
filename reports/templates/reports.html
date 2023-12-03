@@ -16,61 +16,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <div class="card card-outline card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">Most Availed Treatment by Appointment</h3>
-                    </div>
-                    <form class="form-horizontal" action="{% url 'reports:appointment_report' %}" method="POST">
-                        <div class="card-body">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="">Date from:</label>
-                                <div class="col-md-4">
-                                    <input type="date" name="date_from" id="id_date_from" required value="{{ form.cleaned_data.date_from|default:'' }}" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Date to:</label>
-                                <div class="col-md-12">
-                                    <input type="date" name="date_to" id="id_date_to" required value="{{ form.cleaned_data.date_to|default:'' }}" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-info">Generate Report</button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="card card-outline card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">List of Patients with Availble Points</h3>
-                    </div>
-                    <form class="form-horizontal" action="{% url 'reports:patient_list_report' %}" method="POST">
-                        <div class="card-body">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="">Date from:</label>
-                                <div class="col-md-4">
-                                    <input type="date" name="date_from" id="patient_date_from" required value="{{ form.cleaned_data.date_from|default:'' }}" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Date to:</label>
-                                <div class="col-md-12">
-                                    <input type="date" name="date_to" id="patient_date_to" required value="{{ form.cleaned_data.date_to|default:'' }}" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-info">Generate Report</button>
-                        </div>
-                    </form>
-                </div>
-
+              <div class="col-6">
                  <div class="card card-outline card-info">
                     <div class="card-header">
                         <h3 class="card-title">List of Treatments</h3>
@@ -97,11 +43,137 @@
                         </div>
                     </form>
                 </div>
+              </div>
+
+              <div class="col-6">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">List of Patients with Availble Points</h3>
+                    </div>
+                    <form class="form-horizontal" action="{% url 'reports:patient_list_report' %}" method="POST">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="">Date from:</label>
+                                <div class="col-md-4">
+                                    <input type="date" name="date_from" id="patient_date_from" required value="{{ form.cleaned_data.date_from|default:'' }}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Date to:</label>
+                                <div class="col-md-12">
+                                    <input type="date" name="date_to" id="patient_date_to" required value="{{ form.cleaned_data.date_to|default:'' }}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-info">Generate Report</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+        </div>
+
+        <div class="row">
+              <div class="col-6">
+                  <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Most Availed Treatment by Appointment</h3>
+                    </div>
+                    <form class="form-horizontal" action="{% url 'reports:appointment_report' %}" method="POST">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="">Date from:</label>
+                                <div class="col-md-4">
+                                    <input type="date" name="date_from" id="id_date_from" required value="{{ form.cleaned_data.date_from|default:'' }}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Date to:</label>
+                                <div class="col-md-12">
+                                    <input type="date" name="date_to" id="id_date_to" required value="{{ form.cleaned_data.date_to|default:'' }}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-info">Generate Report</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Total Sales</h3>
+                    </div>
+                    <form class="form-horizontal" action="{% url 'reports:total_sales' %}" method="POST">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="">Date from:</label>
+                                <div class="col-md-4">
+                                    <input type="date" name="date_from" id="sales_date_from" required value="{{ form.cleaned_data.date_from|default:'' }}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Date to:</label>
+                                <div class="col-md-12">
+                                    <input type="date" name="date_to" id="sales_date_to" required value="{{ form.cleaned_data.date_to|default:'' }}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-info">Generate Report</button>
+                        </div>
+                    </form>
+                </div>
             </div>
+              </div>
+        </div>
+
+        <div class="row">
+              <div class="col-6">
+                    <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">List of Canceled Appointment</h3>
+                    </div>
+                    <form class="form-horizontal" action="{% url 'reports:canceled_appointment_report' %}" method="POST">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="">Date from:</label>
+                                <div class="col-md-4">
+                                    <input type="date" name="date_from" id="canceled_date_from" required value="{{ form.cleaned_data.date_from|default:'' }}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Date to:</label>
+                                <div class="col-md-12">
+                                    <input type="date" name="date_to" id="canceled_date_to" required value="{{ form.cleaned_data.date_to|default:'' }}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-info">Generate Report</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+
+              <div class="col-6">
+
+              </div>
+        </div>
             <!-- /.col -->
         </div>
         <!-- /.row -->
-    </div>
+
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
