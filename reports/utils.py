@@ -1,3 +1,4 @@
+from user_profile.models import User
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 
@@ -20,3 +21,18 @@ def most_availed_treatment(date_from, date_to):
     return result
 
 
+def get_patients(date_from, date_to):
+    patients = (User.objects
+                .filter(is_patient=True, created_at__range=[date_from, date_to])
+                .order_by('created_at')
+                .select_related('userprofile'))
+
+    return patients
+
+
+def get_treatments(date_from, date_to):
+    treatments = (Treatment.objects
+                  .filter(created_at__range=[date_from, date_to])
+                  .order_by('created_at'))
+
+    return treatments

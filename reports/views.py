@@ -1,19 +1,26 @@
+
 from django.contrib.auth.decorators import login_required, permission_required
 
-from reports.forms import DateRangeForm
+from reports.forms import AppointmentDateRangeForm, PatientDateRangeForm, TreatmentDateRangeForm
 from django.shortcuts import render
 
-from reports.utils import most_availed_treatment
+from reports.utils import most_availed_treatment, get_patients, get_treatments
 from user_profile.decorators import admin_required
 
+from django.contrib.auth.models import User
 
 # Create your views here.
+
 
 @login_required
 @admin_required
 @permission_required('user_profile.view_user', raise_exception=True)
 def report(request):
-    form = DateRangeForm(request.POST or None)
+    return render(request, 'reports.html')
+
+
+def appointment_report(request):
+    form = AppointmentDateRangeForm(request.POST or None)
     if form.is_valid():
         date_from = request.POST.get('date_from')
         date_to = request.POST.get('date_to')
@@ -22,4 +29,25 @@ def report(request):
 
     return render(request, 'reports.html', {'form': form})
 
+
+def patient_list_report(request):
+    form = PatientDateRangeForm(request.POST or None)
+    if form.is_valid():
+        date_from = request.POST.get('date_from')
+        date_to = request.POST.get('date_to')
+        patients = get_patients(date_from, date_to)
+        return render(request, 'patient_list_report.html', {'form': form, 'patients': patients})
+
+    return render(request, 'reports.html', {'form': form})
+
+
+def treatment_list_report(request):
+    form = TreatmentDateRangeForm(request.POST or None)
+    if form.is_valid():
+        date_from = request.POST.get('date_from')
+        date_to = request.POST.get('date_to')
+        treatments = get_treatments(date_from, date_to)
+        return render(request, 'treatment_list_report.html', {'form': form, 'treatments': treatments})
+
+    return render(request, 'reports.html', {'form': form})
 
