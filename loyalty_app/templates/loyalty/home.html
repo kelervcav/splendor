@@ -42,6 +42,49 @@
     </div>
 </div>
 
+ <div class="card card-outline card-info">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card-header">
+                    <h3 class="card-title">
+                      Available Treatments
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        {% for treatment in treatment_list|slice:":3" %}
+                        <div class="col-12 col-md-4">
+                            <div class="card" style="height:220px">
+
+                                <div class="card-body pt-4">
+                                        <h3 style="text-align:center">{{ treatment.name }}</h3>
+                                        <h6 class="text-muted pt-2" style="text-align:center">{{ treatment.description }}</h6>
+                                        {% if treatment.type %}
+                                            <h6 class="text-muted pt-2" style="text-align:center">{{ treatment.area }} / {{ treatment.type }}</h6>
+                                        {% else %}
+                                            <h6 class="text-muted pt-2" style="text-align:center">{{ treatment.area }}</h6>
+                                        {% endif %}
+                                        <h6 class="text-muted pt-2" style="text-align:center">Php {{ treatment.price }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div style="text-align:right">
+                        <a href="{% url 'treatments:treatment_list_loyalty' %}" class="btn btn-sm btn-info"> View More </a>
+                    </div>
+                </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
 
 <section class="content-header">
     <div class="container-fluid">
@@ -56,11 +99,6 @@
 <div class="card card-outline card-info">
     <div class="card-header ">
           <h3 class="card-title"><a href="{% url 'transactions:transaction_history' %}" style="color:black"> Points Transaction History</a></h3>
-          <div class="card-tools">
-             <a href="{% url 'redeem_points:redeemed_list' %}" class="btn btn-sm btn-block bg-gradient-info">
-                Points Redeemed
-             </a>
-          </div>
     </div>
 
     <div class="card-body pt-4">
@@ -70,7 +108,7 @@
                  <li class="list-group-item">
                      <div class="row">
                          <div class="col-6">
-                             <h6>{{ transact.reference_id }}</h6>
+                             <h6>{{ transact.treatment }}</h6>
                              {% if transact.offer_code %}
                                 <h6 class="pt-2">{{transact.offer_code|upper}}</h6>
                              {% endif %}

@@ -1,6 +1,6 @@
 from transactions.models import Transaction
 from user_profile.models import User
-from django.db.models import Count, Sum, F
+from django.db.models import Count, Sum, F, Case, When
 from django.shortcuts import get_object_or_404
 
 from appointments.models import Appointment
@@ -49,8 +49,13 @@ def get_canceled_appointment(date_from, date_to):
 
 def total_sales_report(date_from, date_to):
     total_sales = Transaction.objects.filter(date_added__range=[date_from, date_to]).aggregate(
-        total_sales=Sum(F('price_amount') + F('discounted_amount'))
-        )['total_sales']
+        total_sales=Sum(
+            Case(
+                When(discounted_amount__gt=0, then=F('discounted_amount')),
+                default=F('price_amount'),
+            )
+        )
+    )['total_sales']
     total_sales = total_sales or 0
 
     return total_sales

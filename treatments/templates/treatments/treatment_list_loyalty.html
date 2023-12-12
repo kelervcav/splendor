@@ -15,7 +15,7 @@
 
                 <div class="card-header">
                     <h3 class="card-title">
-                        {{ services.name }} Treatments
+                      Available Treatments
                     </h3>
                 </div>
                 <!-- /.card-header -->
@@ -23,7 +23,7 @@
                     <div class="row">
                         {% for treatment in treatment_list %}
                         <div class="col-12 col-md-4">
-                            <div class="card" style="height:280px">
+                            <div class="card" style="height:220px">
 
                                 <div class="card-body pt-4">
                                         <h3 style="text-align:center">{{ treatment.name }}</h3>
@@ -34,12 +34,6 @@
                                             <h6 class="text-muted pt-2" style="text-align:center">{{ treatment.area }}</h6>
                                         {% endif %}
                                         <h6 class="text-muted pt-2" style="text-align:center">Php {{ treatment.price }}</h6>
-                                </div>
-
-                                <div class="card-footer">
-                                    <div style="text-align:center">
-                                        <a href="{% url 'appointments:appointment_create' %}" class="btn btn-sm btn-primary"> Book Now </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>

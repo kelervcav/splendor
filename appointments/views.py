@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from pusher import Pusher
 
-from treatments.models import Service
+from treatments.models import Service, Treatment
 from user_profile.decorators import admin_required
 from .forms import BookingAppointmentForm
 from .models import Appointment
@@ -28,40 +28,42 @@ pusher = Pusher(
 
 
 # for patients
+
 @login_required
 def appointment_create(request):
+
     services = Service.objects.filter(is_active=True)
     form = BookingAppointmentForm()
     if request.method == 'POST':
         form = BookingAppointmentForm(request.POST or None)
         if form.is_valid():
-            if form.is_valid():
-                appointment = form.save(commit=False)
-                appointment.user = request.user
+            appointment = form.save(commit=False)
+            appointment.user = request.user
 
-                appointment_date = form.cleaned_data['date']
-                appointment_time = form.cleaned_data['time']
+            appointment_date = form.cleaned_data['date']
+            appointment_time = form.cleaned_data['time']
 
-                # Check if the user already has an appointment at the same date and time
-                existing_appointment = Appointment.objects.filter(
-                    user=request.user,
-                    date=appointment_date,
-                    time=appointment_time
-                ).exists()
+            # Check if the user already has an appointment at the same date and time
+            existing_appointment = Appointment.objects.filter(
+                user=request.user,
+                date=appointment_date,
+                time=appointment_time
+            ).exists()
 
-                if existing_appointment:
-                    form.add_error('time', 'You already have an appointment at this time and date.')
-                    # Return the form with an error message
-                    return render(request, 'appointments/appointment_create.html', {'form': form, 'services': services})
-                appointment.save()
+            if existing_appointment:
+                form.add_error('time', 'You already have an appointment at this time and date.')
+                # Return the form with an error message
+                return render(request, 'appointments/appointment_create.html', {'form': form, 'services': services})
+            appointment.save()
 
-                # pusher notification
-                appointment_datetime = datetime.combine(appointment_date, datetime.strptime(appointment_time, '%H:%M:%S').time())
-                formatted_datetime = appointment_datetime.strftime("%m/%d/%Y at %I:%M %p")
-                data = {'message': f"{appointment.user.first_name} booked an appointment for {formatted_datetime}"}
-                pusher.trigger('splendor-channel', 'my-event', data)
+            # pusher notification
+            appointment_datetime = datetime.combine(appointment_date, datetime.strptime(appointment_time, '%H:%M:%S').time())
+            formatted_datetime = appointment_datetime.strftime("%m/%d/%Y at %I:%M %p")
+            data = {'message': f"{appointment.user.first_name} booked an appointment for {formatted_datetime}"}
+            pusher.trigger('splendor-channel', 'my-event', data)
 
-                return redirect('appointments:appointment_info')
+            return redirect('appointments:appointment_info')
+
     context = {'form': form, 'services': services}
     return render(request, 'appointments/appointment_create.html', context)
 
