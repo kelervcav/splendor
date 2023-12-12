@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %} Reports {% endblock title %}
+{% block page_title %} Reports
+
+<button onclick="printReport()" class="btn btn-outline-info btn-sm" style="float:right">
+    <i class="fas fa-arrow-circle-down"></i> Download</button>
+
+{% endblock page_title %}
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content" xmlns="">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">List of Canceled Appointment</h3>
+                </div>
+                <!-- /.card-header -->
+                  <div class="card-body">
+                      <h6>Date Range: {{ form.cleaned_data.date_from }} to {{ form.cleaned_data.date_to }}</h6>
+                  <table id="canceled-table" class="table">
+                     <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TREATMENT</th>
+                            <th>DATE</th>
+                            <th>TIME</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for appointment in canceled_appointment %}
+                        <tr>
+                            <td>{{ appointment.user.first_name }} {{ appointment.user.last_name }}</td>
+                            <td>{{ appointment.treatment }}</td>
+                            <td>{{ appointment.date }}</td>
+                            <td>{{ appointment.time }}</td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock content %} {% block script %}
+<!--<script>-->
+<!--  $(function () {-->
+<!--    $('#canceled-table').DataTable({-->
+<!--      "paging": true,-->
+<!--      "lengthChange": false,-->
+<!--      "searching": false,-->
+<!--      "ordering": false,-->
+<!--      "info": true,-->
+<!--      "autoWidth": false,-->
+<!--      "responsive": true,-->
+<!--      "pageLength": 20,-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
+<script>
+    function printReport() {
+        // Open the print dialog
+        window.print();
+    }
+</script>
+{% endblock script %}

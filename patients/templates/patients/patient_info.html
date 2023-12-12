@@ -85,7 +85,7 @@
                     <table id="transaction-table" class="table table-striped projects">
                         <thead>
                             <tr>
-                                <th>REFERENCE ID</th>
+                                <th>TREATMENT</th>
                                 <th>AMOUNT</th>
                                 <th>POINTS REDEEMED</th>
                                 <th>CODE</th>
@@ -98,7 +98,7 @@
                         <tbody>
                          {% for transact in transactions %}
                             <tr>
-                                <td>{{ transact.reference_id }}</td>
+                                <td>{{ transact.treatment }}</td>
                                  {% if transact.offer_code %}
                                     <td><span>&#8369;</span>{{ transact.discounted_amount }}</td>
                                     <td>
@@ -169,23 +169,27 @@
                                 <td>
                                     {% if appointment.is_approved %}
                                         <span class="badge bg-success">Approved</span>
+                                    {% elif appointment.is_cancel %}
+                                        <span class="badge bg-danger">Cancel</span>
                                     {% else %}
-                                        <span class="badge bg-danger">Pending</span>
+                                        <span class="badge bg-warning">Pending</span>
                                     {% endif %}
-                               </td>
-                               <td>
+                                </td>
+                                <td>
                                    {% if not appointment.is_approved %}
                                         {% if date_now.date > appointment.date and date_now.time <= appointment.time %}
                                             <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
                                                 <button type="button" class="btn btn-success btn-sm" disabled>Approve</button>
                                             </a>
                                         {% else %}
-                                            <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
-                                                <button type="button" class="btn btn-success btn-sm">Approve</button>
-                                            </a>
+                                             {% if not appointment.is_cancel %}
+                                                <a href="{% url 'appointments:approve_appointment' appointment.id %}" class="pull-right text-blue">
+                                                    <button type="button" class="btn btn-success btn-sm">Approve</button>
+                                                </a>
+                                             {% endif %}
                                         {% endif %}
                                     {% endif %}
-								</td>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

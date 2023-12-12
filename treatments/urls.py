@@ -10,17 +10,7 @@ urlpatterns = [
     path('<int:pk>/edit', views.service_edit, name='service_edit'),
     path('<int:pk>/disable', views.service_disable, name='service_disable'),
 
-    # treatment area
-    path('areas/', views.area_list, name='area_list'),
-    path('area/create/', views.area_create, name='area_create'),
-    path('area/<int:pk>/edit', views.area_edit, name='area_edit'),
-    path('area/<int:pk>/disable', views.area_disable, name='area_disable'),
-
-    # price type
-    path('price-type/', views.price_type_list, name='price_type_list'),
-    path('price-type/create/', views.price_type_create, name='price_type_create'),
-    path('price-type/<int:pk>/edit', views.price_type_edit, name='price_type_edit'),
-    path('price-type/<int:pk>/disable', views.price_type_disable, name='price_type_disable'),
+    path('treatment-list', views.treatment_list_loyalty, name='treatment_list_loyalty'),
 
     # treatment
     path('treatment/', views.treatment_list, name='treatment_list'),

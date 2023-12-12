@@ -38,6 +38,7 @@
                         <tr>
                             <th>ID</th>
                             <th>TITLE</th>
+                            <th>TREATMENT</th>
                             <th>CODE</th>
                             <th>DISCOUNT IN %</th>
                             <th>IMAGE</th>
@@ -53,6 +54,7 @@
                            <tr>
                                <th>{{ offer.id }}</th>
                                <td>{{ offer.title }}</td>
+                               <td>{{ offer.treatment }}</td>
                                <td>{{ offer.code }}</td>
                                <td>{{ offer.percentage_discount }}</td>
                                <td><img src="{{ MEDIA_URL }}{{offer.offer_image.url}}" class="img-fluid" alt="Offer Image" width="150px"></td>

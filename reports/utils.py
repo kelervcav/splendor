@@ -1,4 +1,6 @@
-from django.db.models import Count
+from transactions.models import Transaction
+from user_profile.models import User
+from django.db.models import Count, Sum, F, Case, When
 from django.shortcuts import get_object_or_404
 
 from appointments.models import Appointment
@@ -18,3 +20,42 @@ def most_availed_treatment(date_from, date_to):
         treatment['treatment_name'] = treatment_instance.name
 
     return result
+
+
+def get_patients(date_from, date_to):
+    patients = (User.objects
+                .filter(is_patient=True, created_at__range=[date_from, date_to])
+                .order_by('created_at')
+                .select_related('userprofile'))
+
+    return patients
+
+
+def get_treatments(date_from, date_to):
+    treatments = (Treatment.objects
+                  .filter(created_at__range=[date_from, date_to])
+                  .order_by('created_at'))
+
+    return treatments
+
+
+def get_canceled_appointment(date_from, date_to):
+    canceled_appointment = (Appointment.objects
+                            .filter(date__range=[date_from, date_to], is_cancel=True)
+                            .order_by('created_at'))
+
+    return canceled_appointment
+
+
+def total_sales_report(date_from, date_to):
+    total_sales = Transaction.objects.filter(date_added__range=[date_from, date_to]).aggregate(
+        total_sales=Sum(
+            Case(
+                When(discounted_amount__gt=0, then=F('discounted_amount')),
+                default=F('price_amount'),
+            )
+        )
+    )['total_sales']
+    total_sales = total_sales or 0
+
+    return total_sales

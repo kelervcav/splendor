@@ -44,10 +44,10 @@
                                                 <div class="col-6">
                                                     <h5 class="text-right">Available Points:
                                                         {% if user.userprofile.total_points >= 1 %}
-                                                        <b>{{ user.userprofile.total_points|stringformat:"d" }}
-                                                         {% else %}
-                                                            0
-                                                        </b></h5>
+                                                            <b>{{ user.userprofile.total_points|stringformat:"d" }} =
+                                                            <span>&#8369;</span>{{ user.userprofile.total_points|stringformat:"d" }}
+                                                        {% else %}
+                                                            0 </b></h5>
                                                        {% endif %}
 <!--                                                    <p class="text-right"><img src="{{ patient_info.qr_code.url }}" height="50px" alt="QR Code Image"/></p>-->
                                                 </div>

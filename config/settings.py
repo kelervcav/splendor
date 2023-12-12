@@ -54,13 +54,13 @@ INSTALLED_APPS = [
 
     'user_profile',
     'dashboard',
+    'offers',
     'treatments',
     'patients',
     'appointments',
     'loyalty_app',
     'transactions',
     'redeem_points',
-    'offers',
     'reports'
 
 ]
@@ -100,6 +100,12 @@ PUSHER_APP_ID = '1711676'
 PUSHER_KEY = '35f3c6a202ac29846649'
 PUSHER_SECRET = 'd76d685ea0a5379a5089'
 PUSHER_CLUSTER = 'ap1'
+
+
+TWILIO_ACCOUNT_SID = 'AC082804ec2fe0a483e0a5e5c3d87a5b98'
+TWILIO_AUTH_TOKEN = '723cdbae0f934322099276cfa764ce4f'
+TWILIO_PHONE_NUMBER = '+16317915427'
+
 
 
 # Database

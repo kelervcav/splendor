@@ -4,11 +4,10 @@ from itertools import chain
 from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-
 from appointments.models import Appointment
 from patients.forms import RegistrationForm, CustomRegistration, MembershipRenewalForm
+from patients.utils import send_sms
 from redeem_points.models import RedeemPoints
 from transactions.models import Transaction
 from user_profile.decorators import admin_required
@@ -51,6 +50,15 @@ def patient_create(request):
         gender = custom_form.save(commit=False)
         gender.user = registration
         gender.save()
+
+        surname = registration.last_name.lower()
+        birthdate = registration.date_of_birth.strftime('%Y%m%d')
+
+        phone_number = registration.mobile
+        formatted_phone_number = f"+63{phone_number[1:]}"
+        message_body = f"Your username is {registration.mobile} and {surname}{birthdate} for password."
+        send_sms(formatted_phone_number, message_body)
+
         messages.success(request, 'Patient registered successfully.')
         return redirect('patients:patient_list')
 

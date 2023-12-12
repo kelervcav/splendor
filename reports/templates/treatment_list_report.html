@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %} Reports {% endblock title %}
+{% block page_title %} Reports
+
+<button onclick="printReport()" class="btn btn-outline-info btn-sm" style="float:right">
+    <i class="fas fa-arrow-circle-down"></i> Download</button>
+
+{% endblock page_title %}
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content" xmlns="">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">List of Treatment</h3>
+                </div>
+                <!-- /.card-header -->
+                  <div class="card-body">
+                      <h6>Date Range: {{ form.cleaned_data.date_from }} to {{ form.cleaned_data.date_to }}</h6>
+                  <table id="treatment-table" class="table">
+                     <thead>
+                        <tr>
+                            <th>TREATMENT</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for treatment in treatments %}
+                        <tr>
+                            <td>{{ treatment.name }}</td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+{% endblock content %} {% block script %}
+<!--<script>-->
+<!--  $(function () {-->
+<!--    $('#treatment-table').DataTable({-->
+<!--      "paging": true,-->
+<!--      "lengthChange": false,-->
+<!--      "searching": false,-->
+<!--      "ordering": false,-->
+<!--      "info": true,-->
+<!--      "autoWidth": false,-->
+<!--      "responsive": true,-->
+<!--      "pageLength": 20,-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
+<script>
+    function printReport() {
+        // Open the print dialog
+        window.print();
+    }
+</script>
+{% endblock script %}

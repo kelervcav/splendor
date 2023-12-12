@@ -1,4 +1,10 @@
-{% extends 'base.html' %} {% block title %} Reports {% endblock title %} {% block page_title %} Reports {% endblock page_title %} {% block content %}
+{% extends 'base.html' %}
+{% block title %} Reports {% endblock title %}
+{% block page_title %} Reports
+ <button onclick="printReport()" class="btn btn-outline-info btn-sm" style="float:right">
+                            <i class="fas fa-arrow-circle-down"></i> Download</button>
+{% endblock page_title %}
+{% block content %}
 
 <!-- Main content -->
 <section class="content" xmlns="">
@@ -7,9 +13,7 @@
         <div class="col-12">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Most Chosen Treatment by Appointment</h3>
-                    <button onclick="printReport()" class="btn btn-outline-info btn-sm" style="float:right">
-                            <i class="fas fa-arrow-circle-down"></i> Download</button>
+                    <h3 class="card-title">Most Availed Treatment by Appointment</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">

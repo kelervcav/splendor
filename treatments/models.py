@@ -4,7 +4,6 @@ from django.db import models
 from django.db import models
 from django.utils import timezone
 
-
 # Create your models here.
 class Service(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -23,44 +22,13 @@ class Service(models.Model):
         ]
 
 
-class TreatmentArea(models.Model):
-    area = models.CharField(max_length=50, unique=True)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.area
-
-    class Meta:
-        db_table = 'treatment_areas'
-        permissions = [
-            ("disable_treatmentarea", "Can disable treatment area"),
-        ]
-
-
-class PriceType(models.Model):
-    type = models.CharField(max_length=50, unique=True)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.type
-
-    class Meta:
-        db_table = 'price_types'
-        permissions = [
-            ("disable_pricetype", "Can disable price type"),
-        ]
-
-
 class Treatment(models.Model):
     service = models.ForeignKey(Service, on_delete=models.DO_NOTHING)
-    area = models.ForeignKey(TreatmentArea, on_delete=models.DO_NOTHING)
-    type = models.ForeignKey(PriceType, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
+    area = models.CharField(max_length=50)
+    type = models.CharField(max_length=50)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)

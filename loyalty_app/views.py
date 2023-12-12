@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout, get_user_model
-
+from treatments.models import Service, Treatment
 from offers.models import Offer
 from transactions.models import Transaction
 from user_profile.models import UserProfile
@@ -19,8 +19,9 @@ def home(request):
     user = request.user
     transaction_list = Transaction.objects.filter(user=user).order_by('-date_added')[:5]
     offers = Offer.objects.filter(is_offer_active=True)
+    treatment_list = Treatment.objects.filter(is_active=True)
     template_name = 'loyalty/home.html'
-    context = {'transaction_list': transaction_list, 'users': user, 'offers': offers,}
+    context = {'transaction_list': transaction_list, 'users': user, 'offers': offers, 'treatment_list': treatment_list}
     return render(request, template_name, context)
 
 

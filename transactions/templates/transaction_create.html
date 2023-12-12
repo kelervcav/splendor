@@ -6,74 +6,94 @@
 
 <!-- Main content -->
 <section class="content">
-   <div class="container-fluid">
-      <div class="row">
-         <div class="col-12">
-           {% if messages %}
-              {% for message in messages %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                {% if messages %} {% for message in messages %}
                 <div class="{% if message.tags %}{% if 'error' in message.tags %}alert alert-danger{% else %}alert alert-success{% endif %}{% endif %} alert-dismissible">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                  <span class="lh-1">{{ message }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                    <span class="lh-1">{{ message }}</span>
                 </div>
-              {% endfor %}
-            {% endif %}
-         </div>
-         <div class="col-12">
-            <div class="card card-outline card-info">
-               <div class="card-header">
-                  <h3 class="card-title">  Add Transaction</h3>
-               </div>
-               <!-- /.card-header -->
-               <form class="form-horizontal" method="POST" novalidate>
-                  <div class="card-body">
-                     {% csrf_token %}
-                     <div class="form-group ">
-                        <label for="" class="col-md-2 control-label">Reference ID:</label>
-                        <div class="col-md-4">
-                           {{ form.reference_id }}
-                           <span class="help-block">{{ form.reference_id.errors }}</span>
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <label for="" class="col-md-2 control-label">Amount:</label>
-                        <div class="col-md-4">
-                           {{ form.price_amount }}
-                           <span class="help-block">{{ form.price_amount.errors }}</span>
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <label for="" class="col-md-2 control-label">Offer Code:</label>
-                        <div class="col-md-4">
-                           <input type="text" name="offer_code" id="offer_code" value="{{ offer_code|upper }}" class="form-control">
-                           <span class="help-block">{{ form.offer_code.errors }}</span>
-                        </div>
-                     </div>
-                     {% if users.userprofile.total_points > 0 %}
-                      <div class="form-group">
-                        <label for="" class="col-md-2 control-label">Redeem Points:</label>
-                        <div class="col-md-4">
-                           <input type="text" id="redeemed_points" name="redeemed_points" class="form-control" placeholder='{{ users.userprofile.total_points|stringformat:"d" }}'>
-                           <span class="help-block">{{ redeem_form.redeemed_points.errors }}</span>
-                        </div>
-                     </div>
-                     {% endif %}
-                  </div>
-                  <div class="card-footer">
-                     <button type="submit" class="btn btn-info">Save</button>
-                  </div>
-               </form>
-               <!-- /.card-body -->
+                {% endfor %} {% endif %}
             </div>
-         </div>
-         <!-- /.col -->
-      </div>
-      <!-- /.row -->
-   </div>
-   <!-- /.container-fluid -->
+            <div class="col-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Transaction</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <form class="form-horizontal" id="transaction-form" method="POST" novalidate>
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="" class="col-md-2 control-label">Treatment:</label>
+                                <div class="col-md-4">
+                                    <select id="id_treatment" name="{{ form.treatment.name }}" class="form-control">
+                                        <option>-----</option>
+                                        {% for treatment in form.treatment.field.queryset %}
+                                        <option value="{{ treatment.id }}" data-price="{{ treatment.price }}"> {{ treatment.name }} </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-md-2 control-label">Amount:</label>
+                                <div class="col-md-4">
+                                    <div id="selectedDetails">
+                                        <input type="text" id="price_input" name="price_amount" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-md-2 control-label">Offer Code:</label>
+                                <div class="col-md-4">
+                                    <input type="text" name="offer_code" id="offer_code" value="{{ offer_code|upper }}" class="form-control" />
+                                    <span class="help-block">{{ form.offer_code.errors }}</span>
+                                </div>
+                            </div>
+                            {% if users.userprofile.total_points > 0 %}
+                            <div class="form-group">
+                                <label for="" class="col-md-2 control-label">Redeem Points:</label>
+                                <div class="col-md-4">
+                                    <input type="text" id="redeemed_points" name="redeemed_points" class="form-control" placeholder='{{ users.userprofile.total_points|stringformat:"d" }}' />
+                                    <span class="help-block">{{ redeem_form.redeemed_points.errors }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </form>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 
-{% endblock content %}
+{% endblock content %} {% block script %}
+<script>
+    var e = document.getElementById("id_treatment");
+    var e = document.getElementById("id_treatment");
+    var priceInput = document.getElementById("price_input");
 
-{% block script %}
+    function onChange() {
+        var selectedOption = e.options[e.selectedIndex];
+        var value = selectedOption.value;
+        var text = selectedOption.text;
+        var price = selectedOption.getAttribute("data-price");
+
+        // Set the value of the input field
+        priceInput.value = price;
+    }
+
+    e.addEventListener("change", onChange);
+    onChange();
+</script>
+
 {% endblock script %}
